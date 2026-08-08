@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "images": "node tools/build-images.mjs",
+    "images:sheet": "node tools/contact-sheet.mjs"
   },
   "dependencies": {
     "next": "^15.5.20",

@@ -32,3 +32,6 @@ next-env.d.ts
 
 # image pipeline scratch (contact sheets, screenshots, manifest)
 /tools/.out/
+
+# superseded CV build — the published CV is public/cv/adeela-cv.pdf
+/resume/

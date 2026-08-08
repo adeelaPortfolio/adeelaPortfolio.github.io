@@ -1,95 +1,55 @@
-# Adeela — Textile & Fashion Designer Portfolio
+# Adeela Amanat — Portfolio
 
-A fast, image-first portfolio built to help a textile & fashion designer apply to
-fashion houses. Textiles and garments are presented as co-equal pillars, in a
-classy, vintage editorial style.
+The portfolio site of **Adeela Amanat**, textile & fashion designer, Lahore.
+Eight collections spanning nine years of lawn, pret, semi-formal and bridal work,
+plus her surface-print artwork and CV.
 
-- **Stack:** Next.js (App Router) · TypeScript · Tailwind CSS
-- **Fonts:** Playfair Display + EB Garamond (self-hosted, free)
-- **Hosting:** free forever on Vercel
-- **Cost:** £0 (a custom domain is optional, ~£10/yr)
+Built with Next.js 15 + Tailwind, exported as static HTML, and published free on
+GitHub Pages. It costs nothing to run and has no backend.
 
----
-
-## Run it locally
+## Running it
 
 ```bash
 npm install
-npm run dev
+npm run dev      # http://localhost:3000
+npm run build    # static export → out/
 ```
 
-Open http://localhost:3000. Edit files under `src/` and the page reloads.
+## Changing the content
+
+Text, collections and artwork are data, not layout. Edit these and the pages follow:
+
+| File | Contains |
+|------|----------|
+| `src/content/site.ts` | Name, tagline, bio, skills, education, awards, CV path |
+| `src/content/collections.ts` | The eight collections |
+| `src/content/textiles.ts` | The standalone print artworks |
+
+To replace the CV, drop a new PDF at `public/cv/adeela-cv.pdf`.
+
+## Changing the images
+
+Images are generated from Adeela's raw archive, which lives **outside this repo** and is
+never committed.
 
 ```bash
-npm run build   # production build (also proves the static export Vercel uses)
-npm start       # serve the production build locally
+npm run images:sheet   # numbered contact sheets of the whole archive → tools/.out/
+npm run images         # rebuild public/images/ from tools/sources.mjs
 ```
 
----
+`tools/sources.mjs` decides which source asset becomes which published image, and records
+why certain assets are deliberately left out. Edit that file, not `public/images/`.
 
-## Editing content (no coding required for the common cases)
+Every output is capped at 1400 px, so the print-resolution originals are never published.
 
-Everything the designer changes lives in **`src/content/`**:
+## Deploying
 
-| File             | What it controls                                            |
-|------------------|------------------------------------------------------------|
-| `site.ts`        | Name, tagline, bio, statement, skills, education, socials, email, press, CV path |
-| `collections.ts` | The garment collections / lookbooks                        |
-| `textiles.ts`    | The standalone textile / surface-design pieces             |
+Push to `main`. `.github/workflows/deploy.yml` builds the site and publishes it to
+GitHub Pages. Nothing else to do.
 
-Placeholder text is marked with `// TODO`. See `src/content/types.ts` for the
-shape of every field.
+First-time setup: create a **public** repo named `<username>.github.io`, push to it,
+then set **Settings → Pages → Source** to **GitHub Actions**. Pages on private repos
+requires a paid plan, which is why the repo is public.
 
-### Adding real images
-
-Images live in **`public/images/`** — see `public/images/README.md` for the
-folder layout and recommended sizes. Until an image exists, a vintage placeholder
-renders in its place, so the site always looks complete.
-
-To swap one in: drop the file in the right folder, then set its `src` in the
-matching content file, e.g.
-
-```ts
-cover: { src: "/images/collections/sericulture/cover.jpg", alt: "…" }
-```
-
-### The CV
-
-Replace `public/cv/adeela-cv.pdf` with the real CV (same filename), or change
-`site.cvPath` in `src/content/site.ts`.
-
----
-
-## Publish for free on Vercel
-
-1. Create a free account at https://vercel.com (sign in with GitHub).
-2. Push this project to a GitHub repository.
-3. In Vercel: **Add New → Project → Import** your repo → **Deploy**.
-   Vercel auto-detects Next.js; no configuration needed.
-4. You get a live URL like `adeela-portfolio.vercel.app`. Every `git push`
-   redeploys automatically.
-
-**Optional custom domain** (~£10/yr): buy a domain, then in Vercel go to
-Project → Settings → Domains and add it. Then update `SITE_URL` in
-`src/lib/site-url.ts` (Vercel also sets this automatically in production).
-
-### Alternative free hosts
-
-The site is a standard Next.js app and also deploys free on **Netlify** or
-**Cloudflare Pages** using their Next.js presets.
-
----
-
-## Project structure
-
-```
-src/
-  app/            # routes: /, /collections, /collections/[slug], /textiles,
-                  #         /about, /press, /contact  + sitemap, robots, 404
-  components/     # Nav, Footer, Hero, Gallery, TextileGrid, EditorialImage, …
-  content/        # ← edit these: site.ts, collections.ts, textiles.ts, types.ts
-  lib/            # tones + site URL helpers
-public/
-  images/         # real photography goes here (placeholders until then)
-  cv/             # downloadable CV
-```
+If the site ever loads unstyled, check `public/.nojekyll` still exists — without it
+GitHub Pages drops the `_next/` directory.
