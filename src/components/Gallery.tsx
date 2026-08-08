@@ -83,7 +83,10 @@ export default function Gallery({
       {/* Lightbox */}
       {active !== null && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center overscroll-contain bg-scrim/92 p-3 backdrop-blur-sm sm:p-8"
+          /* bg-scrim/[0.92], not bg-scrim/92 — 92 is off Tailwind's opacity
+             scale, so that class compiled to nothing at all and the viewer had
+             no backdrop, only a 4px blur, with the page legible underneath. */
+          className="fixed inset-0 z-[100] flex items-center justify-center overscroll-contain bg-scrim/[0.92] p-3 backdrop-blur-sm sm:p-8"
           role="dialog"
           aria-modal="true"
           aria-label="Image viewer"
@@ -128,7 +131,7 @@ export default function Gallery({
               they sit in a bar underneath it; from sm they return to the sides.
               The bar itself stays click-through, so tapping past a control
               still dismisses the viewer. */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-2 flex items-center justify-center gap-10 sm:inset-y-0 sm:bottom-auto sm:justify-between sm:gap-0 sm:px-1 md:px-5">
+          <div className="pointer-events-none absolute inset-x-0 bottom-3 flex items-center justify-center gap-10 sm:inset-y-0 sm:justify-between sm:gap-0 sm:px-1 md:px-5">
             <button
               type="button"
               onClick={(e) => {

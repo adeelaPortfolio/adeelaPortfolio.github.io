@@ -11,7 +11,7 @@ import manifest from "./image-manifest.json";
 export const site: SiteContent = {
   name: "Adeela",
   fullName: "Adeela Amanat",
-  role: "Textile & Fashion Designer",
+  role: "Fashion & Textile Designer",
   tagline: "Lawn, pret and bridal — designed from the print outward.",
   location: "Lahore, Pakistan",
   email: "amanatadeela@gmail.com",
@@ -33,7 +33,7 @@ export const site: SiteContent = {
   },
 
   bio: [
-    "Adeela Amanat is a textile and fashion designer working across lawn, pret, semi-formal and bridal wear since 2017. Her path runs from Head Designer at a textile house to founding and running an independent label end to end — which means she has sat on both sides of a seasonal collection: the artwork that starts it, and the production floor that has to deliver it.",
+    "Adeela Amanat is a fashion and textile designer working across lawn, pret, semi-formal and bridal wear since 2017. Her path runs from Head Designer at a textile house to founding and running an independent label end to end — which means she has sat on both sides of a seasonal collection: the artwork that starts it, and the production floor that has to deliver it.",
     "She develops digital prints, repeat patterns and engineered layouts for seasonal lawn, directs embroidery artwork and colourways, and manages sourcing, karigars and an in-house production unit. She is a gold medallist in Fashion & Textile Design from the University of South Asia, and is looking for a senior design role with a textile house.",
   ],
 

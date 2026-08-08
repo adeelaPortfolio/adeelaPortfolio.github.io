@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## What this is
 
-The portfolio website of **Adeela Amanat**, a textile & fashion designer based in
+The portfolio website of **Adeela Amanat**, a fashion & textile designer based in
 **Lahore, Pakistan**. Its purpose is to help her apply for **senior design roles at
 Pakistani textile houses and lawn brands**.
 
@@ -25,6 +25,12 @@ database, no metered image optimisation.
 ## Where we left off (2026-08-09)
 
 The site is complete and deployed. Structure, images, theme and layout are all done.
+
+A responsive pass has since gone through every page at 360–1440px (see *Responsive*
+below). It also turned up two non-responsive bugs worth knowing about, both fixed and
+both recorded under *Gotchas*: the lightbox had **no backdrop at all**, and the
+lightbox arrows collapsed into the top corners on tablets. **Not yet committed** at the
+time of writing — check `git status` before assuming the live site has it.
 
 **Open items — these need Adeela, not code:**
 
@@ -130,6 +136,39 @@ reported it twice. So:
 the full-bleed hero banner (`fit="cover"`), and the portrait, which is a crop of a face.
 Uneven gallery rows are the intended result — uniform tiles would mean cropping again.
 
+### Responsive — layouts fold, they don't shrink
+
+Recruiters open portfolios on phones. The site is verified at **360 / 390 / 430 / 768 /
+1024 / 1440 px**, and every page must have `scrollWidth === clientWidth` at all six —
+a sideways scroll on a portfolio reads as carelessness.
+
+The rule that fixes most of it: **a row that won't fit should re-flow, not compress.**
+Two ways this went wrong, both now corrected and worth not reintroducing:
+
+- **`CollectionRow`** is `flex-wrap` below `md` and `md:flex-nowrap` above, with
+  `md:order-*` restoring the desktop sequence. Its season label is `shrink-0
+  whitespace-nowrap` (correct — "Degree Thesis" at `tracking-label` must not break), so
+  in a single row it took ~120px of a 312px phone column and squeezed the title into
+  four words a line. Folding the title to its own full-width line is the fix.
+- **Long unbreakable tokens set the page's minimum width.** `amanatadeela@gmail.com` at
+  `text-3xl` forced the whole `/contact` document to 457px inside a 360px viewport.
+  Any email, URL or single-word display heading needs a smaller base step and
+  `break-words` / `break-all`.
+
+Other standing rules:
+
+- **Type scales start smaller than they used to.** `PageHeader` is
+  `text-4xl → 5xl → 6xl → 7xl`; collection titles are `text-3xl → 4xl → lg:5xl`.
+  Cinzel is wide, and titles are content ("Semi-Formals" is one 12-character word).
+- **Nothing interactive sits on top of the artwork on a phone.** The `Gallery` lightbox
+  puts prev/next in a bar under the plate below `sm` and at the sides from `sm` up.
+- **Tap targets are ≥44px.** The Nav toggle is `h-11 w-11` with `-mr-2` to keep its
+  optical alignment.
+- `body { overflow-x: clip }` in `globals.css` is a **safety net for the `vw`-sized
+  full-bleed strip**, not a licence. `clip`, not `hidden`, so no scroll container is
+  created and fixed/sticky positioning still works. If a phone needs it, there is a
+  layout bug above it — find that instead.
+
 ### Routes (`src/app/`)
 
 `/` · `/work` · `/work/[slug]` (5, SSG) · `/about` · `/awards` (awards + CV download)
@@ -174,8 +213,27 @@ Helpers: `.container-editorial`, `.eyebrow`, `.rule`, `.link-underline`, `.displ
   chained `build && commit` to skip the commit while the following `push` still ran, so
   a "successful deploy" shipped the *previous* commit. **Verify changes against the
   served HTML, not the deploy status.**
+- **Tailwind opacity modifiers only accept values on the scale** (steps of 5). A
+  plausible-looking `bg-scrim/92` compiles to **no rule at all** — silently, with no
+  build warning. That shipped a lightbox whose backdrop was a 4px blur over a fully
+  legible page. Write `bg-scrim/[0.92]` for off-scale values, and sweep for others with:
+  ```bash
+  grep -rhoE '\b(bg|text|border|from|via|to|ring|shadow)-[a-z]+/[0-9]+' src/ \
+    | sort -u | awk -F'/' '$2 % 5 != 0'
+  ```
+- **A responsive `sm:` override must cancel every property the base class set.**
+  `bottom-2 sm:inset-y-0 sm:bottom-auto` collapsed the lightbox arrows into the top
+  corners on tablets: `sm:bottom-auto` is emitted after `sm:inset-y-0`, so it undid the
+  `bottom:0` that was doing the vertical centring.
 - **Chrome screenshots**: a stale `--user-data-dir` lock makes Chrome write nothing and
   report nothing. Use a fresh directory per run.
+- **You cannot screenshot a narrow viewport from the Chrome CLI on Windows.**
+  `--window-size=360,3000` is clamped to ~500 CSS px in *both* headless modes; Chrome
+  renders at 500 and crops the PNG to 360, which looks exactly like catastrophic
+  horizontal overflow on every page. `--force-device-scale-factor` doesn't help. Use CDP
+  `Emulation.setDeviceMetricsOverride` + `Page.captureScreenshot
+  {captureBeyondViewport:true}` — Node's global `WebSocket` is enough, no puppeteer.
+  Scroll the page first or `Reveal` leaves everything below the fold blank at opacity 0.
 - **GitHub Pages caches**: after deploying, re-check with a cache-busting query string.
 - Adeela renames folders in her archive *while work is in progress*. If the pipeline
   can't resolve a path, list the directory before assuming anything is lost.
@@ -184,6 +242,9 @@ Helpers: `.container-editorial`, `.eyebrow`, `.rule`, `.link-underline`, `.displ
 
 - Match the editorial style: generous whitespace, uppercase letter-spaced `.eyebrow`
   kickers, hairline `.rule` dividers, serif display headings.
+- **Any layout change is checked at 360px before it is called done**, not just at the
+  desktop width you happened to be looking at. See *Responsive* above for the widths
+  and *Gotchas* for how to screenshot them.
 - Server components by default; `"use client"` only where interactivity is needed.
 - Always write descriptive `alt` text.
 - Do not publish Adeela's phone number or home address on a page. They appear in the

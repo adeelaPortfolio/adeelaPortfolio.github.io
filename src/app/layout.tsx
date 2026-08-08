@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   },
   description: site.tagline,
   keywords: [
-    "textile design",
     "fashion design",
+    "textile design",
     "portfolio",
     "surface pattern",
     "print design",

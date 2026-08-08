@@ -1,6 +1,6 @@
 # Adeela Amanat — Portfolio
 
-The portfolio site of **Adeela Amanat**, textile & fashion designer, Lahore.
+The portfolio site of **Adeela Amanat**, fashion & textile designer, Lahore.
 Her degree thesis and four bodies of professional work — printed textiles and
 cutlines, silk scarfs, bridal, and semi-formals — plus her CV.
 
