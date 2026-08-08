@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import CollectionCard from "@/components/CollectionCard";
+import CollectionRow from "@/components/CollectionRow";
 import Reveal from "@/components/Reveal";
 import { collections } from "@/content/collections";
 import { toneFor } from "@/lib/tones";
@@ -20,14 +20,18 @@ export default function CollectionsPage() {
         intro="Nine years of seasonal work, most recent first — from her own bridal label back to the degree collection that won a gold medal. Select one to see the finished pieces and the artwork behind them."
       />
 
-      <section className="container-editorial pt-16 pb-8">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-          {collections.map((c, i) => (
-            <Reveal key={c.slug} delay={(i % 3) * 90}>
-              <CollectionCard collection={c} tone={toneFor(c.slug)} priority={i < 3} />
-            </Reveal>
-          ))}
-        </div>
+      <section className="container-editorial pt-8 pb-8">
+        {collections.map((c, i) => (
+          <Reveal key={c.slug} delay={Math.min(i, 4) * 70}>
+            <CollectionRow
+              collection={c}
+              index={i}
+              tone={toneFor(c.slug)}
+              priority={i < 3}
+            />
+          </Reveal>
+        ))}
+        <div className="rule" />
       </section>
     </>
   );

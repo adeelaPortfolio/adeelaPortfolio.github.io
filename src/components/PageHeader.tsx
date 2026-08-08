@@ -14,13 +14,13 @@ interface Props {
 export default function PageHeader({ eyebrow, title, intro }: Props) {
   return (
     <header className="container-editorial pt-32 md:pt-40">
-      <Reveal className="max-w-3xl">
+      <Reveal className="max-w-4xl">
         {eyebrow && <p className="eyebrow mb-5">{eyebrow}</p>}
-        <h1 className="font-display text-4xl leading-tight text-ink sm:text-5xl md:text-6xl">
+        <h1 className="display-xl text-5xl text-ink sm:text-6xl md:text-7xl">
           {title}
         </h1>
         {intro && (
-          <p className="mt-6 max-w-prose font-body text-lg leading-relaxed text-ink/70">
+          <p className="mt-7 max-w-prose font-body text-lg leading-relaxed text-ink/70">
             {intro}
           </p>
         )}

@@ -23,35 +23,42 @@ export default function Hero() {
         {/* Vintage wash for text legibility. The hero is a dense, pale print
             rather than a dark photograph, so this has to carry real weight —
             a light scrim leaves both the wordmark and the nav unreadable. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/65 via-ink/40 to-ink/75" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-ink/25 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-scrim/65 via-scrim/35 to-scrim/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-scrim/75 via-scrim/25 to-transparent" />
       </div>
 
       {/* Content */}
       <div className="container-editorial relative flex h-full flex-col items-start justify-end pb-20 md:justify-center md:pb-0">
         <div className="max-w-2xl animate-fade-up">
-          <p className="font-body text-sm uppercase tracking-label text-ivory/85">
+          <p className="font-body text-xs uppercase tracking-label text-white/80 sm:text-sm">
             {site.role}
           </p>
-          <h1 className="mt-5 font-display text-6xl leading-[0.95] text-ivory sm:text-7xl md:text-8xl">
+          <h1 className="display-xl mt-6 text-7xl text-white sm:text-8xl md:text-[8.5rem]">
             {site.name}
           </h1>
-          <p className="mt-6 max-w-lg font-display text-xl italic text-ivory/90 sm:text-2xl">
+          <p className="mt-7 max-w-lg font-display text-xl italic leading-snug text-white/90 sm:text-2xl md:text-3xl">
             {site.tagline}
           </p>
-          <div className="mt-9 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap gap-4">
             <Button href="/collections" variant="solid">
               View Collections
             </Button>
             <Button
               href="/textiles"
               variant="outline"
-              className="border-ivory/40 text-ivory hover:border-ivory hover:text-ivory"
+              className="border-white/40 text-ivory hover:border-white hover:text-white"
             >
               Explore Textiles
             </Button>
           </div>
         </div>
+      </div>
+
+      {/* Scroll cue — the hero fills the viewport, so say there is more below. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-7 hidden justify-center md:flex">
+        <span className="font-body text-[0.65rem] uppercase tracking-label text-white/55">
+          Scroll
+        </span>
       </div>
     </section>
   );

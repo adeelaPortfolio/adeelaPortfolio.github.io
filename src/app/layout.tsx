@@ -1,29 +1,63 @@
 import type { Metadata } from "next";
-import { Playfair_Display, EB_Garamond } from "next/font/google";
+import {
+  Cormorant_Garamond,
+  Inter,
+  Cinzel,
+  EB_Garamond,
+  Bodoni_Moda,
+} from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ImageGuard from "@/components/ImageGuard";
+import ThemeSwitch from "@/components/ThemeSwitch";
 import { site } from "@/content/site";
 import { SITE_URL } from "@/lib/site-url";
 
-// Vintage editorial pairing: a high-contrast display serif + a classic body serif.
-// Self-hosted by next/font — zero external requests, zero cost.
-const display = Playfair_Display({
+// Three font pairings, one per theme in globals.css. All self-hosted by
+// next/font — no external requests, no cost. Once a theme is chosen, delete the
+// two unused pairings so the site ships one.
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
-  variable: "--font-display",
+  variable: "--font-cormorant",
   display: "swap",
 });
 
-const body = EB_Garamond({
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cinzel",
+  display: "swap",
+});
+
+const bodoni = Bodoni_Moda({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-bodoni",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const garamond = EB_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   style: ["normal", "italic"],
-  variable: "--font-body",
+  variable: "--font-garamond",
   display: "swap",
 });
+
+const fontVars = [cormorant, cinzel, bodoni, inter, garamond]
+  .map((f) => f.variable)
+  .join(" ");
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -58,9 +92,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" data-theme="noir" className={fontVars}>
       <body className="flex min-h-screen flex-col">
         <ImageGuard />
+        <ThemeSwitch />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

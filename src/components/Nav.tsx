@@ -51,7 +51,7 @@ export default function Nav() {
         <Link
           href="/"
           className={`font-display text-xl tracking-wide sm:text-2xl ${
-            onDark ? "text-ivory" : "text-ink"
+            onDark ? "text-white" : "text-ink"
           }`}
           aria-label={`${site.name} — home`}
         >
@@ -69,7 +69,7 @@ export default function Nav() {
                   href={l.href}
                   className={`link-underline font-body text-sm uppercase tracking-[0.14em] transition-colors ${
                     onDark
-                      ? "text-ivory/85 hover:text-ivory"
+                      ? "text-white/85 hover:text-white"
                       : active
                         ? "text-sepia"
                         : "text-ink/75 hover:text-ink"
@@ -93,12 +93,12 @@ export default function Nav() {
           <span className="relative block h-3 w-6">
             <span
               className={`absolute left-0 top-0 h-px w-6 transition-transform duration-300 ${
-                onDark ? "bg-ivory" : "bg-ink"
+                onDark ? "bg-white" : "bg-ink"
               } ${open ? "translate-y-[6px] rotate-45" : ""}`}
             />
             <span
               className={`absolute bottom-0 left-0 h-px w-6 transition-transform duration-300 ${
-                onDark ? "bg-ivory" : "bg-ink"
+                onDark ? "bg-white" : "bg-ink"
               } ${open ? "-translate-y-[6px] -rotate-45" : ""}`}
             />
           </span>

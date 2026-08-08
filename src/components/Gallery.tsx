@@ -68,6 +68,9 @@ export default function Gallery({
                 item={img}
                 ratio={ratio}
                 tone={tone}
+                /* Eager-load the first row. Lazy-loading everything meant a
+                   gallery's first impression was a grid of blank rectangles. */
+                priority={i < columns}
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
@@ -79,7 +82,7 @@ export default function Gallery({
       {/* Lightbox */}
       {active !== null && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/90 p-4 backdrop-blur-sm sm:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-scrim/92 p-4 backdrop-blur-sm sm:p-8"
           role="dialog"
           aria-modal="true"
           aria-label="Image viewer"
@@ -88,7 +91,7 @@ export default function Gallery({
           <button
             type="button"
             onClick={close}
-            className="absolute right-5 top-5 font-body text-xs uppercase tracking-label text-ivory/80 hover:text-ivory"
+            className="absolute right-5 top-5 font-body text-xs uppercase tracking-label text-white/80 hover:text-white"
             aria-label="Close"
           >
             Close ✕
@@ -100,7 +103,7 @@ export default function Gallery({
               e.stopPropagation();
               show(-1);
             }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-ivory/70 hover:text-ivory sm:left-8"
+            className="absolute left-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-white/70 hover:text-white sm:left-8"
             aria-label="Previous image"
           >
             ‹
@@ -121,9 +124,9 @@ export default function Gallery({
               sizes="(max-width: 768px) 100vw, 1024px"
               className="h-[78vh]"
             />
-            <figcaption className="mt-4 text-center font-body text-sm italic text-ivory/70">
+            <figcaption className="mt-4 text-center font-body text-sm italic text-white/70">
               {images[active].caption ?? images[active].alt}
-              <span className="ml-3 not-italic text-ivory/40">
+              <span className="ml-3 not-italic text-white/40">
                 {active + 1} / {images.length}
               </span>
             </figcaption>
@@ -135,7 +138,7 @@ export default function Gallery({
               e.stopPropagation();
               show(1);
             }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-ivory/70 hover:text-ivory sm:right-8"
+            className="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-white/70 hover:text-white sm:right-8"
             aria-label="Next image"
           >
             ›

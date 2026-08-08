@@ -108,6 +108,37 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Full-bleed print strip — a band of her actual artwork, edge to edge.
+          The page is otherwise a centred column, so this breaks the rhythm and
+          lets the prints carry a section on their own. */}
+      <section className="pt-28 md:pt-36">
+        <div className="container-editorial">
+          <p className="eyebrow mb-6">Surface Work</p>
+        </div>
+        <div className="relative left-1/2 w-screen -translate-x-1/2">
+          <ul className="grid grid-cols-3 gap-px bg-ink/10 md:grid-cols-6">
+            {textiles.slice(0, 6).map((t) => (
+              <li key={t.title} className="bg-ivory">
+                <Link
+                  href="/textiles"
+                  className="group block overflow-hidden"
+                  aria-label={`Textiles — ${t.title}`}
+                >
+                  <EditorialImage
+                    item={t.image}
+                    ratio="1 / 1"
+                    tone={t.tone}
+                    label={t.title}
+                    sizes="(max-width: 768px) 33vw, 17vw"
+                    className="transition-transform duration-700 ease-out group-hover:scale-110"
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* About teaser */}
       <section className="container-editorial pt-28 md:pt-36">
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">

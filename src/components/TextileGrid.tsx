@@ -72,7 +72,7 @@ export default function TextileGrid({ textiles }: { textiles: Textile[] }) {
       {/* Lightbox */}
       {active !== null && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/90 p-4 backdrop-blur-sm sm:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-scrim/92 p-4 backdrop-blur-sm sm:p-8"
           role="dialog"
           aria-modal="true"
           aria-label={textiles[active].title}
@@ -81,7 +81,7 @@ export default function TextileGrid({ textiles }: { textiles: Textile[] }) {
           <button
             type="button"
             onClick={close}
-            className="absolute right-5 top-5 font-body text-xs uppercase tracking-label text-ivory/80 hover:text-ivory"
+            className="absolute right-5 top-5 font-body text-xs uppercase tracking-label text-white/80 hover:text-white"
             aria-label="Close"
           >
             Close ✕
@@ -93,7 +93,7 @@ export default function TextileGrid({ textiles }: { textiles: Textile[] }) {
               e.stopPropagation();
               show(-1);
             }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-ivory/70 hover:text-ivory sm:left-8"
+            className="absolute left-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-white/70 hover:text-white sm:left-8"
             aria-label="Previous"
           >
             ‹
@@ -110,15 +110,15 @@ export default function TextileGrid({ textiles }: { textiles: Textile[] }) {
               label={textiles[active].title}
               sizes="(max-width: 768px) 100vw, 500px"
             />
-            <figcaption className="text-ivory">
+            <figcaption className="text-white">
               <p className="font-body text-xs uppercase tracking-label text-gilt">
                 {textiles[active].technique}
               </p>
               <h3 className="mt-3 font-display text-3xl">{textiles[active].title}</h3>
-              <p className="mt-4 font-body leading-relaxed text-ivory/80">
+              <p className="mt-4 font-body leading-relaxed text-white/80">
                 {textiles[active].description}
               </p>
-              <p className="mt-6 font-body text-xs text-ivory/40">
+              <p className="mt-6 font-body text-xs text-white/40">
                 {active + 1} / {textiles.length}
               </p>
             </figcaption>
@@ -130,7 +130,7 @@ export default function TextileGrid({ textiles }: { textiles: Textile[] }) {
               e.stopPropagation();
               show(1);
             }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-ivory/70 hover:text-ivory sm:right-8"
+            className="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-white/70 hover:text-white sm:right-8"
             aria-label="Next"
           >
             ›
