@@ -27,7 +27,11 @@ export default function WorkPage() {
 
       <section className="container-editorial pt-4 pb-8">
         {groups.map(({ group, items }) => (
-          <div key={group} className="pt-12 first:pt-4">
+          <div
+            key={group}
+            id={group.toLowerCase().replace(/\s+/g, "-")}
+            className="scroll-mt-28 pt-12 first:pt-4"
+          >
             <p className="eyebrow mb-2">{group}</p>
 
             {items.map((c, i) => {

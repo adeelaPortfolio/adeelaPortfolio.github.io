@@ -35,7 +35,10 @@
     @apply bg-ivory text-ink font-body antialiased;
     background-attachment: fixed;
     /* The hover previews and the full-bleed print strip sit outside the text
-       column by design; clip rather than allow a horizontal scrollbar. */
+       column by design; clip rather than allow a horizontal scrollbar. `clip`
+       and not `hidden` because it creates no scroll container, so fixed and
+       sticky positioning are unaffected. A safety net, not a licence — a phone
+       that needs this is a layout bug somewhere above. */
     overflow-x: clip;
     /* Warm gold bloom over the oxblood, so large flat areas aren't dead. */
     background-image:

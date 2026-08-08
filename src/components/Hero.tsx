@@ -40,16 +40,14 @@ export default function Hero() {
           <p className="mt-7 max-w-lg font-display text-xl italic leading-snug text-white/90 sm:text-2xl md:text-3xl">
             {site.tagline}
           </p>
+          {/* Adeela's two top-level categories. Both solid, so neither reads as
+              the secondary option. */}
           <div className="mt-10 flex flex-wrap gap-4">
-            <Button href="/work" variant="solid">
-              View Collections
+            <Button href="/work/thesis" variant="solid">
+              Thesis
             </Button>
-            <Button
-              href="/work/prints-and-cutlines"
-              variant="outline"
-              className="border-white/40 text-ivory hover:border-white hover:text-white"
-            >
-              Explore Prints
+            <Button href="/work#my-work" variant="solid">
+              My Work
             </Button>
           </div>
         </div>

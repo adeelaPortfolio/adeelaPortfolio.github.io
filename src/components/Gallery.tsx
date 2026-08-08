@@ -83,7 +83,7 @@ export default function Gallery({
       {/* Lightbox */}
       {active !== null && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-scrim/92 p-4 backdrop-blur-sm sm:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center overscroll-contain bg-scrim/92 p-3 backdrop-blur-sm sm:p-8"
           role="dialog"
           aria-modal="true"
           aria-label="Image viewer"
@@ -92,26 +92,14 @@ export default function Gallery({
           <button
             type="button"
             onClick={close}
-            className="absolute right-5 top-5 font-body text-xs uppercase tracking-label text-white/80 hover:text-white"
+            className="absolute right-2 top-2 p-3 font-body text-xs uppercase tracking-label text-white/80 hover:text-white sm:right-4 sm:top-4"
             aria-label="Close"
           >
             Close ✕
           </button>
 
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              show(-1);
-            }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-white/70 hover:text-white sm:left-8"
-            aria-label="Previous image"
-          >
-            ‹
-          </button>
-
           <figure
-            className="w-full max-w-5xl"
+            className="w-full max-w-5xl pb-14 sm:px-12 sm:pb-0"
             onClick={(e) => e.stopPropagation()}
           >
             {/* The lightbox exists so the artwork can actually be read, so it
@@ -123,9 +111,9 @@ export default function Gallery({
               tone={tone}
               fit="contain"
               sizes="(max-width: 768px) 100vw, 1024px"
-              className="h-[78vh]"
+              className="h-[62vh] sm:h-[74vh]"
             />
-            <figcaption className="mt-4 text-center font-body text-sm italic text-white/70">
+            <figcaption className="mt-3 text-center font-body text-sm italic text-white/70 sm:mt-4">
               {images[active].caption ?? images[active].alt}
               <span className="ml-3 not-italic text-white/40">
                 {active + 1} / {images.length}
@@ -133,17 +121,34 @@ export default function Gallery({
             </figcaption>
           </figure>
 
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              show(1);
-            }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-6 font-display text-3xl text-white/70 hover:text-white sm:right-8"
-            aria-label="Next image"
-          >
-            ›
-          </button>
+          {/* Paging controls. On a phone there is no room beside the plate, so
+              they sit in a bar underneath it; from sm they return to the sides.
+              The bar itself stays click-through, so tapping past a control
+              still dismisses the viewer. */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-2 flex items-center justify-center gap-10 sm:inset-y-0 sm:bottom-auto sm:justify-between sm:gap-0 sm:px-1 md:px-5">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                show(-1);
+              }}
+              className="pointer-events-auto flex h-12 w-12 items-center justify-center font-display text-3xl leading-none text-white/70 hover:text-white"
+              aria-label="Previous image"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                show(1);
+              }}
+              className="pointer-events-auto flex h-12 w-12 items-center justify-center font-display text-3xl leading-none text-white/70 hover:text-white"
+              aria-label="Next image"
+            >
+              ›
+            </button>
+          </div>
         </div>
       )}
     </>

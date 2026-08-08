@@ -24,9 +24,12 @@ export default function ContactPage() {
           <Reveal>
             {/* Email */}
             <p className="eyebrow mb-4">Email</p>
+            {/* The address is one unbreakable token, so it sets the page's
+                minimum width. At text-3xl that was 409px and every phone got a
+                horizontally scrolling page. */}
             <a
               href={`mailto:${site.email}`}
-              className="link-underline font-display text-3xl text-ink sm:text-4xl"
+              className="link-underline break-all font-display text-xl text-ink sm:text-3xl md:text-4xl"
             >
               {site.email}
             </a>
