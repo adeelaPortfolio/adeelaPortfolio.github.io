@@ -4,13 +4,13 @@
 // Everything Adeela needs to change lives in the sibling data files
 // (site.ts, collections.ts, textiles.ts). To swap a placeholder for a real
 // photo: drop the image in /public/images/... and set the matching `src` field
-// to that path (e.g. "/images/collections/sericulture/look-01.jpg"). When `src`
+// to that path (e.g. "/images/collections/palais-royal/look-01.webp"). When `src`
 // is empty, a tasteful vintage placeholder renders automatically.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** A single image slot. Leave `src` empty ("") to render a placeholder. */
 export interface ImageItem {
-  /** Public path, e.g. "/images/collections/sericulture/look-01.jpg". Empty = placeholder. */
+  /** Public path, e.g. "/images/collections/palais-royal/look-01.webp". Empty = placeholder. */
   src: string;
   /** Descriptive alt text — always fill this in for accessibility & SEO. */
   alt: string;
@@ -80,7 +80,7 @@ export interface Textile {
 
 /** A press feature, exhibition, or award. */
 export interface PressItem {
-  /** e.g. "Vogue Talents", "Central Saint Martins Degree Show". */
+  /** e.g. "Gold Medal, Tamgha-e-Quaid". */
   title: string;
   /** e.g. "Feature", "Exhibition", "Award". */
   kind: string;
