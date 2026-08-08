@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Adeela Amanat — Textile &amp; Fashion Designer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* ───────────────────────────────────────────────────────────────────────
+     Design system lifted from https://ahmadzafar005.github.io/ (measured
+     from its live styles.css), with the violet accent swapped for antique
+     gold. Dark is the default; append #light to the URL for the print theme.
+     ─────────────────────────────────────────────────────────────────────── */
+
+  :root {
+    --bg:        #08080c;
+    --bg-2:      #0d0e15;
+    --surface:   #12131a;
+    --surface-2: #171923;
+    --border:    #23232f;
+    --text:      #f5f6fa;
+    --muted:     #9aa1b0;
+    --faint:     #6b7080;
+    /* Gold lifted so it stays legible on near-black. The gilt/sepia pair
+       from tailwind.config.ts is too dark to read here — it's used as-is
+       in the light theme below. */
+    --accent:    #C08A46;
+    --accent-2:  #E3B972;
+    --ring:      rgba(192, 138, 70, 0.16);
+    --todo-bg:   rgba(227, 185, 114, 0.18);
+    --todo-fg:   #E3B972;
+    --radius:    16px;
+  }
+
+  :root[data-theme="light"] {
+    --bg:        #ffffff;
+    --bg-2:      #FAF7F1;
+    --surface:   #FBF8F2;
+    --surface-2: #F5F0E6;
+    --border:    #E6E1D7;
+    --text:      #1A1713;
+    --muted:     #5C554B;
+    --faint:     #8C8375;
+    --accent:    #A6763E;  /* gilt  — tailwind.config.ts */
+    --accent-2:  #7B4A2F;  /* sepia — tailwind.config.ts */
+    --ring:      rgba(166, 118, 62, 0.16);
+    --todo-bg:   #FBEFCE;
+    --todo-fg:   #6B4E00;
+  }
+
+  @page { size: A4; margin: 30pt 34pt; }
+
+  * { box-sizing: border-box; }
+
+  html {
+    background: var(--bg);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 8.9pt;
+    line-height: 1.38;
+  }
+
+  @media screen {
+    body { padding: 30pt 34pt; max-width: 595pt; margin: 0 auto; }
+  }
+
+  /* ── Hero ─────────────────────────────────────────────────────────────── */
+
+  .hero { margin-bottom: 15pt; }
+
+  .hero-hello {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 8.4pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 6pt;
+  }
+
+  .hero-name {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 26pt;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0 0 4pt;
+  }
+
+  .hero-role {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13pt;
+    font-weight: 500;
+    margin: 0 0 14pt;
+  }
+
+  .accent {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-contact {
+    font-size: 9pt;
+    color: var(--muted);
+    margin: 0;
+    padding-top: 12pt;
+    border-top: 1px solid var(--border);
+  }
+  .hero-contact span:not(:last-child)::after {
+    content: "  ·  ";
+    color: var(--faint);
+  }
+  .hero-contact a { color: inherit; text-decoration: none; }
+
+  /* ── Section titles (the site's numbered .idx badge) ──────────────────── */
+
+  section { margin-bottom: 11pt; }
+  section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 15pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 10pt;
+    margin: 0 0 9pt;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .section-title .idx {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 7.6pt;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--accent-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2.5pt 5pt;
+  }
+
+  p { margin: 0 0 8pt; }
+  p:last-child { margin-bottom: 0; }
+  .lead { color: var(--muted); max-width: 78ch; }
+
+  /* ── Timeline ─────────────────────────────────────────────────────────── */
+
+  .timeline {
+    position: relative;
+    margin-top: 4pt;
+    padding-left: 20pt;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 5pt;
+    top: 5pt;
+    bottom: 8pt;
+    width: 1.6pt;
+    background: linear-gradient(var(--accent), transparent);
+  }
+
+  /* A whole role is NOT break-inside:avoid — a tall one straddling the page
+     boundary gets pushed entire and wastes most of a page. Instead the period
+     and role heading are glued to what follows, and individual bullets stay
+     intact, so a long list may split but never mid-line and never leaving a
+     heading stranded. */
+  .tl-item {
+    position: relative;
+    padding: 0 0 8.5pt 16pt;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+
+  .tl-dot {
+    position: absolute;
+    left: -19.5pt;
+    top: 3.5pt;
+    width: 10pt;
+    height: 10pt;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.6pt solid var(--accent);
+    box-shadow: 0 0 0 3pt var(--ring);
+  }
+  .tl-edu .tl-dot { border-color: var(--accent-2); }
+
+  .tl-period {
+    display: inline-block;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 7.8pt;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 2pt;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .tl-role {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 11.4pt;
+    font-weight: 600;
+    margin: 0 0 4pt;
+    line-height: 1.3;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .tl-org {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 9.6pt;
+  }
+  .tl-blurb { color: var(--muted); margin: 0; }
+
+  .tl-item ul {
+    margin: 0;
+    padding-left: 11pt;
+    color: var(--muted);
+    list-style: none;
+  }
+  .tl-item li {
+    margin-bottom: 2.5pt;
+    text-indent: -11pt;
+    padding-left: 11pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .tl-item li::before { content: "▸ "; color: var(--accent); }
+
+  .tl-subhead {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 9.6pt;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 10pt 0 0;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* ── Pills ────────────────────────────────────────────────────────────── */
+
+  .pill-group { margin-bottom: 7pt; break-inside: avoid; }
+  .pill-group:last-child { margin-bottom: 0; }
+  .pill-label {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 7.8pt;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 5pt;
+  }
+  .pill-grid { display: flex; flex-wrap: wrap; gap: 4.5pt; }
+  .pill {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    font-size: 8.4pt;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6pt;
+    padding: 2.2pt 7pt;
+  }
+  .pill.is-todo {
+    background: var(--todo-bg);
+    color: var(--todo-fg);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── Cards (awards / contact) ─────────────────────────────────────────── */
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8pt;
+  }
+  /* Uneven columns so the email fits on one line instead of breaking mid-word. */
+  .card-grid.four { grid-template-columns: 0.8fr 1.3fr 1.35fr 0.85fr; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10pt;
+    padding: 9pt 11pt;
+    break-inside: avoid;
+  }
+  .four .card-value { font-size: 8.2pt; overflow-wrap: break-word; }
+  .card-label {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 7.4pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 3pt;
+  }
+  .card-value {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 10pt;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.35;
+  }
+  .card-value a { color: inherit; text-decoration: none; }
+  .card-note { color: var(--muted); font-size: 8.6pt; margin: 3pt 0 0; }
+
+  .award-list { margin: 0; padding: 0; list-style: none; }
+  .award-list li {
+    margin-bottom: 3pt;
+    color: var(--muted);
+    padding-left: 12pt;
+    text-indent: -12pt;
+  }
+  .award-list li::before { content: "▸ "; color: var(--accent); }
+  .award-list b { color: var(--text); font-weight: 600; }
+
+  .foot {
+    margin-top: 18pt;
+    padding-top: 10pt;
+    border-top: 1px solid var(--border);
+    color: var(--faint);
+    font-size: 8.4pt;
+  }
+</style>
+
+<script>
+  // Append #light to the URL to render the print theme. One source, two PDFs.
+  if (location.hash === "#light") {
+    document.documentElement.dataset.theme = "light";
+  }
+</script>
+</head>
+<body>
+
+  <!-- ── Hero ──────────────────────────────────────────────────────────── -->
+  <div class="hero">
+    <p class="hero-hello">Hello, I'm</p>
+    <h1 class="hero-name">Adeela Amanat</h1>
+    <p class="hero-role">A <span class="accent">Textile &amp; Fashion Designer</span></p>
+    <p class="hero-contact">
+      <span>Lahore, Pakistan</span>
+      <span>+92-300-7311117</span>
+      <span><a href="mailto:amanatadeela@gmail.com">amanatadeela@gmail.com</a></span>
+    </p>
+  </div>
+
+  <!-- ── 01 About Me ───────────────────────────────────────────────────── -->
+  <section>
+    <h2 class="section-title"><span class="idx">01</span> About <span class="accent">Me</span></h2>
+    <p class="lead">
+      Textile and fashion designer working across lawn, pret, semi-formal and bridal
+      since 2017 — from Head Designer at a textile house to founding and running an
+      independent label end to end. Equally at home developing digital prints, repeat
+      patterns and engineered layouts for seasonal lawn, directing embroidery artwork
+      and colourways, and managing sourcing, karigars and an in-house production unit.
+      Gold medallist in Fashion &amp; Textile Design, University of South Asia.
+      Seeking a senior design role with a Pakistani textile house.
+    </p>
+  </section>
+
+  <!-- ── 02 Career & Experience ────────────────────────────────────────── -->
+  <section>
+    <h2 class="section-title"><span class="idx">02</span> Career &amp; <span class="accent">Experience</span></h2>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <span class="tl-period">May 2024 – March 2026</span>
+        <h3 class="tl-role">Founder &amp; Creative Director <span class="tl-org">· Inventive Clothing</span></h3>
+        <ul>
+          <li>Founded and scaled an independent fashion label, growing operations from
+              custom lawn stitching orders into semi-formal and bridal wear.</li>
+          <li>Handled direct client consultations, custom fittings, order management,
+              and personalised design commissions for high-end clientele.</li>
+          <li>Oversaw end-to-end supply chain — raw fabric procurement, custom dyeing,
+              trim selection, and specialised embellishment (karigar) sourcing from
+              local markets.</li>
+          <li>Recruited, trained and managed an in-house production unit of master
+              cutters, tailors and hand-embroidery artisans, holding quality control
+              and delivery to schedule.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <span class="tl-period">2020 – 2021 · Remote</span>
+        <h3 class="tl-role">Freelance Digital Print Designer <span class="tl-org">· Jahanara</span></h3>
+        <ul>
+          <li>Created original digital prints, repeat patterns and engineered layouts
+              for seasonal lawn collections.</li>
+          <li>Delivered print-ready artwork and curated colourways remotely, working
+              in close collaboration with the in-house team.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <span class="tl-period">2020</span>
+        <h3 class="tl-role">Project Designer <span class="tl-org">· La'Belle</span></h3>
+        <ul>
+          <li>Designed a complete lawn pret capsule collection — digital textile print
+              development, custom embroidery placements, colourways and garment
+              cutlines through to final sampling.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <span class="tl-period">February 2019 – March 2020</span>
+        <h3 class="tl-role">Head Designer <span class="tl-org">· Noor Textiles</span></h3>
+        <ul>
+          <li>Led and mentored a multidisciplinary team of textile and embroidery
+              designers, owning creative direction from mood board to finished garment.</li>
+          <li>Directed custom embroidery artwork — technique, placement and thread
+              selection — and approved every swatch and fabric sample before bulk.</li>
+          <li>Curated colour palettes across prints, embroideries and trims to hold
+              each collection to a single narrative.</li>
+          <li>Ran end-to-end sample development, supervising stitching teams on
+              silhouette translation and finish quality.</li>
+          <li>Resolved construction, fit and pattern issues with technical and
+              production teams ahead of collection sign-off.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <span class="tl-period">March 2017 – November 2018</span>
+        <h3 class="tl-role">Fashion &amp; Textile Designer <span class="tl-org">· Coronation</span></h3>
+        <ul>
+          <li>Designed <i>Palais Royal</i>, the label's first luxury semi-formal
+              collection for women and children.</li>
+          <li>Developed digital prints for 3-piece lawn and built multi-head embroidery
+              artwork across seasonal ranges.</li>
+          <li>Owned silk tunics end to end — print development, cut and embroidery
+              experimentation — plus a printed silk scarf range and an organza
+              semi-formal collection.</li>
+          <li>Developed cutlines for pret and designed stitched garments for catalogue,
+              art-directing the luxury lawn shoots.</li>
+          <li>Designed seasonal women's pret and semi-formal ranges to customer demand
+              and current trend direction.</li>
+          <li>Managed the design workforce and production against seasonal deadlines.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <h3 class="tl-subhead">Education</h3>
+    <div class="timeline tl-edu">
+
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <span class="tl-period">2011 – 2015</span>
+        <h3 class="tl-role">Bachelor's (Hons), Fashion &amp; Textile Design
+          <span class="tl-org">· University of South Asia, Lahore</span></h3>
+        <p class="tl-blurb">CGPA 3.86 · Thesis: <i>Redefining the Ottoman Queen</i></p>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <span class="tl-period">2009 – 2011</span>
+        <h3 class="tl-role">Intermediate, Science
+          <span class="tl-org">· Punjab Group of Colleges, Lahore</span></h3>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <span class="tl-period">2007 – 2009</span>
+        <h3 class="tl-role">Matriculation
+          <span class="tl-org">· Kirdar School System, Lahore</span></h3>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 03 Skills & Tools ─────────────────────────────────────────────── -->
+  <section>
+    <h2 class="section-title"><span class="idx">03</span> Skills &amp; <span class="accent">Tools</span></h2>
+
+    <div class="pill-group">
+      <p class="pill-label">Print &amp; Surface</p>
+      <div class="pill-grid">
+        <span class="pill">Digital textile print development</span>
+        <span class="pill">Repeat patterns</span>
+        <span class="pill">Engineered layouts</span>
+        <span class="pill">Colourways</span>
+        <span class="pill">Colour palettes</span>
+        <span class="pill">Fabric surface treatment</span>
+        <span class="pill">Weaving</span>
+      </div>
+    </div>
+
+    <div class="pill-group">
+      <p class="pill-label">Embroidery &amp; Embellishment</p>
+      <div class="pill-grid">
+        <span class="pill">Multi-head embroidery development</span>
+        <span class="pill">Hand embroidery</span>
+        <span class="pill">Embellishment techniques</span>
+        <span class="pill">Swatch approval</span>
+      </div>
+    </div>
+
+    <div class="pill-group">
+      <p class="pill-label">Garment</p>
+      <div class="pill-grid">
+        <span class="pill">Pattern making</span>
+        <span class="pill">Cutlines &amp; silhouette</span>
+        <span class="pill">Cutting</span>
+        <span class="pill">Garment stitching</span>
+        <span class="pill">Sample development</span>
+        <span class="pill">Fit &amp; construction</span>
+      </div>
+    </div>
+
+    <div class="pill-group">
+      <p class="pill-label">Brand &amp; Production</p>
+      <div class="pill-grid">
+        <span class="pill">Label founding &amp; scaling</span>
+        <span class="pill">Client consultation</span>
+        <span class="pill">Custom commissions</span>
+        <span class="pill">Fabric &amp; trim sourcing</span>
+        <span class="pill">Custom dyeing</span>
+        <span class="pill">Karigar sourcing</span>
+        <span class="pill">Production unit management</span>
+        <span class="pill">Team leadership</span>
+        <span class="pill">Creative direction</span>
+      </div>
+    </div>
+
+    <div class="pill-group">
+      <p class="pill-label">Software &amp; Tools</p>
+      <div class="pill-grid">
+        <span class="pill">Adobe Photoshop</span>
+        <span class="pill">Fashion illustration — hand</span>
+        <span class="pill">Fashion illustration — Photoshop</span>
+        <span class="pill">Digital photography · Nikon D7000, 35mm</span>
+        <span class="pill is-todo">Illustrator / CorelDRAW / NedGraphics?</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── 04 Awards & Research ──────────────────────────────────────────── -->
+  <section>
+    <h2 class="section-title"><span class="idx">04</span> Awards &amp; <span class="accent">Research</span></h2>
+    <div class="card-grid">
+      <div class="card">
+        <p class="card-label">Awards</p>
+        <ul class="award-list">
+          <li><b>Gold Medal, Tamgha-e-Quaid</b> — 2015</li>
+          <li><b>Gold Medal in Graduation</b> — Fashion &amp; Textile Design, 2015</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="card-label">Projects &amp; Research</p>
+        <ul class="award-list">
+          <li><b>Attitude of Youth on Fashion</b> — research report</li>
+          <li><b>University Fashion Show</b> — designed dresses, University of South
+              Asia, 2015</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 Get in Touch ───────────────────────────────────────────────── -->
+  <section>
+    <h2 class="section-title"><span class="idx">05</span> Get in <span class="accent">Touch</span></h2>
+    <div class="card-grid four">
+      <div class="card">
+        <p class="card-label">Phone</p>
+        <p class="card-value">+92-300-7311117</p>
+      </div>
+      <div class="card">
+        <p class="card-label">Email</p>
+        <p class="card-value"><a href="mailto:amanatadeela@gmail.com">amanatadeela@gmail.com</a></p>
+      </div>
+      <div class="card">
+        <p class="card-label">Address</p>
+        <p class="card-value">478-E Block, Central Park Housing Society, Ferozepur Road, Lahore</p>
+      </div>
+      <div class="card">
+        <p class="card-label">Languages</p>
+        <p class="card-value">Urdu · English · Punjabi</p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
