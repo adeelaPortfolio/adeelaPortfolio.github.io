@@ -71,7 +71,7 @@ export const collections: Collection[] = [
       src: "/images/collections/jahanara-lawn/cover.webp",
       alt: "Model wearing a printed lawn three-piece from the Jahanara seasonal range",
     },
-    lookbook: gallery("jahanara-lawn", "look", 5, (n) =>
+    lookbook: gallery("jahanara-lawn", "look", 6, (n) =>
       `Jahanara seasonal lawn, printed three-piece worn — look ${n}`),
     process: gallery("jahanara-lawn", "process", 4, (n) =>
       `Jahanara engineered print artwork — panel layout ${n}`),
@@ -94,7 +94,7 @@ export const collections: Collection[] = [
       src: "/images/collections/labelle-lawn-pret/cover.webp",
       alt: "Model wearing a printed lawn pret suit from the La'Belle summer capsule",
     },
-    lookbook: gallery("labelle-lawn-pret", "look", 11, (n) =>
+    lookbook: gallery("labelle-lawn-pret", "look", 17, (n) =>
       `La'Belle summer lawn pret, finished suit worn — look ${n}`),
     process: gallery("labelle-lawn-pret", "process", 8, (n) =>
       `La'Belle lawn pret print plate — engineered panel layout ${n}`),
@@ -206,7 +206,7 @@ export const collections: Collection[] = [
       src: "/images/collections/ottoman-queen/cover.webp",
       alt: "Detail of gold embellishment from the Redefining the Ottoman Queen thesis collection",
     },
-    lookbook: gallery("ottoman-queen", "look", 8, (n) =>
+    lookbook: gallery("ottoman-queen", "look", 10, (n) =>
       `Redefining the Ottoman Queen — illustration, finished garment or thesis display ${n}`),
     process: gallery("ottoman-queen", "process", 9, (n) =>
       `Ottoman and Victorian dress research board ${n}`),

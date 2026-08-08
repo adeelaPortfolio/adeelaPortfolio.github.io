@@ -6,13 +6,19 @@
 // the nth image stream in that PDF (page numbers are unreliable: bridal 2.pdf
 // carries 9 images across 8 pages).
 //
-// Deliberately EXCLUDED, and why:
-//   • labelle FB_IMG_…512446/515037/518740/521629/525690/545393 — influencer
-//     campaign graphics with other people's names and handles burned in
-//     ("KANWAL AFTAB in SPOTLIGHT", "@greeneyed.gurl"). Not Adeela's to publish.
-//   • jahanara FB_IMG_…955623 — carries a "Linen'19" client campaign lockup.
-//   • thesis #2 and #3 — both print Adeela's old personal phone number and
-//     email address into the artwork. #3 is used ONLY as a cropped portrait.
+// CROPPED rather than excluded. These carry text that must not be published, so
+// each is cut down to the garment. Crops are fractions of the source, so they
+// survive any change of resolution:
+//   • six labelle FB_IMG_… campaign graphics print other people's names and
+//     handles over the photo ("KANWAL AFTAB in SPOTLIGHT", "NAYAB in
+//     SPOTLIGHT", "KHADIJA in SPOTLIGHT", "@ZeeNM", "@greeneyed.gurl",
+//     "kanwal.135", "hiba.chaudharyy"). The crops remove every one of them.
+//   • jahanara FB_IMG_…955623 carries a "Linen'19" campaign lockup.
+//   • thesis #2 and #3 print Adeela's OLD personal phone number and hotmail
+//     address into the artwork; both are cropped to drop that block. #3 is
+//     additionally the source of her portrait.
+//
+// Still fully EXCLUDED:
 //   • bridal 2.pdf #6 — a 336×924 sidebar strip, not artwork.
 //   • noor tex viscose 6.jpg / 8.jpg — corrupt in every surviving copy.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -53,6 +59,9 @@ export const collections = [
       "jahanara/FB_IMG_1782762963986.jpg", "jahanara/FB_IMG_1782762926786.jpg",
       "jahanara/FB_IMG_1782762937020.jpg", "jahanara/FB_IMG_1782762942501.jpg",
       "jahanara/FB_IMG_1782762950262.jpg",
+      // "Linen'19" campaign lockup sits right of centre — cropped away.
+      { from: "jahanara/FB_IMG_1782762955623.jpg",
+        crop: { left: 0.05, top: 0.02, width: 0.60, height: 0.96 } },
     ],
     process: [
       "jahanara/front.jpg", "jahanara/shirt.jpg",
@@ -70,6 +79,19 @@ export const collections = [
       "labelle/FB_IMG_1782762494417.jpg", "labelle/FB_IMG_1782762497593.jpg",
       "labelle/FB_IMG_1782762499680.jpg", "labelle/FB_IMG_1782762502057.jpg",
       "labelle/FB_IMG_1782762504274.jpg",
+      // Campaign graphics, cropped to the garment so no third party is named.
+      { from: "labelle/FB_IMG_1782762512446.jpg",   // "KANWAL AFTAB in SPOTLIGHT"
+        crop: { left: 0.03, top: 0, width: 0.50, height: 1 } },
+      { from: "labelle/FB_IMG_1782762518740.jpg",   // "NAYAB in SPOTLIGHT" + "@ZeeNM"
+        crop: { left: 0, top: 0, width: 0.52, height: 0.76 } },
+      { from: "labelle/FB_IMG_1782762521629.jpg",   // "KHADIJA in SPOTLIGHT"
+        crop: { left: 0.05, top: 0, width: 0.47, height: 1 } },
+      { from: "labelle/FB_IMG_1782762515037.jpg",   // "@greeneyed.gurl" footer bar
+        crop: { left: 0, top: 0, width: 1, height: 0.92 } },
+      { from: "labelle/FB_IMG_1782762525690.jpg",   // "kanwal.135" footer bar
+        crop: { left: 0.15, top: 0, width: 0.68, height: 0.93 } },
+      { from: "labelle/FB_IMG_1782762545393.jpg",   // "hiba.chaudharyy" footer bar
+        crop: { left: 0.14, top: 0, width: 0.68, height: 0.93 } },
     ],
     process: [
       "labelle/d1.jpg", "labelle/d2.jpg", "labelle/d3.jpg", "labelle/d4a.jpg",
@@ -128,6 +150,10 @@ export const collections = [
     lookbook: [
       `${THESIS}#4`, `${THESIS}#14`, `${THESIS}#15`, `${THESIS}#16`,
       `${THESIS}#17`, `${THESIS}#18`, `${THESIS}#19`, `${THESIS}#1`,
+      // Both title cards print her old phone number and hotmail address.
+      // #2 carries it in a footer block; #3 in a column under the portrait.
+      { from: `${THESIS}#2`, crop: { left: 0, top: 0, width: 1, height: 0.815 } },
+      { from: `${THESIS}#3`, crop: { left: 0, top: 0, width: 0.663, height: 1 } },
     ],
     process: r(THESIS, 5, 13),
   },

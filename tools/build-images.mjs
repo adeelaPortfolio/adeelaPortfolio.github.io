@@ -74,19 +74,33 @@ function coverBox(ratio) {
     : { w: Math.round((COVER * a) / b), h: COVER };
 }
 
+/** A gallery entry is either a bare asset id, or `{ from, crop }` where crop is
+ *  in fractions of the source — used to cut third-party names and handles out
+ *  of client campaign images. Fractions survive any change of resolution. */
+const entryOf = (item) => (typeof item === "string" ? { from: item } : item);
+
 for (const c of collections) {
   const box = coverBox(c.ratio);
   const entry = { cover: null, lookbook: [], process: [] };
-  entry.cover = await write(c.cover, `collections/${c.slug}/cover`, { ...box, trim: c.trim });
+  const cov = entryOf(c.cover);
+  entry.cover = await write(cov.from, `collections/${c.slug}/cover`, {
+    ...box, trim: c.trim, crop: cov.crop,
+  });
 
-  for (const [i, id] of c.lookbook.entries()) {
+  for (const [i, item] of c.lookbook.entries()) {
+    const e = entryOf(item);
     entry.lookbook.push(
-      await write(id, `collections/${c.slug}/look-${String(i + 1).padStart(2, "0")}`, { trim: c.trim }),
+      await write(e.from, `collections/${c.slug}/look-${String(i + 1).padStart(2, "0")}`, {
+        trim: c.trim, crop: e.crop,
+      }),
     );
   }
-  for (const [i, id] of (c.process ?? []).entries()) {
+  for (const [i, item] of (c.process ?? []).entries()) {
+    const e = entryOf(item);
     entry.process.push(
-      await write(id, `collections/${c.slug}/process-${String(i + 1).padStart(2, "0")}`, { trim: c.trim }),
+      await write(e.from, `collections/${c.slug}/process-${String(i + 1).padStart(2, "0")}`, {
+        trim: c.trim, crop: e.crop,
+      }),
     );
   }
   manifest.collections[c.slug] = entry;
