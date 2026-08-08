@@ -99,7 +99,7 @@ export default function Gallery({
           </button>
 
           <figure
-            className="w-full max-w-5xl pb-14 sm:px-12 sm:pb-0"
+            className="w-full max-w-5xl sm:px-12"
             onClick={(e) => e.stopPropagation()}
           >
             {/* The lightbox exists so the artwork can actually be read, so it
@@ -113,7 +113,10 @@ export default function Gallery({
               sizes="(max-width: 768px) 100vw, 1024px"
               className="h-[62vh] sm:h-[74vh]"
             />
-            <figcaption className="mt-3 text-center font-body text-sm italic text-white/70 sm:mt-4">
+            {/* Letterboxing means the box is usually taller than the artwork
+                inside it, so on a phone the caption is pinned above the control
+                bar instead of hanging off the bottom of that empty space. */}
+            <figcaption className="absolute inset-x-0 bottom-[4.5rem] px-5 text-center font-body text-sm italic text-white/70 sm:static sm:mt-4 sm:px-0">
               {images[active].caption ?? images[active].alt}
               <span className="ml-3 not-italic text-white/40">
                 {active + 1} / {images.length}

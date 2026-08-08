@@ -135,7 +135,7 @@ export default async function CollectionDetailPage({
         {/* Prev and next pair up on their own row until there is width for all
             three side by side — collection titles are long enough that a
             three-across row shreds them on a tablet. */}
-        <div className="mt-8 grid grid-cols-2 items-center gap-x-6 gap-y-8 lg:grid-cols-[1fr_auto_1fr]">
+        <div className="mt-8 grid grid-cols-2 items-start gap-x-6 gap-y-8 lg:grid-cols-[1fr_auto_1fr] lg:items-center">
           <Link href={`/work/${prev.slug}`} className="group min-w-0">
             <span className="eyebrow">← Previous</span>
             <span className="mt-2 block font-display text-lg text-ink group-hover:text-sepia sm:text-xl md:text-2xl">
