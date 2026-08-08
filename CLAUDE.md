@@ -26,11 +26,24 @@ database, no metered image optimisation.
 
 The site is complete and deployed. Structure, images, theme and layout are all done.
 
-A responsive pass has since gone through every page at 360–1440px (see *Responsive*
-below). It also turned up two non-responsive bugs worth knowing about, both fixed and
-both recorded under *Gotchas*: the lightbox had **no backdrop at all**, and the
-lightbox arrows collapsed into the top corners on tablets. **Not yet committed** at the
-time of writing — check `git status` before assuming the live site has it.
+**Recent changes, all live:**
+
+- Home trimmed to **hero → Collections → About → Contact**. The "Textiles & Fashion"
+  split and the "Surface Work" strip were removed at Adeela's request — both drew from
+  the same collection cover, so one photograph appeared three times on one page.
+- Hero buttons are **Thesis** and **My Work** (both solid), linking to `/work/thesis`
+  and `/work#my-work`.
+- Role reads **"Fashion & Textile Designer"** everywhere. It comes from one value,
+  `site.role` — change it there, never in components.
+- A responsive pass covered every page at 360–1440px (see *Responsive*). It fixed two
+  real bugs, both now committed: the lightbox had **no backdrop at all**, and its arrows
+  collapsed into the top corners on tablets.
+
+**⚠ Uncommitted work in the tree** (check `git status` first): the hero banner is being
+re-cut — `tools/sources.mjs` crops `Prints & Cutlines/03.jpg` to a single panel and
+rotates it 270°, with matching `rotate` support in `tools/build-images.mjs`, new alt
+text in `site.ts`, and a regenerated `hero.webp`. Finish or discard it deliberately;
+don't let a `git add -A` sweep it into an unrelated commit.
 
 **Open items — these need Adeela, not code:**
 
@@ -185,9 +198,11 @@ Each group heading has an `id`, so the hero's "My Work" button can link to `/wor
 
 `Nav` (sticky; white text over the home hero — client) · `Footer` · `Hero`
 · `PageHeader` · `SectionHeading` · `CollectionRow` (the numbered index row, with a
-hover preview in the right margin) · `CollectionCard` (home featured) · `Gallery`
-(masonry + lightbox — client) · `SwatchStrip` · `EditorialImage` · `Button`
-· `Reveal` (client) · `ImageGuard` (right-click/drag deterrent — client).
+hover preview in the right margin; folds below `md`) · `CollectionCard` (home featured)
+· `Gallery` (masonry + lightbox, the lightbox re-laid-out for phones — client)
+· `SwatchStrip` · `EditorialImage` · `Button` · `Reveal` (client — starts at opacity 0,
+so it photographs blank unless the page is scrolled first) · `ImageGuard`
+(right-click/drag deterrent — client).
 
 ### Design tokens
 
@@ -205,6 +220,30 @@ of a scrim; `ivory` would invert with the theme.
 Helpers: `.container-editorial`, `.eyebrow`, `.rule`, `.link-underline`, `.display-xl`.
 
 ---
+
+## Responsive
+
+To check the site at phone and tablet widths for $0: `npm run build`, serve `out/` from
+a throwaway server, and drive headless Chrome over CDP.
+
+**The trap:** `chrome --headless --window-size=360,3000 --screenshot` does **not** give
+a 360px viewport on Windows. Chrome clamps the window to ~500 CSS px, renders at 500 and
+crops the PNG to 360. It looks exactly like catastrophic horizontal overflow — text
+sliced mid-word on every page — and it is an artifact. `--force-device-scale-factor`
+does not help.
+
+Use CDP `Emulation.setDeviceMetricsOverride` + `Page.captureScreenshot
+{captureBeyondViewport:true}`. No puppeteer needed: Node has a global `WebSocket`, so
+launch with `--remote-debugging-port`, read `webSocketDebuggerUrl` from `/json/version`,
+then `Target.createTarget` → `Target.attachToTarget {flatten:true}`.
+
+Two things worth doing in the same pass:
+
+- **Scroll before capturing.** `Reveal` uses IntersectionObserver and starts at opacity
+  0, so anything below the fold photographs as blank space.
+- **Assert, don't eyeball.** Probe `documentElement.scrollWidth` vs `clientWidth` and
+  list elements whose `getBoundingClientRect().right` exceeds the viewport — the rect
+  check still works after `body { overflow-x: clip }` hides the scrollbar evidence.
 
 ## Gotchas that have actually bitten
 
@@ -225,6 +264,9 @@ Helpers: `.container-editorial`, `.eyebrow`, `.rule`, `.link-underline`, `.displ
   `bottom-2 sm:inset-y-0 sm:bottom-auto` collapsed the lightbox arrows into the top
   corners on tablets: `sm:bottom-auto` is emitted after `sm:inset-y-0`, so it undid the
   `bottom:0` that was doing the vertical centring.
+- **Tailwind opacity is a fixed scale.** `bg-scrim/92` is not valid — 92 is not a step,
+  so the class silently produces nothing and the lightbox rendered with no backdrop at
+  all. Use an arbitrary value: `bg-scrim/[0.92]`.
 - **Chrome screenshots**: a stale `--user-data-dir` lock makes Chrome write nothing and
   report nothing. Use a fresh directory per run.
 - **You cannot screenshot a narrow viewport from the Chrome CLI on Windows.**
