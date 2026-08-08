@@ -3,53 +3,27 @@
 @tailwind utilities;
 
 /* ───────────────────────────────────────────────────────────────────────────
-   THEMES
-   Each block is one palette, as space-separated RGB triplets, plus the font
-   pairing for that theme. Set data-theme on <html> to switch.
-   `--c-scrim` stays dark in every theme — it washes photography for legibility.
+   PALETTE — "Jewel Atelier": oxblood ground with gold, chosen to sit in the
+   Pakistani luxury lawn and bridal market Adeela is applying into. Her prints
+   read far better against a deep ground than the ivory they started on.
+
+   Colours are CSS variables so a re-theme is a value swap, not a rewrite. The
+   names keep their meaning: `ivory` is always the page ground, `ink` always the
+   primary text. `scrim` is the exception — it stays dark regardless, because it
+   washes photography for legibility and must never invert.
    ─────────────────────────────────────────────────────────────────────────── */
 
-/* Couture Noir — dark gallery. Colourful print artwork glows against near-black. */
-:root,
-html[data-theme="noir"] {
+:root {
   color-scheme: dark;
-  --c-ivory: 20 18 15;
-  --c-cream: 30 26 22;
-  --c-ink: 243 234 216;
-  --c-sepia: 201 162 39;
-  --c-gilt: 224 192 112;
-  --c-muted: 138 127 109;
-  --c-scrim: 10 9 7;
-  --font-display: var(--font-cormorant);
-  --font-body: var(--font-inter);
-}
-
-/* Jewel Atelier — oxblood and gold. Reads as South-Asian luxury lawn/bridal. */
-html[data-theme="jewel"] {
-  color-scheme: dark;
-  --c-ivory: 43 18 22;
-  --c-cream: 61 27 32;
-  --c-ink: 240 226 204;
-  --c-sepia: 200 160 70;
-  --c-gilt: 227 199 126;
-  --c-muted: 154 133 116;
-  --c-scrim: 22 9 11;
+  --c-ivory: 43 18 22;    /* page ground   #2B1216 */
+  --c-cream: 61 27 32;    /* raised panels #3D1B20 */
+  --c-ink: 240 226 204;   /* primary text  #F0E2CC */
+  --c-sepia: 200 160 70;  /* accent        #C8A046 */
+  --c-gilt: 227 199 126;  /* second accent #E3C77E */
+  --c-muted: 154 133 116; /* secondary     #9A8574 */
+  --c-scrim: 22 9 11;     /* washes over photography */
   --font-display: var(--font-cinzel);
   --font-body: var(--font-garamond);
-}
-
-/* Bold Editorial — hard black on paper white. All colour comes from the work. */
-html[data-theme="bold"] {
-  color-scheme: light;
-  --c-ivory: 250 250 248;
-  --c-cream: 240 239 234;
-  --c-ink: 10 10 10;
-  --c-sepia: 193 18 31;
-  --c-gilt: 138 133 120;
-  --c-muted: 107 107 99;
-  --c-scrim: 10 10 10;
-  --font-display: var(--font-bodoni);
-  --font-body: var(--font-inter);
 }
 
 @layer base {
@@ -60,27 +34,11 @@ html[data-theme="bold"] {
   body {
     @apply bg-ivory text-ink font-body antialiased;
     background-attachment: fixed;
-  }
-
-  /* Fine film grain over the dark grounds, so large flat areas aren't dead. */
-  html[data-theme="noir"] body {
-    background-image:
-      radial-gradient(1100px 600px at 12% -10%, rgba(224, 192, 112, 0.07), transparent 60%),
-      radial-gradient(900px 500px at 108% 6%, rgba(201, 162, 39, 0.05), transparent 55%),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-  }
-
-  /* A warmer gold bloom for the jewel ground. */
-  html[data-theme="jewel"] body {
+    /* Warm gold bloom over the oxblood, so large flat areas aren't dead. */
     background-image:
       radial-gradient(1000px 620px at 50% -12%, rgba(227, 199, 126, 0.12), transparent 62%),
       radial-gradient(800px 480px at 105% 40%, rgba(200, 160, 70, 0.07), transparent 58%),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
-  }
-
-  /* Bold Editorial stays flat paper — the drama is type and scale, not texture. */
-  html[data-theme="bold"] body {
-    background-image: none;
   }
 
   ::selection {

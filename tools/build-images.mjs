@@ -108,8 +108,10 @@ for (const c of collections) {
 }
 
 for (const t of textiles) {
+  // Trim by default: the print plates carry wide white margins, which against a
+  // dark page ground read as blank blocks beside the artwork rather than paper.
   manifest.textiles[t.name] = await write(t.from, `textiles/${t.name}`, {
-    w: 1200, h: 1200, position: t.position,
+    w: 1200, h: 1200, position: t.position, trim: t.trim ?? true,
   });
 }
 console.log(`✓ textiles (${textiles.length})`);
