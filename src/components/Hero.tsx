@@ -14,6 +14,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         <EditorialImage
           item={site.heroImage}
+          fit="cover"
           ratio="16 / 9"
           tone="#8A6A48"
           priority

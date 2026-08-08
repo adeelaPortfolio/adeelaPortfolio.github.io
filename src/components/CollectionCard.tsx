@@ -19,7 +19,6 @@ export default function CollectionCard({ collection, tone, priority = false }: P
       <div className="overflow-hidden">
         <EditorialImage
           item={collection.cover}
-          ratio="3 / 4"
           tone={tone}
           label={collection.title}
           priority={priority}

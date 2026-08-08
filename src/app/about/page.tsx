@@ -21,7 +21,6 @@ export default function AboutPage() {
           <Reveal>
             <EditorialImage
               item={site.portrait}
-              ratio="4 / 5"
               tone="#9A8A72"
               label="Portrait"
               sizes="(max-width: 768px) 100vw, 40vw"

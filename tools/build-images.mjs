@@ -43,12 +43,16 @@ async function write(asset, outRel, opts = {}) {
 
   img =
     opts.w && opts.h
-      ? img.resize(opts.w, opts.h, {
+      ? // A hard crop to an exact box — only for the hero banner and the portrait.
+        img.resize(opts.w, opts.h, {
           fit: "cover",
           position: opts.position ?? "centre",
           withoutEnlargement: true,
         })
-      : img.resize(MAX, MAX, { fit: "inside", withoutEnlargement: true });
+      : img.resize(opts.max ?? MAX, opts.max ?? MAX, {
+          fit: "inside",
+          withoutEnlargement: true,
+        });
 
   const abs = path.join(OUT, outRel + ".webp");
   fs.mkdirSync(path.dirname(abs), { recursive: true });
@@ -56,15 +60,6 @@ async function write(asset, outRel, opts = {}) {
 
   report.push({ out: outRel, from: asset.id, px: `${info.width}x${info.height}`, kb: info.size / 1024 });
   return { src: `/images/${outRel}.webp`, width: info.width, height: info.height };
-}
-
-/** Cover boxes follow the collection's own aspect ratio, so a landscape
- *  catalogue spread gets a landscape cover rather than being cropped twice. */
-function coverBox(ratio) {
-  const [a, b] = ratio.split("/").map((n) => Number(n.trim()));
-  return a >= b
-    ? { w: COVER, h: Math.round((COVER * b) / a) }
-    : { w: Math.round((COVER * a) / b), h: COVER };
 }
 
 // Start from a clean slate so images removed from a folder don't linger.
@@ -90,8 +85,10 @@ for (const c of collections) {
   // Cover: the named file if given, otherwise the first image in sequence.
   const coverAsset =
     (c.cover && assets.find((a) => path.basename(a.file) === c.cover)) ?? assets[0];
+  // Covers are sized down, never cropped to a box — the site displays every
+  // image at its own aspect ratio.
   entry.cover = await write(coverAsset, `${c.slug}/cover`, {
-    ...coverBox(c.ratio),
+    max: COVER,
     trim: c.trim,
     crop: c.crops?.[path.basename(coverAsset.file)],
   });

@@ -64,7 +64,6 @@ export default function CollectionRow({ collection, index, tone, priority }: Pro
       <div className="pointer-events-none absolute right-36 top-1/2 hidden w-32 -translate-y-1/2 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 lg:block xl:right-44 xl:w-40">
         <EditorialImage
           item={collection.cover}
-          ratio="3 / 4"
           tone={tone}
           label={collection.title}
           priority={priority}

@@ -16,6 +16,10 @@ export interface ImageItem {
   alt: string;
   /** Optional short caption shown under the image in some layouts. */
   caption?: string;
+  /** True pixel size, filled in by the image pipeline. When present the image
+   *  is displayed at its own aspect ratio and is never cropped. */
+  width?: number;
+  height?: number;
 }
 
 /** A fabric / colour swatch shown as a small chip. */

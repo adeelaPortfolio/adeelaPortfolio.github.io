@@ -5,14 +5,17 @@ import type { ImageItem } from "@/content/types";
 // EditorialImage
 //
 // Renders a real optimised photo when `item.src` is set, otherwise a tasteful
-// vintage placeholder frame carrying the image's label. This is what lets the
-// whole site look finished before any real photography exists — swapping in a
-// real image is just setting the `src` field in the content files.
+// vintage placeholder frame. Swapping in a real image is just setting `src`.
+//
+// Default behaviour is "natural": the frame takes the image's OWN aspect ratio,
+// so nothing is ever cropped. Adeela's work is a mix of landscape catalogue
+// spreads, portrait plates and square photos, and forcing them all through one
+// box cut the sides off her artwork. Cropping now has to be asked for.
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface Props {
   item: ImageItem;
-  /** CSS aspect-ratio, e.g. "3 / 4", "4 / 5", "1 / 1", "16 / 9". */
+  /** Frame ratio, used only by "cover" and "contain". e.g. "3 / 4", "16 / 9". */
   ratio?: string;
   /** Placeholder tint (CSS colour). */
   tone?: string;
@@ -22,14 +25,14 @@ interface Props {
   className?: string;
   /** next/image sizes hint. */
   sizes?: string;
-  /** Prioritise loading (use for above-the-fold hero images). */
+  /** Prioritise loading (use for above-the-fold images). */
   priority?: boolean;
   /**
-   * "cover" crops to fill the frame (right for uniform grids); "contain" fits
-   * the whole image inside it (right for the lightbox, where cropping a print
-   * plate would hide the artwork the viewer clicked to see).
+   * "natural" — frame matches the image; nothing is cropped or letterboxed.
+   * "cover"   — fills `ratio`, cropping the overflow. Banners only.
+   * "contain" — fits inside `ratio`, letterboxing. Lightbox and fixed strips.
    */
-  fit?: "cover" | "contain";
+  fit?: "natural" | "cover" | "contain";
 }
 
 /** Slightly darken a hex colour for the placeholder's inner frame. */
@@ -51,15 +54,20 @@ export default function EditorialImage({
   className = "",
   sizes = "(max-width: 768px) 100vw, 50vw",
   priority = false,
-  fit = "cover",
+  fit = "natural",
 }: Props) {
   const hasImage = Boolean(item.src);
   const caption = label ?? item.caption ?? item.alt;
 
+  // Natural mode needs the real dimensions; without them fall back to the frame.
+  const natural = fit === "natural" && item.width && item.height;
+  const frameRatio = natural ? `${item.width} / ${item.height}` : ratio;
+  const objectFit = fit === "contain" ? "object-contain" : "object-cover";
+
   return (
     <div
       className={`relative overflow-hidden ${fit === "contain" ? "" : "bg-cream"} ${className}`}
-      style={{ aspectRatio: ratio }}
+      style={{ aspectRatio: frameRatio }}
     >
       {hasImage ? (
         <Image
@@ -69,7 +77,7 @@ export default function EditorialImage({
           sizes={sizes}
           priority={priority}
           draggable={false}
-          className={`select-none ${fit === "contain" ? "object-contain" : "object-cover"}`}
+          className={`select-none ${objectFit}`}
         />
       ) : (
         <div

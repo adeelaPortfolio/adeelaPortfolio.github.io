@@ -3,6 +3,7 @@ import PageHeader from "@/components/PageHeader";
 import EditorialImage from "@/components/EditorialImage";
 import Reveal from "@/components/Reveal";
 import { site } from "@/content/site";
+import manifest from "@/content/image-manifest.json";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -61,7 +62,7 @@ export default function ContactPage() {
               <div>
                 <p className="eyebrow mb-3">Availability</p>
                 <p className="font-body text-lg text-ink/80">
-                  Open to opportunities from Autumn 2025
+                  Open to senior design roles now
                 </p>
               </div>
             </div>
@@ -69,10 +70,11 @@ export default function ContactPage() {
 
           <Reveal delay={120}>
             <EditorialImage
-              item={{ src: "", alt: "Detail of hand-finished cloth in the studio" }}
-              ratio="4 / 5"
+              item={{
+                ...manifest.collections.bridal.cover,
+                alt: "Detail of hand-embroidered bridal work",
+              }}
               tone="#8A6A5A"
-              label="Studio"
               sizes="(max-width: 768px) 100vw, 40vw"
             />
           </Reveal>

@@ -16,19 +16,21 @@ import manifest from "./image-manifest.json";
 // editing. To change words: edit below.
 // ─────────────────────────────────────────────────────────────────────────────
 
-type ManifestEntry = { cover: { src: string }; lookbook: { src: string }[] };
+type Img = { src: string; width: number; height: number };
+type ManifestEntry = { cover: Img; lookbook: Img[] };
 const images = manifest.collections as Record<string, ManifestEntry>;
 
 /** Gallery for one collection, straight from what the pipeline produced. */
 function gallery(slug: string, describe: (n: number) => string) {
   return (images[slug]?.lookbook ?? []).map((img, i) => ({
-    src: img.src,
+    ...img,
     alt: describe(i + 1),
   }));
 }
 
 function cover(slug: string, alt: string) {
-  return { src: images[slug]?.cover.src ?? "", alt };
+  const c = images[slug]?.cover;
+  return c ? { ...c, alt } : { src: "", alt };
 }
 
 export const collections: Collection[] = [

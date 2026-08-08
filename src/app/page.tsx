@@ -63,7 +63,6 @@ export default function HomePage() {
             <Link href="/work/prints-and-cutlines" className="group block">
               <EditorialImage
                 item={prints?.cover ?? { src: "", alt: "Print artwork" }}
-                ratio="4 / 3"
                 tone={toneFor("prints-and-cutlines")}
                 label="Printed"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -86,7 +85,6 @@ export default function HomePage() {
             <Link href="/work" className="group block">
               <EditorialImage
                 item={featured[1]?.cover ?? { src: "", alt: "Garment detail" }}
-                ratio="4 / 3"
                 tone={toneFor(featured[1]?.slug ?? "")}
                 label="Fashion"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -125,6 +123,7 @@ export default function HomePage() {
                 >
                   <EditorialImage
                     item={img}
+                    fit="contain"
                     ratio="1 / 1"
                     tone={toneFor("prints-and-cutlines")}
                     sizes="(max-width: 768px) 33vw, 17vw"
@@ -143,7 +142,6 @@ export default function HomePage() {
           <Reveal>
             <EditorialImage
               item={site.portrait}
-              ratio="4 / 5"
               tone="#9A8A72"
               label="Portrait"
               sizes="(max-width: 768px) 100vw, 50vw"

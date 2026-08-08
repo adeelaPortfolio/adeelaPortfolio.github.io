@@ -101,7 +101,7 @@
       "cover": {
         "src": "/images/thesis/cover.webp",
         "width": 1200,
-        "height": 900
+        "height": 848
       }
     },
     "prints-and-cutlines": {
@@ -565,7 +565,7 @@
       "cover": {
         "src": "/images/prints-and-cutlines/cover.webp",
         "width": 1200,
-        "height": 900
+        "height": 866
       }
     },
     "silk-scarves": {
@@ -614,7 +614,7 @@
       "cover": {
         "src": "/images/silk-scarves/cover.webp",
         "width": 1200,
-        "height": 900
+        "height": 848
       }
     },
     "bridal": {
@@ -797,7 +797,7 @@
       ],
       "cover": {
         "src": "/images/bridal/cover.webp",
-        "width": 900,
+        "width": 899,
         "height": 1200
       }
     },
@@ -877,7 +877,7 @@
       "cover": {
         "src": "/images/semi-formals/cover.webp",
         "width": 1200,
-        "height": 900
+        "height": 848
       }
     }
   },

@@ -51,13 +51,15 @@ export default function Gallery({
     };
   }, [active, close, show]);
 
-  const colClass = columns === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3";
+  // Masonry: images keep their own aspect ratios, so a fixed grid would leave
+  // ragged gaps. CSS columns tile mixed heights without cropping anything.
+  const colClass = columns === 2 ? "sm:columns-2" : "sm:columns-2 lg:columns-3";
 
   return (
     <>
-      <ul className={`grid grid-cols-1 gap-4 sm:gap-6 ${colClass}`}>
+      <ul className={`columns-1 gap-4 sm:gap-6 ${colClass}`}>
         {images.map((img, i) => (
-          <li key={i}>
+          <li key={i} className="mb-4 break-inside-avoid sm:mb-6">
             <button
               type="button"
               onClick={() => setActive(i)}
@@ -66,7 +68,6 @@ export default function Gallery({
             >
               <EditorialImage
                 item={img}
-                ratio={ratio}
                 tone={tone}
                 /* Eager-load the first row. Lazy-loading everything meant a
                    gallery's first impression was a grid of blank rectangles. */

@@ -1,4 +1,5 @@
 import type { SiteContent } from "./types";
+import manifest from "./image-manifest.json";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SITE CONTENT
@@ -19,13 +20,15 @@ export const site: SiteContent = {
   // social row — better than linking to a handle that isn't hers.
   socials: [],
 
+  // Dimensions come from the image pipeline, so both render at their true
+  // aspect ratio rather than being cropped to a box.
   heroImage: {
-    src: "/images/hero.webp",
+    ...manifest.singles.hero,
     alt: "Engineered digital lawn print artwork, drawn as a shaped garment panel",
   },
 
   portrait: {
-    src: "/images/portrait.webp",
+    ...manifest.singles.portrait,
     alt: "Portrait of Adeela Amanat",
   },
 
