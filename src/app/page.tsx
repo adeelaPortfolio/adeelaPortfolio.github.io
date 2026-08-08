@@ -16,7 +16,6 @@ import { toneFor } from "@/lib/tones";
 
 export default function HomePage() {
   const featured = collections.slice(0, 3);
-  const prints = collections.find((c) => c.slug === "prints-and-cutlines");
 
   return (
     <>
@@ -49,92 +48,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Two-pillar split: Textiles + Fashion */}
-      <section className="container-editorial pt-28 md:pt-36">
-        <SectionHeading
-          eyebrow="Two Disciplines, One Hand"
-          title="Textiles & Fashion"
-          intro="The cloth and the cut are designed together. Explore the surface work on its own, or see how it becomes a garment."
-          align="center"
-        />
-
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <Reveal>
-            <Link href="/work/prints-and-cutlines" className="group block">
-              <EditorialImage
-                item={prints?.cover ?? { src: "", alt: "Print artwork" }}
-                tone={toneFor("prints-and-cutlines")}
-                label="Printed"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-              />
-              <div className="mt-6">
-                <p className="eyebrow">Surface & Material</p>
-                <h3 className="mt-2 font-display text-3xl text-ink">
-                  <span className="link-underline">Printed</span>
-                </h3>
-                <p className="mt-3 max-w-md font-body text-ink/65">
-                  Digital prints, repeat patterns and engineered panel layouts —
-                  drawn for lawn, viscose and printed silk.
-                </p>
-              </div>
-            </Link>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <Link href="/work" className="group block">
-              <EditorialImage
-                item={featured[1]?.cover ?? { src: "", alt: "Garment detail" }}
-                tone={toneFor(featured[1]?.slug ?? "")}
-                label="Fashion"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-              />
-              <div className="mt-6">
-                <p className="eyebrow">Silhouette & Construction</p>
-                <h3 className="mt-2 font-display text-3xl text-ink">
-                  <span className="link-underline">Fashion</span>
-                </h3>
-                <p className="mt-3 max-w-md font-body text-ink/65">
-                  Cutlines, embroidery placement and sample development — the
-                  garment built around the print it is cut from.
-                </p>
-              </div>
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Full-bleed print strip — a band of her actual artwork, edge to edge.
-          The page is otherwise a centred column, so this breaks the rhythm and
-          lets the prints carry a section on their own. */}
-      <section className="pt-28 md:pt-36">
-        <div className="container-editorial">
-          <p className="eyebrow mb-6">Surface Work</p>
-        </div>
-        <div className="relative left-1/2 w-screen -translate-x-1/2">
-          <ul className="grid grid-cols-3 gap-px bg-ink/10 md:grid-cols-6">
-            {(prints?.lookbook ?? []).slice(0, 6).map((img) => (
-              <li key={img.src} className="bg-ivory">
-                <Link
-                  href="/work/prints-and-cutlines"
-                  className="group block overflow-hidden"
-                  aria-label="Prints & Cutlines"
-                >
-                  <EditorialImage
-                    item={img}
-                    fit="contain"
-                    ratio="1 / 1"
-                    tone={toneFor("prints-and-cutlines")}
-                    sizes="(max-width: 768px) 33vw, 17vw"
-                    className="transition-transform duration-700 ease-out group-hover:scale-110"
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
 
       {/* About teaser */}
       <section className="container-editorial pt-28 md:pt-36">
