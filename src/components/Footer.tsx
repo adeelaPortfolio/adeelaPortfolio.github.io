@@ -6,8 +6,7 @@ import { site } from "@/content/site";
 // ─────────────────────────────────────────────────────────────────────────────
 
 const quickLinks = [
-  { href: "/collections", label: "Collections" },
-  { href: "/textiles", label: "Textiles" },
+  { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/awards", label: "Awards & CV" },
   { href: "/contact", label: "Contact" },

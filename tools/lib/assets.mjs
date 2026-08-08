@@ -1,14 +1,15 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Shared asset loader for the image tooling.
+// Asset loader for the image tooling.
 //
-// Reads Adeela's raw archive, which lives OUTSIDE the repo and is never
-// committed. Two kinds of source:
-//   • loose image files      → id "labelle/d1.jpg"
-//   • images inside the PDFs → id "bridal/bridal 1.pdf#7"
+// Adeela's raw archive lives OUTSIDE the repo and is never committed. It is her
+// working folder, so it gets reorganised — folders have been renamed and files
+// renumbered mid-build more than once. Two consequences shape this file:
 //
-// PDF pages are addressed by IMAGE STREAM ORDINAL, not page number: some pages
-// carry two images (bridal 2.pdf has 9 images across 8 pages), so page numbers
-// are not stable identifiers.
+//   1. Paths are resolved tolerantly (exact, then case-insensitive, then by
+//      first word), so a rename doesn't break the pipeline outright.
+//   2. Collections name DIRECTORIES, not individual files. Whatever is in the
+//      folder is what gets published, in filename order. Reordering or swapping
+//      images is a file operation, not a code change.
 // ─────────────────────────────────────────────────────────────────────────────
 import fs from "node:fs";
 import path from "node:path";
@@ -16,24 +17,7 @@ import sharp from "sharp";
 
 export const SRC_ROOT = "J:/Cursor Projects/Adeela portfolio Data";
 
-export const PDFS = [
-  "bridal/bridal 1.pdf",
-  "bridal/bridal 2.pdf",
-  "coronation/semi formals.pdf",
-  "coronation/scarfs.pdf",
-  "coronation/my textile prints and cutlines.pdf",
-  "final thesis/thesis portfolio.pdf",
-];
-
-export const LOOSE_DIRS = ["labelle", "jahanara", "noor tex viscose"];
-
-// ── Path resolution ──────────────────────────────────────────────────────────
-// The archive is Adeela's working folder, so it gets reorganised: mid-build the
-// folders were recapitalised and "noor tex viscose" became "Noor Textiles
-// viscose". Asset IDs stay stable (they're the provenance record in
-// sources.mjs); only the lookup adapts. Each path segment is matched against
-// what is actually on disk — exactly, then case-insensitively, then by first
-// word — so a rename doesn't silently break the pipeline.
+const IMAGE_RE = /\.(jpe?g|png|tiff?|webp)$/i;
 
 function resolveSegment(dir, want) {
   const entries = fs.readdirSync(dir);
@@ -57,17 +41,44 @@ export function resolvePath(relPath) {
   return abs;
 }
 
-/** Every page image lifts straight out: these PDFs store one uncompressed
- *  DCTDecode XObject per page, with a direct /Length. No decoding needed. */
+/**
+ * Every image in one archive directory, in filename order — which is the
+ * sequence Adeela numbered them in. Plain lexicographic sort is correct here:
+ * "41.jpg" < "41a.jpg" < "42.jpg", so the lettered variants stay with their
+ * parent plate.
+ */
+export function listImages(relDir) {
+  const abs = resolvePath(relDir);
+  return fs
+    .readdirSync(abs)
+    .filter((f) => IMAGE_RE.test(f))
+    .sort()
+    .map((name) => ({ id: `${relDir}/${name}`, file: path.join(abs, name) }));
+}
+
+/** One sharp instance for an asset. `unlimited` is needed for large TIFFs,
+ *  which otherwise trip libtiff's 50 MB cumulative allocation limit. */
+export function open(asset) {
+  const opts = { unlimited: true, limitInputPixels: false };
+  return asset.data ? sharp(asset.data, opts) : sharp(asset.file, opts);
+}
+
+// ── PDF carving ──────────────────────────────────────────────────────────────
+// Kept for tools/extract-pdf-images.mjs. The archive's PDFs have since been
+// extracted into plain image folders, so the pipeline no longer needs this.
+
+/** These PDFs store one uncompressed DCTDecode XObject per page with a direct
+ *  /Length, so page images lift out byte-wise — no decoding, no poppler. */
 export function carvePdf(relPath) {
   const buf = fs.readFileSync(resolvePath(relPath));
   const s = buf.toString("latin1");
   const out = [];
   let i = 0;
   while ((i = s.indexOf("DCTDecode", i)) !== -1) {
-    // Anchor on the enclosing indirect object, NOT the nearest "<<" — several
-    // of these PDFs put a nested /DecodeParms << >> dict before /Filter, which
-    // would otherwise slice off the /Subtype and /Width keys.
+    // Anchor on the enclosing indirect object, NOT the nearest "<<" — some of
+    // these PDFs nest a /DecodeParms << >> dict before /Filter, which would
+    // otherwise slice off the /Subtype and /Width keys and silently yield zero
+    // images for the whole file.
     const objStart = s.lastIndexOf(" obj", i);
     const streamKw = s.indexOf("stream", i);
     if (objStart === -1 || streamKw === -1) break;
@@ -90,37 +101,5 @@ export function carvePdf(relPath) {
     });
     i = p + Number(len[1]);
   }
-  return out;
-}
-
-/** Loose files on disk, excluding the two known-corrupt Noor plates. */
-export const CORRUPT = new Set(["noor tex viscose/6.jpg", "noor tex viscose/8.jpg"]);
-
-export function looseFiles() {
-  const out = [];
-  for (const dir of LOOSE_DIRS) {
-    const abs = resolvePath(dir);
-    for (const name of fs.readdirSync(abs).sort()) {
-      if (!/\.(jpe?g|tiff?)$/i.test(name)) continue;
-      const id = `${dir}/${name}`;
-      if (CORRUPT.has(id)) continue;
-      out.push({ id, file: path.join(abs, name) });
-    }
-  }
-  return out;
-}
-
-/** One sharp instance for any asset id. `unlimited` is required for cover.tif,
- *  which otherwise trips libtiff's 50 MB cumulative allocation limit. */
-export function open(asset) {
-  const opts = { unlimited: true, limitInputPixels: false };
-  return asset.data ? sharp(asset.data, opts) : sharp(asset.file, opts);
-}
-
-/** Every asset in the archive, PDFs carved and loose files listed. */
-export function allAssets() {
-  const out = [];
-  for (const p of PDFS) out.push(...carvePdf(p));
-  out.push(...looseFiles());
   return out;
 }

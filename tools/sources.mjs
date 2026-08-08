@@ -1,186 +1,77 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// CURATION MANIFEST — the provenance record for every image on the site.
+// SOURCE MAP — which archive folders feed which collection.
 //
-// Each entry maps a raw archive asset to a path under public/images/. Assets
-// are addressed as "<file>" or "<pdf>#<n>", where n is the 1-based ordinal of
-// the nth image stream in that PDF (page numbers are unreliable: bridal 2.pdf
-// carries 9 images across 8 pages).
+// This file names DIRECTORIES, not files. Whatever is in the folder is what
+// gets published, in filename order, which is the sequence Adeela numbered them
+// in. To add, remove or reorder images, change the folder and re-run
+// `npm run images` — nothing here needs editing.
 //
-// CROPPED rather than excluded. These carry text that must not be published, so
-// each is cut down to the garment. Crops are fractions of the source, so they
-// survive any change of resolution:
-//   • six labelle FB_IMG_… campaign graphics print other people's names and
-//     handles over the photo ("KANWAL AFTAB in SPOTLIGHT", "NAYAB in
-//     SPOTLIGHT", "KHADIJA in SPOTLIGHT", "@ZeeNM", "@greeneyed.gurl",
-//     "kanwal.135", "hiba.chaudharyy"). The crops remove every one of them.
-//   • jahanara FB_IMG_…955623 carries a "Linen'19" campaign lockup.
-//   • thesis #2 and #3 print Adeela's OLD personal phone number and hotmail
-//     address into the artwork; both are cropped to drop that block. #3 is
-//     additionally the source of her portrait.
-//
-// Still fully EXCLUDED:
-//   • bridal 2.pdf #6 — a 336×924 sidebar strip, not artwork.
-//   • noor tex viscose 6.jpg / 8.jpg — corrupt in every surviving copy.
+// Prose (titles, summaries, concepts) lives in src/content/collections.ts.
+// This file is only about where the pixels come from.
 // ─────────────────────────────────────────────────────────────────────────────
-
-const BRIDAL1 = "bridal/bridal 1.pdf";
-const BRIDAL2 = "bridal/bridal 2.pdf";
-const SEMI = "coronation/semi formals.pdf";
-const SCARF = "coronation/scarfs.pdf";
-const PRINTS = "coronation/my textile prints and cutlines.pdf";
-const THESIS = "final thesis/thesis portfolio.pdf";
-
-const r = (file, from, to) =>
-  Array.from({ length: to - from + 1 }, (_, i) => `${file}#${from + i}`);
 
 export const collections = [
   {
-    slug: "inventive-bridal",
-    ratio: "3 / 4",
-    cover: `${BRIDAL1}#23`,
-    lookbook: [
-      `${BRIDAL1}#23`, `${BRIDAL1}#24`, `${BRIDAL1}#26`, `${BRIDAL1}#25`,
-      `${BRIDAL2}#9`, `${BRIDAL2}#8`, `${BRIDAL1}#20`, `${BRIDAL1}#21`,
-      `${BRIDAL1}#22`, `${BRIDAL2}#7`, `${BRIDAL1}#15`, `${BRIDAL1}#16`,
-      `${BRIDAL1}#17`, `${BRIDAL1}#18`,
-    ],
-    process: [
-      `${BRIDAL1}#1`, `${BRIDAL1}#2`, `${BRIDAL2}#1`, `${BRIDAL2}#2`,
-      `${BRIDAL1}#7`, `${BRIDAL1}#9`, `${BRIDAL1}#8`, `${BRIDAL1}#3`,
-      `${BRIDAL1}#5`, `${BRIDAL1}#10`, `${BRIDAL1}#12`, `${BRIDAL1}#13`,
-      `${BRIDAL1}#14`, `${BRIDAL2}#3`,
-    ],
-  },
-  {
-    slug: "jahanara-lawn",
-    ratio: "3 / 4",
-    cover: "jahanara/FB_IMG_1782762963986.jpg",
-    lookbook: [
-      "jahanara/FB_IMG_1782762963986.jpg", "jahanara/FB_IMG_1782762926786.jpg",
-      "jahanara/FB_IMG_1782762937020.jpg", "jahanara/FB_IMG_1782762942501.jpg",
-      "jahanara/FB_IMG_1782762950262.jpg",
-      // "Linen'19" campaign lockup sits right of centre — cropped away.
-      { from: "jahanara/FB_IMG_1782762955623.jpg",
-        crop: { left: 0.05, top: 0.02, width: 0.60, height: 0.96 } },
-    ],
-    process: [
-      "jahanara/front.jpg", "jahanara/shirt.jpg",
-      "jahanara/sleeve.jpg", "jahanara/dupata1.jpg",
-    ],
-  },
-  {
-    slug: "labelle-lawn-pret",
-    ratio: "3 / 4",
-    cover: "labelle/FB_IMG_1782762475196.jpg",
-    lookbook: [
-      "labelle/FB_IMG_1782762475196.jpg", "labelle/FB_IMG_1782762480275.jpg",
-      "labelle/FB_IMG_1782762482915.jpg", "labelle/FB_IMG_1782762485672.jpg",
-      "labelle/FB_IMG_1782762488078.jpg", "labelle/FB_IMG_1782762491149.jpg",
-      "labelle/FB_IMG_1782762494417.jpg", "labelle/FB_IMG_1782762497593.jpg",
-      "labelle/FB_IMG_1782762499680.jpg", "labelle/FB_IMG_1782762502057.jpg",
-      "labelle/FB_IMG_1782762504274.jpg",
-      // Campaign graphics, cropped to the garment so no third party is named.
-      { from: "labelle/FB_IMG_1782762512446.jpg",   // "KANWAL AFTAB in SPOTLIGHT"
-        crop: { left: 0.03, top: 0, width: 0.50, height: 1 } },
-      { from: "labelle/FB_IMG_1782762518740.jpg",   // "NAYAB in SPOTLIGHT" + "@ZeeNM"
-        crop: { left: 0, top: 0, width: 0.52, height: 0.76 } },
-      { from: "labelle/FB_IMG_1782762521629.jpg",   // "KHADIJA in SPOTLIGHT"
-        crop: { left: 0.05, top: 0, width: 0.47, height: 1 } },
-      { from: "labelle/FB_IMG_1782762515037.jpg",   // "@greeneyed.gurl" footer bar
-        crop: { left: 0, top: 0, width: 1, height: 0.92 } },
-      { from: "labelle/FB_IMG_1782762525690.jpg",   // "kanwal.135" footer bar
-        crop: { left: 0.15, top: 0, width: 0.68, height: 0.93 } },
-      { from: "labelle/FB_IMG_1782762545393.jpg",   // "hiba.chaudharyy" footer bar
-        crop: { left: 0.14, top: 0, width: 0.68, height: 0.93 } },
-    ],
-    process: [
-      "labelle/d1.jpg", "labelle/d2.jpg", "labelle/d3.jpg", "labelle/d4a.jpg",
-      "labelle/d5.jpg", "labelle/d6a.jpg", "labelle/d8.jpg", "labelle/d11a.jpg",
-    ],
-  },
-  {
-    slug: "noor-maya",
-    ratio: "3 / 4",
-    cover: "noor tex viscose/cover.tif",
-    trim: true, // these plates carry ~40% dead white margin
-    lookbook: [
-      "noor tex viscose/9.jpg", "noor tex viscose/0.jpg", "noor tex viscose/1.jpg",
-      "noor tex viscose/2.jpg", "noor tex viscose/3.jpg", "noor tex viscose/4.jpg",
-      "noor tex viscose/5.jpg", "noor tex viscose/7.jpg", "noor tex viscose/10.jpg",
-      "noor tex viscose/11.jpg",
-    ],
-    process: [],
-  },
-  {
-    slug: "coronation-lawn",
+    slug: "thesis",
+    dirs: ["Final thesis/Thesis Portfolio"],
     ratio: "4 / 3",
-    cover: `${PRINTS}#4`,
-    lookbook: [
-      `${PRINTS}#4`, `${PRINTS}#7`, `${PRINTS}#1`, `${PRINTS}#2`, `${PRINTS}#10`,
-      `${PRINTS}#13`, `${PRINTS}#16`, `${PRINTS}#19`, `${PRINTS}#22`,
-      `${PRINTS}#24`, `${PRINTS}#27`, `${PRINTS}#30`, `${PRINTS}#36`,
-    ],
-    process: [
-      `${PRINTS}#3`, `${PRINTS}#6`, `${PRINTS}#9`, `${PRINTS}#12`, `${PRINTS}#15`,
-      `${PRINTS}#20`, `${PRINTS}#23`, `${PRINTS}#26`, `${PRINTS}#32`,
-      `${PRINTS}#41`, `${PRINTS}#43`, `${PRINTS}#46`, `${PRINTS}#49`, `${PRINTS}#52`,
-    ],
+    // Pages 2 and 3 print Adeela's old phone number and hotmail address into
+    // the artwork. Cropped, never published whole.
+    crops: {
+      "02.jpg": { left: 0, top: 0, width: 1, height: 0.815 },
+      "03.jpg": { left: 0, top: 0, width: 0.663, height: 1 },
+    },
   },
   {
-    slug: "coronation-scarves",
+    slug: "prints-and-cutlines",
+    dirs: ["My Work/Prints & Cutlines"],
     ratio: "4 / 3",
-    cover: `${SCARF}#2`,
-    lookbook: r(SCARF, 1, 8),
-    process: [],
+    // Five client campaign graphics print other people's names and Instagram
+    // handles over the photo. Cropped to the garment so no third party is
+    // named. Verified by rendering the output, not by trusting the numbers.
+    crops: {
+      "65.jpg": { left: 0, top: 0, width: 0.51, height: 0.74 },   // "NAYAB in SPOTLIGHT" + @ZeeN'M
+      "67.jpg": { left: 0, top: 0, width: 1, height: 0.92 },      // "greeneyed.gurl" footer bar
+      "76.jpg": { left: 0.03, top: 0, width: 0.50, height: 1 },   // "KHADIJA in SPOTLIGHT"
+      "77.jpg": { left: 0.16, top: 0, width: 0.68, height: 0.92 },// "kanwal.135" footer bar
+      "81.jpg": { left: 0.02, top: 0, width: 0.51, height: 1 },   // "KANWAL AFTAB in SPOTLIGHT"
+    },
   },
   {
-    slug: "palais-royal",
+    slug: "silk-scarves",
+    dirs: ["My Work/Scarfs"],
     ratio: "4 / 3",
-    cover: `${SEMI}#4`,
-    lookbook: [
-      `${SEMI}#4`, `${SEMI}#2`, `${SEMI}#6`, `${SEMI}#8`, `${SEMI}#10`,
-      `${SEMI}#12`, `${SEMI}#14`, `${SEMI}#1`,
-    ],
-    process: [`${SEMI}#3`, `${SEMI}#5`, `${SEMI}#7`, `${SEMI}#9`, `${SEMI}#11`, `${SEMI}#13`],
   },
   {
-    slug: "ottoman-queen",
-    ratio: "4 / 3",
-    cover: `${THESIS}#4`,
-    lookbook: [
-      `${THESIS}#4`, `${THESIS}#14`, `${THESIS}#15`, `${THESIS}#16`,
-      `${THESIS}#17`, `${THESIS}#18`, `${THESIS}#19`, `${THESIS}#1`,
-      // Both title cards print her old phone number and hotmail address.
-      // #2 carries it in a footer block; #3 in a column under the portrait.
-      { from: `${THESIS}#2`, crop: { left: 0, top: 0, width: 1, height: 0.815 } },
-      { from: `${THESIS}#3`, crop: { left: 0, top: 0, width: 0.663, height: 1 } },
-    ],
-    process: r(THESIS, 5, 13),
+    slug: "bridal",
+    dirs: ["Bridal/Bridal 1", "Bridal/Bridal 2"],
+    ratio: "3 / 4",
   },
+  {
+    slug: "semi-formals",
+    dirs: ["My Work/Semi Formals"],
+    ratio: "4 / 3",
+  },
+  // Inventive Clothing: add its folder here once Adeela supplies the images.
+  // { slug: "inventive-clothing", dirs: ["My Work/Inventive Clothing"], ratio: "3 / 4" },
 ];
 
-/** Standalone surface-design pieces for /textiles — square crops of artwork. */
-export const textiles = [
-  { name: "engineered-shirt-front", from: "jahanara/front.jpg" },
-  { name: "shirt-back-panel", from: "jahanara/shirt.jpg" },
-  { name: "sleeve-repeat", from: "jahanara/sleeve.jpg" },
-  { name: "dupatta-border", from: "jahanara/dupata1.jpg", position: "top" },
-  { name: "mughal-medallion", from: "noor tex viscose/9.jpg" },
-  { name: "paisley-border", from: "noor tex viscose/0.jpg" },
-  { name: "garden-arch", from: "noor tex viscose/3.jpg" },
-  { name: "striped-rose-placement", from: "labelle/d1.jpg" },
-  { name: "chevron-bloom", from: "labelle/d5.jpg" },
-  { name: "indigo-cypress", from: "labelle/d8.jpg" },
-  { name: "printed-silk-scarf", from: `${SCARF}#3` },
-  { name: "baroque-scarf", from: `${SCARF}#4` },
-];
-
-/** One-off site images. */
+/** One-off site images, sourced the same way. */
 export const singles = [
-  { id: "hero", from: "jahanara/shirt.jpg", w: 2400, h: 1350 },
-  // The only photograph of Adeela anywhere in the archive: a framed portrait
-  // inside a thesis page. Cropped to the frame's interior — the rest of that
-  // page prints her old personal phone number and email, so it is never shown.
-  { id: "portrait", from: `${THESIS}#3`, w: 800, h: 1000,
-    crop: { left: 0.737, top: 0.108, width: 0.146, height: 0.326 } },
+  {
+    id: "hero",
+    from: "My Work/Prints & Cutlines/03.jpg",
+    w: 2400,
+    h: 1350,
+  },
+  {
+    // The only photograph of Adeela anywhere in the archive: a framed portrait
+    // inside a thesis page. Cropped to the frame's interior — the rest of that
+    // page prints her old phone number and email.
+    id: "portrait",
+    from: "Final thesis/Thesis Portfolio/03.jpg",
+    w: 800,
+    h: 1000,
+    crop: { left: 0.737, top: 0.108, width: 0.146, height: 0.326 },
+  },
 ];

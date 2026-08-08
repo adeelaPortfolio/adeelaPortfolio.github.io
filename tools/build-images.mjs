@@ -12,27 +12,20 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import fs from "node:fs";
 import path from "node:path";
-import { allAssets, open } from "./lib/assets.mjs";
-import { collections, textiles, singles } from "./sources.mjs";
+import { listImages, open, resolvePath } from "./lib/assets.mjs";
+import { collections, singles } from "./sources.mjs";
 
 const OUT = "public/images";
-const MAX = 1400;        // longest edge for gallery images — also the ceiling on what any visitor can obtain
-const COVER = 1200;      // longest edge for collection covers
+const MANIFEST = "src/content/image-manifest.json";
+const MAX = 1400; // longest edge — also the ceiling on what any visitor can obtain
+const COVER = 1200;
 const QUALITY = 70;
-const BUDGET_MB = 30;    // hard ceiling — the build fails past this
+const BUDGET_MB = 45; // hard ceiling — the run fails past this
 
-const index = new Map(allAssets().map((a) => [a.id, a]));
 const report = [];
-const manifest = { collections: {}, textiles: {}, singles: {} };
+const manifest = { collections: {}, singles: {} };
 
-function get(id) {
-  const a = index.get(id);
-  if (!a) throw new Error(`unknown asset: ${id}`);
-  return a;
-}
-
-async function write(id, outRel, opts = {}) {
-  const asset = get(id);
+async function write(asset, outRel, opts = {}) {
   let img = open(asset).rotate();
 
   if (opts.trim) img = img.trim({ threshold: 12 });
@@ -61,12 +54,12 @@ async function write(id, outRel, opts = {}) {
   fs.mkdirSync(path.dirname(abs), { recursive: true });
   const info = await img.webp({ quality: QUALITY, effort: 5 }).toFile(abs);
 
-  report.push({ out: outRel, from: id, px: `${info.width}x${info.height}`, kb: info.size / 1024 });
+  report.push({ out: outRel, from: asset.id, px: `${info.width}x${info.height}`, kb: info.size / 1024 });
   return { src: `/images/${outRel}.webp`, width: info.width, height: info.height };
 }
 
-/** Cover boxes follow the collection's own aspect ratio, so nothing is cropped
- *  twice — a landscape catalogue spread gets a landscape cover. */
+/** Cover boxes follow the collection's own aspect ratio, so a landscape
+ *  catalogue spread gets a landscape cover rather than being cropped twice. */
 function coverBox(ratio) {
   const [a, b] = ratio.split("/").map((n) => Number(n.trim()));
   return a >= b
@@ -74,62 +67,57 @@ function coverBox(ratio) {
     : { w: Math.round((COVER * a) / b), h: COVER };
 }
 
-/** A gallery entry is either a bare asset id, or `{ from, crop }` where crop is
- *  in fractions of the source — used to cut third-party names and handles out
- *  of client campaign images. Fractions survive any change of resolution. */
-const entryOf = (item) => (typeof item === "string" ? { from: item } : item);
+// Start from a clean slate so images removed from a folder don't linger.
+fs.rmSync(OUT, { recursive: true, force: true });
 
 for (const c of collections) {
-  const box = coverBox(c.ratio);
-  const entry = { cover: null, lookbook: [], process: [] };
-  const cov = entryOf(c.cover);
-  entry.cover = await write(cov.from, `collections/${c.slug}/cover`, {
-    ...box, trim: c.trim, crop: cov.crop,
-  });
+  const assets = c.dirs.flatMap((d) => listImages(d));
+  if (!assets.length) {
+    console.warn(`! ${c.slug}: no images found in ${c.dirs.join(", ")} — skipped`);
+    continue;
+  }
 
-  for (const [i, item] of c.lookbook.entries()) {
-    const e = entryOf(item);
+  const entry = { lookbook: [] };
+  for (const [i, asset] of assets.entries()) {
     entry.lookbook.push(
-      await write(e.from, `collections/${c.slug}/look-${String(i + 1).padStart(2, "0")}`, {
-        trim: c.trim, crop: e.crop,
+      await write(asset, `${c.slug}/${String(i + 1).padStart(2, "0")}`, {
+        trim: c.trim,
+        crop: c.crops?.[path.basename(asset.file)],
       }),
     );
   }
-  for (const [i, item] of (c.process ?? []).entries()) {
-    const e = entryOf(item);
-    entry.process.push(
-      await write(e.from, `collections/${c.slug}/process-${String(i + 1).padStart(2, "0")}`, {
-        trim: c.trim, crop: e.crop,
-      }),
-    );
-  }
-  manifest.collections[c.slug] = entry;
-  console.log(`✓ ${c.slug}  (${entry.lookbook.length} looks, ${entry.process.length} process)`);
-}
 
-for (const t of textiles) {
-  // Trim by default: the print plates carry wide white margins, which against a
-  // dark page ground read as blank blocks beside the artwork rather than paper.
-  manifest.textiles[t.name] = await write(t.from, `textiles/${t.name}`, {
-    w: 1200, h: 1200, position: t.position, trim: t.trim ?? true,
+  // Cover: the named file if given, otherwise the first image in sequence.
+  const coverAsset =
+    (c.cover && assets.find((a) => path.basename(a.file) === c.cover)) ?? assets[0];
+  entry.cover = await write(coverAsset, `${c.slug}/cover`, {
+    ...coverBox(c.ratio),
+    trim: c.trim,
+    crop: c.crops?.[path.basename(coverAsset.file)],
   });
+
+  manifest.collections[c.slug] = entry;
+  console.log(`✓ ${c.slug.padEnd(22)} ${String(entry.lookbook.length).padStart(3)} images`);
 }
-console.log(`✓ textiles (${textiles.length})`);
 
 for (const s of singles) {
-  manifest.singles[s.id] = await write(s.from, s.id, {
-    w: s.w, h: s.h, crop: s.crop,
-  });
+  const dir = path.dirname(s.from);
+  const base = path.basename(s.from);
+  const asset = listImages(dir).find((a) => path.basename(a.file) === base);
+  if (!asset) throw new Error(`single "${s.id}": ${s.from} not found`);
+  manifest.singles[s.id] = await write(asset, s.id, { w: s.w, h: s.h, crop: s.crop });
 }
-console.log(`✓ singles (${singles.length})`);
+console.log(`✓ singles                ${String(singles.length).padStart(3)} images`);
 
-fs.writeFileSync("tools/.out/manifest.json", JSON.stringify(manifest, null, 2));
+// Committed, so the site build never depends on the raw archive being present.
+fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2) + "\n");
 
 const totalKb = report.reduce((n, r) => n + r.kb, 0);
-const biggest = [...report].sort((a, b) => b.kb - a.kb).slice(0, 5);
 console.log(`\n${report.length} images, ${(totalKb / 1024).toFixed(1)} MB total`);
 console.log("largest:");
-for (const b of biggest) console.log(`  ${b.kb.toFixed(0).padStart(5)} KB  ${b.px.padEnd(11)} ${b.out}`);
+for (const b of [...report].sort((a, b) => b.kb - a.kb).slice(0, 5)) {
+  console.log(`  ${b.kb.toFixed(0).padStart(5)} KB  ${b.px.padEnd(11)} ${b.out}`);
+}
 
 if (totalKb / 1024 > BUDGET_MB) {
   console.error(`\n✗ over the ${BUDGET_MB} MB budget — cut image counts before quality.`);

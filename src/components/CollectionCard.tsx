@@ -15,7 +15,7 @@ interface Props {
 
 export default function CollectionCard({ collection, tone, priority = false }: Props) {
   return (
-    <Link href={`/collections/${collection.slug}`} className="group block">
+    <Link href={`/work/${collection.slug}`} className="group block">
       <div className="overflow-hidden">
         <EditorialImage
           item={collection.cover}

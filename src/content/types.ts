@@ -2,15 +2,15 @@
 // Content model for the portfolio.
 //
 // Everything Adeela needs to change lives in the sibling data files
-// (site.ts, collections.ts, textiles.ts). To swap a placeholder for a real
+// (site.ts, collections.ts). To swap a placeholder for a real
 // photo: drop the image in /public/images/... and set the matching `src` field
-// to that path (e.g. "/images/collections/palais-royal/look-01.webp"). When `src`
+// to that path (e.g. "/images/bridal/01.webp"). When `src`
 // is empty, a tasteful vintage placeholder renders automatically.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** A single image slot. Leave `src` empty ("") to render a placeholder. */
 export interface ImageItem {
-  /** Public path, e.g. "/images/collections/palais-royal/look-01.webp". Empty = placeholder. */
+  /** Public path, e.g. "/images/bridal/01.webp". Empty = placeholder. */
   src: string;
   /** Descriptive alt text — always fill this in for accessibility & SEO. */
   alt: string;
@@ -30,8 +30,15 @@ export interface Swatch {
 
 /** A garment collection / lookbook. */
 export interface Collection {
-  /** URL slug, e.g. "palais-royal". Must be unique. */
+  /** URL slug, e.g. "silk-scarves". Must be unique. */
   slug: string;
+  /**
+   * Top-level category on the index: "Thesis" or "My Work". Collections are
+   * grouped under these headings in the order the groups first appear.
+   */
+  group: string;
+  /** Optional second level, e.g. "Printed" for the two print collections. */
+  subgroup?: string;
   /** Display title. */
   title: string;
   /** Season label, e.g. "Autumn/Winter". */

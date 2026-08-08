@@ -1,0 +1,896 @@
+{
+  "collections": {
+    "thesis": {
+      "lookbook": [
+        {
+          "src": "/images/thesis/01.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/02.webp",
+          "width": 1400,
+          "height": 810
+        },
+        {
+          "src": "/images/thesis/03.webp",
+          "width": 1313,
+          "height": 1400
+        },
+        {
+          "src": "/images/thesis/04.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/05.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/06.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/07.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/08.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/09.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/10.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/11.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/12.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/13.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/14.webp",
+          "width": 1400,
+          "height": 657
+        },
+        {
+          "src": "/images/thesis/15.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/16.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/17.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/thesis/18.webp",
+          "width": 1232,
+          "height": 816
+        },
+        {
+          "src": "/images/thesis/19.webp",
+          "width": 1232,
+          "height": 816
+        }
+      ],
+      "cover": {
+        "src": "/images/thesis/cover.webp",
+        "width": 1200,
+        "height": 900
+      }
+    },
+    "prints-and-cutlines": {
+      "lookbook": [
+        {
+          "src": "/images/prints-and-cutlines/01.webp",
+          "width": 1400,
+          "height": 1011
+        },
+        {
+          "src": "/images/prints-and-cutlines/02.webp",
+          "width": 1400,
+          "height": 1011
+        },
+        {
+          "src": "/images/prints-and-cutlines/03.webp",
+          "width": 1400,
+          "height": 988
+        },
+        {
+          "src": "/images/prints-and-cutlines/04.webp",
+          "width": 1400,
+          "height": 1011
+        },
+        {
+          "src": "/images/prints-and-cutlines/05.webp",
+          "width": 1400,
+          "height": 1011
+        },
+        {
+          "src": "/images/prints-and-cutlines/06.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/07.webp",
+          "width": 1400,
+          "height": 1011
+        },
+        {
+          "src": "/images/prints-and-cutlines/08.webp",
+          "width": 1400,
+          "height": 1011
+        },
+        {
+          "src": "/images/prints-and-cutlines/09.webp",
+          "width": 1400,
+          "height": 988
+        },
+        {
+          "src": "/images/prints-and-cutlines/10.webp",
+          "width": 1400,
+          "height": 1011
+        },
+        {
+          "src": "/images/prints-and-cutlines/11.webp",
+          "width": 1400,
+          "height": 1011
+        },
+        {
+          "src": "/images/prints-and-cutlines/12.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/13.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/14.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/15.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/16.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/17.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/18.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/19.webp",
+          "width": 1400,
+          "height": 991
+        },
+        {
+          "src": "/images/prints-and-cutlines/20.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/21.webp",
+          "width": 1400,
+          "height": 991
+        },
+        {
+          "src": "/images/prints-and-cutlines/22.webp",
+          "width": 1400,
+          "height": 991
+        },
+        {
+          "src": "/images/prints-and-cutlines/23.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/24.webp",
+          "width": 1400,
+          "height": 991
+        },
+        {
+          "src": "/images/prints-and-cutlines/25.webp",
+          "width": 1400,
+          "height": 991
+        },
+        {
+          "src": "/images/prints-and-cutlines/26.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/27.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/28.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/29.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/30.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/31.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/32.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/33.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/34.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/35.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/36.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/37.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/38.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/39.webp",
+          "width": 1043,
+          "height": 737
+        },
+        {
+          "src": "/images/prints-and-cutlines/40.webp",
+          "width": 1043,
+          "height": 737
+        },
+        {
+          "src": "/images/prints-and-cutlines/41.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/prints-and-cutlines/42.webp",
+          "width": 589,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/43.webp",
+          "width": 1176,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/44.webp",
+          "width": 1225,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/45.webp",
+          "width": 1120,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/46.webp",
+          "width": 800,
+          "height": 800
+        },
+        {
+          "src": "/images/prints-and-cutlines/47.webp",
+          "width": 800,
+          "height": 800
+        },
+        {
+          "src": "/images/prints-and-cutlines/48.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/49.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/50.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/51.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/52.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/53.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/54.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/55.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/56.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/57.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/58.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/prints-and-cutlines/59.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/60.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/61.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/62.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/63.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/64.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/65.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/66.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/67.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/68.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/69.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/70.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/71.webp",
+          "width": 734,
+          "height": 1066
+        },
+        {
+          "src": "/images/prints-and-cutlines/72.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/73.webp",
+          "width": 1080,
+          "height": 994
+        },
+        {
+          "src": "/images/prints-and-cutlines/74.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/75.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/76.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/77.webp",
+          "width": 1124,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/78.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/79.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/80.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/81.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/82.webp",
+          "width": 700,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/83.webp",
+          "width": 979,
+          "height": 1325
+        },
+        {
+          "src": "/images/prints-and-cutlines/84.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/85.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/86.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/87.webp",
+          "width": 714,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/88.webp",
+          "width": 990,
+          "height": 1400
+        },
+        {
+          "src": "/images/prints-and-cutlines/89.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/90.webp",
+          "width": 1280,
+          "height": 1280
+        },
+        {
+          "src": "/images/prints-and-cutlines/91.webp",
+          "width": 990,
+          "height": 1400
+        }
+      ],
+      "cover": {
+        "src": "/images/prints-and-cutlines/cover.webp",
+        "width": 1200,
+        "height": 900
+      }
+    },
+    "silk-scarves": {
+      "lookbook": [
+        {
+          "src": "/images/silk-scarves/01.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/silk-scarves/02.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/silk-scarves/03.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/silk-scarves/04.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/silk-scarves/05.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/silk-scarves/06.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/silk-scarves/07.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/silk-scarves/08.webp",
+          "width": 1400,
+          "height": 990
+        }
+      ],
+      "cover": {
+        "src": "/images/silk-scarves/cover.webp",
+        "width": 1200,
+        "height": 900
+      }
+    },
+    "bridal": {
+      "lookbook": [
+        {
+          "src": "/images/bridal/01.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/02.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/03.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/04.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/05.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/06.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/07.webp",
+          "width": 989,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/08.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/09.webp",
+          "width": 989,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/10.webp",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "src": "/images/bridal/11.webp",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "src": "/images/bridal/12.webp",
+          "width": 989,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/13.webp",
+          "width": 989,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/14.webp",
+          "width": 989,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/15.webp",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "src": "/images/bridal/16.webp",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "src": "/images/bridal/17.webp",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "src": "/images/bridal/18.webp",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "src": "/images/bridal/19.webp",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "src": "/images/bridal/20.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/21.webp",
+          "width": 1049,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/22.webp",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "src": "/images/bridal/23.webp",
+          "width": 933,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/24.webp",
+          "width": 933,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/25.webp",
+          "width": 1299,
+          "height": 866
+        },
+        {
+          "src": "/images/bridal/26.webp",
+          "width": 933,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/27.webp",
+          "width": 1400,
+          "height": 1058
+        },
+        {
+          "src": "/images/bridal/28.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/bridal/29.webp",
+          "width": 1400,
+          "height": 989
+        },
+        {
+          "src": "/images/bridal/30.webp",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "src": "/images/bridal/31.webp",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "src": "/images/bridal/32.webp",
+          "width": 336,
+          "height": 924
+        },
+        {
+          "src": "/images/bridal/33.webp",
+          "width": 1400,
+          "height": 933
+        },
+        {
+          "src": "/images/bridal/34.webp",
+          "width": 934,
+          "height": 1400
+        },
+        {
+          "src": "/images/bridal/35.webp",
+          "width": 1074,
+          "height": 1400
+        }
+      ],
+      "cover": {
+        "src": "/images/bridal/cover.webp",
+        "width": 900,
+        "height": 1200
+      }
+    },
+    "semi-formals": {
+      "lookbook": [
+        {
+          "src": "/images/semi-formals/01.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/02.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/03.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/04.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/05.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/06.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/07.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/08.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/09.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/10.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/11.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/12.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/13.webp",
+          "width": 1400,
+          "height": 990
+        },
+        {
+          "src": "/images/semi-formals/14.webp",
+          "width": 1400,
+          "height": 990
+        }
+      ],
+      "cover": {
+        "src": "/images/semi-formals/cover.webp",
+        "width": 1200,
+        "height": 900
+      }
+    }
+  },
+  "singles": {
+    "hero": {
+      "src": "/images/hero.webp",
+      "width": 2303,
+      "height": 1350
+    },
+    "portrait": {
+      "src": "/images/portrait.webp",
+      "width": 512,
+      "height": 808
+    }
+  }
+}

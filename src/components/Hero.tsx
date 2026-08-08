@@ -40,15 +40,15 @@ export default function Hero() {
             {site.tagline}
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Button href="/collections" variant="solid">
+            <Button href="/work" variant="solid">
               View Collections
             </Button>
             <Button
-              href="/textiles"
+              href="/work/prints-and-cutlines"
               variant="outline"
               className="border-white/40 text-ivory hover:border-white hover:text-white"
             >
-              Explore Textiles
+              Explore Prints
             </Button>
           </div>
         </div>

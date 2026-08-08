@@ -22,7 +22,7 @@ interface Props {
 export default function CollectionRow({ collection, index, tone, priority }: Props) {
   return (
     <Link
-      href={`/collections/${collection.slug}`}
+      href={`/work/${collection.slug}`}
       className={`group relative block py-7 transition-colors md:py-9 ${
         index === 0 ? "" : "border-t border-ink/15 hover:border-ink/40"
       }`}

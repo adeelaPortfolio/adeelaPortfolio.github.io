@@ -6,7 +6,7 @@ import { collections } from "@/content/collections";
 import { SITE_URL } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/collections", "/textiles", "/about", "/awards", "/contact"].map(
+  const staticRoutes = ["", "/work", "/about", "/awards", "/contact"].map(
     (path) => ({
       url: `${SITE_URL}${path}`,
       changeFrequency: "monthly" as const,
@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
 
   const collectionRoutes = collections.map((c) => ({
-    url: `${SITE_URL}/collections/${c.slug}`,
+    url: `${SITE_URL}/work/${c.slug}`,
     changeFrequency: "yearly" as const,
     priority: 0.6,
   }));

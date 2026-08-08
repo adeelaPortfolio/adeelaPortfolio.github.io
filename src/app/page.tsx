@@ -6,18 +6,17 @@ import EditorialImage from "@/components/EditorialImage";
 import Reveal from "@/components/Reveal";
 import Button from "@/components/Button";
 import { collections } from "@/content/collections";
-import { textiles } from "@/content/textiles";
 import { site } from "@/content/site";
 import { toneFor } from "@/lib/tones";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Home — hero, featured collections, the two-pillar (textiles + fashion) split,
+// Home — hero, featured work, the two-pillar (print + garment) split, a
 // an about teaser, and a closing contact call-to-action.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
   const featured = collections.slice(0, 3);
-  const textilePreview = textiles.slice(0, 3);
+  const prints = collections.find((c) => c.slug === "prints-and-cutlines");
 
   return (
     <>
@@ -33,7 +32,7 @@ export default function HomePage() {
           />
           <Reveal delay={120}>
             <Link
-              href="/collections"
+              href="/work"
               className="link-underline font-body text-sm uppercase tracking-[0.14em] text-sepia"
             >
               View all collections →
@@ -61,19 +60,19 @@ export default function HomePage() {
 
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
           <Reveal>
-            <Link href="/textiles" className="group block">
+            <Link href="/work/prints-and-cutlines" className="group block">
               <EditorialImage
-                item={textilePreview[0]?.image ?? { src: "", alt: "Textile detail" }}
+                item={prints?.cover ?? { src: "", alt: "Print artwork" }}
                 ratio="4 / 3"
-                tone={textilePreview[0]?.tone}
-                label="Textiles"
+                tone={toneFor("prints-and-cutlines")}
+                label="Printed"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="transition-transform duration-700 ease-out group-hover:scale-[1.02]"
               />
               <div className="mt-6">
                 <p className="eyebrow">Surface & Material</p>
                 <h3 className="mt-2 font-display text-3xl text-ink">
-                  <span className="link-underline">Textiles</span>
+                  <span className="link-underline">Printed</span>
                 </h3>
                 <p className="mt-3 max-w-md font-body text-ink/65">
                   Digital prints, repeat patterns and engineered panel layouts —
@@ -84,7 +83,7 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal delay={120}>
-            <Link href="/collections" className="group block">
+            <Link href="/work" className="group block">
               <EditorialImage
                 item={featured[1]?.cover ?? { src: "", alt: "Garment detail" }}
                 ratio="4 / 3"
@@ -117,18 +116,17 @@ export default function HomePage() {
         </div>
         <div className="relative left-1/2 w-screen -translate-x-1/2">
           <ul className="grid grid-cols-3 gap-px bg-ink/10 md:grid-cols-6">
-            {textiles.slice(0, 6).map((t) => (
-              <li key={t.title} className="bg-ivory">
+            {(prints?.lookbook ?? []).slice(0, 6).map((img) => (
+              <li key={img.src} className="bg-ivory">
                 <Link
-                  href="/textiles"
+                  href="/work/prints-and-cutlines"
                   className="group block overflow-hidden"
-                  aria-label={`Textiles — ${t.title}`}
+                  aria-label="Prints & Cutlines"
                 >
                   <EditorialImage
-                    item={t.image}
+                    item={img}
                     ratio="1 / 1"
-                    tone={t.tone}
-                    label={t.title}
+                    tone={toneFor("prints-and-cutlines")}
                     sizes="(max-width: 768px) 33vw, 17vw"
                     className="transition-transform duration-700 ease-out group-hover:scale-110"
                   />
