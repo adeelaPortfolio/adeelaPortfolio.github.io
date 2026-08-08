@@ -34,6 +34,9 @@
   body {
     @apply bg-ivory text-ink font-body antialiased;
     background-attachment: fixed;
+    /* The hover previews and the full-bleed print strip sit outside the text
+       column by design; clip rather than allow a horizontal scrollbar. */
+    overflow-x: clip;
     /* Warm gold bloom over the oxblood, so large flat areas aren't dead. */
     background-image:
       radial-gradient(1000px 620px at 50% -12%, rgba(227, 199, 126, 0.12), transparent 62%),

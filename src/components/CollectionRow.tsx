@@ -58,16 +58,22 @@ export default function CollectionRow({ collection, index, tone, priority }: Pro
         </span>
       </div>
 
-      {/* Cover, revealed on hover. Absolutely positioned so it contributes no
-          height — in flow at opacity-0 it reserved ~280px per row and the index
-          read as a column of blank gaps. */}
-      <div className="pointer-events-none absolute right-36 top-1/2 hidden w-32 -translate-y-1/2 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 lg:block xl:right-44 xl:w-40">
+      {/* Cover, revealed on hover.
+          • Absolutely positioned so it contributes no height — in flow at
+            opacity-0 it reserved ~280px per row and the index read as blank gaps.
+          • Sits in the empty margin OUTSIDE the text column (`left-full`), so it
+            never covers the title.
+          • Width is the margin that actually exists — calc(50vw - 630px) — capped
+            at 320px, and only shown from 2xl up, where that margin is wide
+            enough to hold it without spilling off screen. */}
+      <div className="pointer-events-none absolute left-full top-1/2 hidden w-[clamp(140px,calc(50vw-630px),320px)] -translate-y-1/2 pl-6 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 2xl:block">
         <EditorialImage
           item={collection.cover}
           tone={tone}
           label={collection.title}
           priority={priority}
-          sizes="180px"
+          sizes="320px"
+          className="shadow-2xl shadow-scrim/50 ring-1 ring-gilt/20"
         />
       </div>
     </Link>
