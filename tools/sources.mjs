@@ -62,8 +62,14 @@ export const collections = [
     // finished garments on a model, which is what the row is previewing.
     cover: "My Work/Semi Formals/06.jpg",
   },
-  // Inventive Clothing: add its folder here once Adeela supplies the images.
-  // { slug: "inventive-clothing", dirs: ["My Work/Inventive Clothing"], ratio: "3 / 4" },
+  {
+    // Adeela's own label. The folder is numbered 1..64 UNPADDED, so the natural
+    // sort in lib/assets.mjs is what keeps it in her sequence — plain
+    // lexicographic ordering puts 10 before 2 and scatters the set.
+    slug: "inventive-clothing",
+    dirs: ["My Work/Inventive Clothing"],
+    ratio: "3 / 4",
+  },
 ];
 
 /** One-off site images, sourced the same way. */

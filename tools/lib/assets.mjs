@@ -42,17 +42,25 @@ export function resolvePath(relPath) {
 }
 
 /**
- * Every image in one archive directory, in filename order — which is the
- * sequence Adeela numbered them in. Plain lexicographic sort is correct here:
- * "41.jpg" < "41a.jpg" < "42.jpg", so the lettered variants stay with their
- * parent plate.
+ * Every image in one archive directory, in the sequence Adeela numbered them in.
+ *
+ * The sort is NATURAL, not lexicographic: digit runs compare as numbers. Most of
+ * the archive is zero-padded ("01.jpg"), where the two agree — but Inventive
+ * Clothing arrived numbered "1..64" unpadded, and plain .sort() puts 10 before 2
+ * and scatters the set. She numbers folders in the order she wants them shown, so
+ * honouring that numbering is the whole contract of this function.
+ *
+ * Letters still tie a variant to its plate: "41.jpg" < "41a.jpg" < "42.jpg",
+ * because the leading numbers compare equal and the suffix breaks the tie.
  */
+const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
+
 export function listImages(relDir) {
   const abs = resolvePath(relDir);
   return fs
     .readdirSync(abs)
     .filter((f) => IMAGE_RE.test(f))
-    .sort()
+    .sort((a, b) => collator.compare(a, b))
     .map((name) => ({ id: `${relDir}/${name}`, file: path.join(abs, name) }));
 }
 

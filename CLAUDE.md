@@ -67,15 +67,25 @@ live site is evidence about the last *push*, not about the working tree — comp
   She may still want a real headshot; if she sends one, drop it in that folder, adjust
   the crop and re-run `npm run images`.
 
+- **Inventive Clothing shipped on 2026-08-09** — 63 images, her own label, the sixth
+  collection. Two things about it are load-bearing:
+  - **The folder is numbered `1..64` unpadded**, unlike the rest of the archive. Plain
+    `.sort()` put 10 before 2 and scattered the set, so `lib/assets.mjs` now sorts
+    **naturally** (`Intl.Collator {numeric:true}`). Every existing collection was
+    checked file-by-file against the old order: all six unchanged.
+  - **Adeela blurred the clients' faces in the archive originals herself.** The
+    pipeline does no blurring — that was tried and reverted in `f416e0a`. Two frames
+    (`54.png`, `55.png`) show an unblurred professional model; those are campaign
+    shots, in the same category as the Enchantress and Jahanara images already on the
+    site. If new files arrive, **check faces on the contact sheet before publishing**.
+- **`site.socials` is no longer empty.** It carries one real link, the label's
+  Instagram, `instagram.com/inventiveclothing_`. Labelled "Instagram — Inventive
+  Clothing" rather than plain "Instagram" because it is the brand's account, not a
+  personal design one. The `?igsh=` share token was stripped.
+
 **Open items — these need Adeela, not code:**
 
-1. **Inventive Clothing** — her own label, the most senior role on her CV, has no
-   images yet. When she supplies a folder: add it to `tools/sources.mjs`, add an entry
-   to `src/content/collections.ts` (group `"My Work"`), run `npm run images`. That's it.
-2. **Social handles** — none exist anywhere in her material. `site.socials` is `[]` and
-   the Footer/Contact blocks hide themselves when empty. Never ship a bare
-   `instagram.com` link.
-3. **Two files she may not want published**, both included because she asked for
+1. **Two files she may not want published**, both included because she asked for
    everything in the folder: `Bridal/Bridal 2/06.jpg` is a 336×924 sidebar strip, not
    artwork; `Prints & Cutlines/41e.jpg` and `41f.jpg` are 800×800 and visibly soft.
    Deleting the file from the folder and re-running the pipeline is the fix.
@@ -116,7 +126,7 @@ All content lives in `src/content/` as plain typed data. Pages map over that dat
 |------|----------|
 | `src/content/types.ts` | The shape of every content object (read this first) |
 | `src/content/site.ts` | Name, tagline, bio, statement, skills, education, awards, `cvPath` |
-| `src/content/collections.ts` | The five collections — **words only**; images come from the manifest |
+| `src/content/collections.ts` | The six collections — **words only**; images come from the manifest |
 | `src/content/image-manifest.json` | **Generated.** Written by `npm run images`; never edit by hand |
 
 ### Optional by design
@@ -138,7 +148,12 @@ section under the header.
 
 - **`tools/sources.mjs` names DIRECTORIES, not files.** Each collection lists source
   folders in Adeela's archive; `npm run images` publishes whatever is in them, in
-  filename order, which is the sequence she numbered them in.
+  filename order, which is the sequence she numbered them in. That sort is **natural,
+  not lexicographic** — digit runs compare as numbers, so an unpadded `1..64` folder
+  stays in her order. Letters still bind a variant to its plate (`41` < `41a` < `42`).
+- **The image budget is nearly spent.** `build-images.mjs` fails past 45 MB; the set is
+  at **40.5 MB** since Inventive Clothing landed. The next folder will need images cut,
+  or `QUALITY`/`MAX` lowered — cut counts before quality, per the error message.
 - **To add, remove or reorder images: change the folder and re-run `npm run images`.**
   No code edit. This matters — the archive is her working folder and gets reorganised
   regularly, and an earlier hand-listed manifest broke every single time it did, once

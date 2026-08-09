@@ -127,8 +127,27 @@ export const collections: Collection[] = [
       (n) => `Semi-formal collection — illustration, embroidery development or campaign spread ${n}`,
     ),
   },
-  // Inventive Clothing — Adeela's own label — goes here once she supplies the
-  // images. Add its folder to tools/sources.mjs and an entry below.
+  {
+    // Her own label, May 2024 – March 2026. Everything below is from the
+    // Career & Experience entry on her CV — no concept statement, because she
+    // has not written one for it.
+    slug: "inventive-clothing",
+    group: "My Work",
+    title: "Inventive Clothing",
+    season: "Own Label",
+    year: "2026",
+    summary:
+      "Adeela's own label — an independent brand she founded and ran end to end, from custom lawn stitching through semi-formal and bridal commissions.",
+    ratio: "3 / 4",
+    cover: cover(
+      "inventive-clothing",
+      "Hand-embroidered bridal lehnga made under Adeela's own label",
+    ),
+    lookbook: gallery(
+      "inventive-clothing",
+      (n) => `Inventive Clothing — garment, embroidery detail or finished commission ${n}`,
+    ),
+  },
 ];
 
 /** Look up one collection by slug. */

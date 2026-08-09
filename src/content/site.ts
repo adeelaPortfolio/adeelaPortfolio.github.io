@@ -18,7 +18,16 @@ export const site: SiteContent = {
 
   // Add real profile links here as they exist. An empty list simply hides the
   // social row — better than linking to a handle that isn't hers.
-  socials: [],
+  //
+  // This is the account for Inventive Clothing, her own label, which is why the
+  // label says so rather than just "Instagram" — she has no personal design
+  // account. The ?igsh= tracking parameter she sent is stripped on purpose.
+  socials: [
+    {
+      label: "Instagram — Inventive Clothing",
+      href: "https://www.instagram.com/inventiveclothing_/",
+    },
+  ],
 
   // Dimensions come from the image pipeline, so both render at their true
   // aspect ratio rather than being cropped to a box.
