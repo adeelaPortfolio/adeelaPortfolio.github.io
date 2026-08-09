@@ -61,6 +61,7 @@ function build(slug: string): Collection {
     ...(c.concept?.length ? { concept: c.concept } : {}),
     ...(c.materials?.length ? { materials: c.materials } : {}),
     ...(c.credit ? { credit: c.credit } : {}),
+    ...(c.link ? { link: c.link } : {}),
   };
 }
 

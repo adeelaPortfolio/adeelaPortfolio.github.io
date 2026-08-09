@@ -59,6 +59,27 @@ export default async function CollectionDetailPage({
         intro={collection.summary}
       />
 
+      {/* Where to see more of this collection — only ever a link Adeela has
+          given us. Sits directly under the header so it reads as part of the
+          introduction rather than as a stray footer link. */}
+      {collection.link && (
+        <section className="container-editorial pt-8">
+          <Reveal>
+            <a
+              href={collection.link.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="link-underline inline-flex items-baseline gap-2 font-body text-sm uppercase tracking-label text-sepia"
+            >
+              {collection.link.label}
+              <span aria-hidden className="text-xs">
+                &#8599;
+              </span>
+            </a>
+          </Reveal>
+        </section>
+      )}
+
       {/* Concept + materials — the whole block is dropped when a collection
           has neither, rather than printing a lone heading over empty space.
           Only the thesis carries a concept statement now. */}

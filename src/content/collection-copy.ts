@@ -31,6 +31,8 @@ export interface CollectionCopy {
   materials?: string[];
   /** Photography credit. */
   credit?: string;
+  /** "See more" link — only a URL she has actually supplied. */
+  link?: { label: string; href: string };
   /** Second-level heading on /work, e.g. "Printed". */
   subgroup?: string;
   /** Alt text for image n of the gallery. Falls back to the title. */
@@ -114,6 +116,12 @@ export const copy: Record<string, CollectionCopy> = {
     summary:
       "Adeela's own label — an independent brand she founded and ran end to end, from custom lawn stitching through semi-formal and bridal commissions.",
     coverAlt: "Hand-embroidered bridal lehnga made under Adeela's own label",
+    // The label's own account, and the only place the full body of its work
+    // lives. The ?igsh= share token she sent is stripped.
+    link: {
+      label: "See the label on Instagram",
+      href: "https://www.instagram.com/inventiveclothing_/",
+    },
     describe: (n) => `Inventive Clothing — garment, embroidery detail or finished commission ${n}`,
   },
 };

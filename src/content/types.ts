@@ -81,6 +81,13 @@ export interface Collection {
   ratio?: string;
   /** Photography credit, e.g. "Campaign photography courtesy of La'Belle." */
   credit?: string;
+  /**
+   * Somewhere to see more of this collection — the label's own Instagram, a
+   * client's lookbook. Optional, and only ever a link Adeela has given us:
+   * a guessed handle is exactly the kind of invention this site exists
+   * without. Rendered under the page intro, opens in a new tab.
+   */
+  link?: { label: string; href: string };
   /** Key materials list. Optional — only where the cloth is actually known. */
   materials?: string[];
   /** Fabric & colour swatches. Optional — never hand-invent hex values. */
