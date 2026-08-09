@@ -59,10 +59,24 @@ export const collections = [
 /** One-off site images, sourced the same way. */
 export const singles = [
   {
+    // The left panel of that sheet, on its own and turned on its side. 03.jpg is
+    // a catalogue page of five panels on white; used whole it put the white
+    // margin and two half-panels into the banner. Cropped to the one panel and
+    // rotated, the floral archway reads as a single wide image.
+    //
+    // 270° (anticlockwise), not 90°: it lands the empty damask arch on the left,
+    // under the wordmark and the heavy left-hand scrim, and the flowers, vase
+    // and fruit on the right where nothing covers them. A 90° turn mirrors that
+    // and buries the detail under the text.
+    //
+    // No w/h box: cover-cropping to one would cut the panel's own gold border
+    // off. `max` is the panel's long edge, so it publishes at native size —
+    // the same pixels the old whole-sheet hero already exposed, not more.
     id: "hero",
     from: "My Work/Prints & Cutlines/03.jpg",
-    w: 2400,
-    h: 1350,
+    crop: { left: 0.0156, top: 0, width: 0.3238, height: 1 },
+    rotate: 270,
+    max: 1626,
   },
   {
     // The only photograph of Adeela anywhere in the archive: a framed portrait

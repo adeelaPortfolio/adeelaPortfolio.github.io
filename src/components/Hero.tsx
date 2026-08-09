@@ -21,11 +21,13 @@ export default function Hero() {
           sizes="100vw"
           className="h-full w-full"
         />
-        {/* Vintage wash for text legibility. The hero is a dense, pale print
-            rather than a dark photograph, so this has to carry real weight —
-            a light scrim leaves both the wordmark and the nav unreadable. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-scrim/65 via-scrim/35 to-scrim/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-scrim/75 via-scrim/25 to-transparent" />
+        {/* Vintage wash for text legibility. Kept light on purpose: the banner
+            is the print panel turned on its side, and its left half is already
+            a dark damask arch, so the wordmark has contrast without help. The
+            weight that is here is aimed at the two places that don't — the nav
+            over the flowers top-right, and the scroll cue at the foot. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-scrim/40 via-transparent to-scrim/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-scrim/85 via-scrim/45 to-scrim/5" />
       </div>
 
       {/* Content */}

@@ -39,11 +39,24 @@ The site is complete and deployed. Structure, images, theme and layout are all d
   real bugs, both now committed: the lightbox had **no backdrop at all**, and its arrows
   collapsed into the top corners on tablets.
 
-**⚠ Uncommitted work in the tree** (check `git status` first): the hero banner is being
-re-cut — `tools/sources.mjs` crops `Prints & Cutlines/03.jpg` to a single panel and
-rotates it 270°, with matching `rotate` support in `tools/build-images.mjs`, new alt
-text in `site.ts`, and a regenerated `hero.webp`. Finish or discard it deliberately;
-don't let a `git add -A` sweep it into an unrelated commit.
+- **The hero banner is one print panel, turned on its side.** `Prints & Cutlines/03.jpg`
+  is a catalogue page of five panels on white; used whole it put white margin and two
+  half-panels into the banner. `sources.mjs` now crops it to the left panel and rotates
+  it **270°**. Anticlockwise is the load-bearing part: it puts the empty damask arch on
+  the left under the wordmark and the flowers and fruit on the right where nothing
+  covers them. 90° mirrors that and buries the artwork under the text.
+- **The hero scrim was re-tuned with it.** It had been weighted for a pale sheet; over a
+  dark panel that reading came out muddy and grey. The weight now sits in the
+  left-to-right gradient, which only covers the text column, so the print stays
+  saturated on the right.
+
+  Both were verified at 390–2560px and are now committed and deployed.
+
+**Check `git status` before assuming what's live.** The hero panel sat finished but
+uncommitted in the tree for a session, so `npm run dev` showed the new banner while
+adeelaportfolio.github.io still served the old whole-sheet one. A screenshot of the
+live site is evidence about the last *push*, not about the working tree — compare
+`out/images/hero.webp` against the deployed file before re-doing work that already exists.
 
 **Open items — these need Adeela, not code:**
 
@@ -126,7 +139,13 @@ invent one. Keep it that way.
   and is never committed. `tools/lib/assets.mjs` resolves paths tolerantly (case- and
   rename-insensitive) for the same reason.
 - Output is capped at **1400 px**. Deliberate: it is the ceiling on what any visitor can
-  obtain. Her print-resolution originals (up to 6300 × 14981) are never served.
+  obtain. Her print-resolution originals (up to 6300 × 14981) are never served. The one
+  exception is the hero (`max: 1626`), which is the cropped panel's own long edge — the
+  same pixels the old whole-sheet banner already published, not more.
+- A single may also carry **`rotate`** (a quarter-turn, for a tall panel used as a wide
+  banner). It has to be applied **after** `resize` in `build-images.mjs`: sharp runs
+  extract → resize → rotate whatever the call order, so a `.rotate()` written earlier in
+  the chain silently does nothing. Empirically verified, not assumed.
 - **`src/components/EditorialImage.tsx`** renders a real image when `src` is set and a
   vintage placeholder frame otherwise. **Never remove that fallback.**
 - The CV at `public/cv/adeela-cv.pdf` is Adeela's own Google Doc export and is the only
@@ -148,6 +167,11 @@ reported it twice. So:
 **Cropping must now be asked for.** Only two places do, both deliberate and commented:
 the full-bleed hero banner (`fit="cover"`), and the portrait, which is a crop of a face.
 Uneven gallery rows are the intended result — uniform tiles would mean cropping again.
+
+The hero's crop in `sources.mjs` is a third, different thing: it selects *which artwork*
+is in the banner (one panel out of a five-panel catalogue page), and deliberately keeps
+that panel's own gold border intact. That is why it publishes at `max` rather than
+through a `w`/`h` cover box — a box would cut the border straight off.
 
 ### Responsive — layouts fold, they don't shrink
 

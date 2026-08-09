@@ -24,7 +24,7 @@ export const site: SiteContent = {
   // aspect ratio rather than being cropped to a box.
   heroImage: {
     ...manifest.singles.hero,
-    alt: "Engineered digital lawn print artwork, drawn as a shaped garment panel",
+    alt: "Engineered digital print panel — a floral archway over gold trellis, with a vase of blooms and fruit, shown on its side",
   },
 
   portrait: {

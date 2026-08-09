@@ -54,6 +54,12 @@ async function write(asset, outRel, opts = {}) {
           withoutEnlargement: true,
         });
 
+  // A quarter-turn, for a tall engineered panel used as a wide banner.
+  // MUST come after resize: sharp runs extract → resize → rotate whatever the
+  // call order, so a .rotate() written earlier in the chain silently does
+  // nothing. The resize box above is square, so turning last is equivalent.
+  if (opts.rotate) img = img.rotate(opts.rotate);
+
   const abs = path.join(OUT, outRel + ".webp");
   fs.mkdirSync(path.dirname(abs), { recursive: true });
   const info = await img.webp({ quality: QUALITY, effort: 5 }).toFile(abs);
@@ -102,7 +108,13 @@ for (const s of singles) {
   const base = path.basename(s.from);
   const asset = listImages(dir).find((a) => path.basename(a.file) === base);
   if (!asset) throw new Error(`single "${s.id}": ${s.from} not found`);
-  manifest.singles[s.id] = await write(asset, s.id, { w: s.w, h: s.h, crop: s.crop });
+  manifest.singles[s.id] = await write(asset, s.id, {
+    w: s.w,
+    h: s.h,
+    max: s.max,
+    crop: s.crop,
+    rotate: s.rotate,
+  });
 }
 console.log(`✓ singles                ${String(singles.length).padStart(3)} images`);
 

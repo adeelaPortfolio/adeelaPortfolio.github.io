@@ -884,8 +884,8 @@
   "singles": {
     "hero": {
       "src": "/images/hero.webp",
-      "width": 2303,
-      "height": 1350
+      "width": 1626,
+      "height": 746
     },
     "portrait": {
       "src": "/images/portrait.webp",
