@@ -100,17 +100,27 @@ for (const c of collections) {
     );
   }
 
+  // Development gallery: a "Development" or "Process" sub-folder of the
+  // collection's own folder. Optional, and absent for every collection today.
+  const processAssets = (c.processDirs ?? []).flatMap((d) => listImages(d));
+  for (const [i, asset] of processAssets.entries()) {
+    (entry.process ??= []).push(
+      await write(asset, `${c.slug}/process/${String(i + 1).padStart(2, "0")}`, {
+        trim: c.trim,
+        crop: c.crops?.[path.basename(asset.file)],
+      }),
+    );
+  }
+
   // Cover: the named file if given, otherwise the first image in sequence.
   //
   // `cover` may be a bare filename or an archive-relative path. The path form
   // is not optional when a collection draws on more than one folder: Bridal
   // pulls from "Bridal 1" and "Bridal 2" and both number their files from 01,
   // so a bare "04.jpg" silently resolves to whichever folder is listed first.
-  const coverAsset =
-    (c.cover &&
-      assets.find((a) => a.id === c.cover || a.id.endsWith(`/${c.cover}`))) ??
-    assets[0];
-  if (c.cover && !assets.some((a) => a.id === c.cover || a.id.endsWith(`/${c.cover}`))) {
+  const named = (a) => a.id === c.cover || a.id.endsWith(`/${c.cover}`);
+  const coverAsset = c.cover ? assets.find(named) : assets[0];
+  if (!coverAsset) {
     throw new Error(`${c.slug}: cover "${c.cover}" is not in ${c.dirs.join(", ")}`);
   }
   // Covers are sized down, never cropped to a box — the site displays every

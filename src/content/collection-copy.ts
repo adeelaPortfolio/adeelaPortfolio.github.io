@@ -16,6 +16,8 @@
 // what the work is.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import type { Swatch } from "./types";
+
 export interface CollectionCopy {
   /** Overrides the folder name. */
   title?: string;
@@ -31,6 +33,11 @@ export interface CollectionCopy {
   materials?: string[];
   /** Photography credit. */
   credit?: string;
+  /**
+   * Fabric & colour swatches. Never hand-invent hex values — read them off the
+   * cloth or leave the section out.
+   */
+  swatches?: Swatch[];
   /** "See more" link — only a URL she has actually supplied. */
   link?: { label: string; href: string };
   /** Second-level heading on /work, e.g. "Printed". */

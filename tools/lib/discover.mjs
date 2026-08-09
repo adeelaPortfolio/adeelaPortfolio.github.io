@@ -32,6 +32,17 @@ const GROUPS = {
 };
 const DEFAULT_GROUP = "My Work";
 
+/**
+ * A sub-folder with one of these names is not a collection of its own — it is
+ * the parent collection's Development gallery (`Collection.process`), which the
+ * detail page shows under its own heading below the lookbook.
+ *
+ * Without this rule a "Development" folder inside Bridal would appear on /work
+ * as a separate collection called Development, which is the wrong shape for
+ * mood boards and cutlines: they belong to the collection they came from.
+ */
+const PROCESS_DIRS = ["development", "process"];
+
 /** "My Work/Semi Formals" → "semi-formals" */
 export function slugify(name) {
   return name
@@ -81,7 +92,15 @@ export function imageDirs(root = SRC_ROOT) {
 export function discoverCollections(overrides = [], notCollections = []) {
   const isExcluded = (d) =>
     notCollections.some((n) => d === n || d.startsWith(`${n}/`));
-  const dirs = imageDirs().filter((d) => !isExcluded(d));
+  const all = imageDirs().filter((d) => !isExcluded(d));
+
+  // Split the Development sub-folders out before anything claims them, so they
+  // can never be mistaken for collections in their own right.
+  const isProcessDir = (d) => PROCESS_DIRS.includes(path.basename(d).toLowerCase());
+  const dirs = all.filter((d) => !isProcessDir(d));
+  const processFor = (owned) =>
+    all.filter((d) => isProcessDir(d) && owned.some((o) => d === `${o}/${path.basename(d)}`));
+
   const claimed = new Set();
   const out = [];
 
@@ -99,6 +118,7 @@ export function discoverCollections(overrides = [], notCollections = []) {
     out.push({
       ...o,
       dirs: live,
+      processDirs: o.processDirs ?? processFor(live),
       group: o.group ?? GROUPS[live[0].split("/")[0]] ?? DEFAULT_GROUP,
       title: o.title ?? titleize(path.basename(live[0])),
       discovered: false,
@@ -112,6 +132,7 @@ export function discoverCollections(overrides = [], notCollections = []) {
     out.push({
       slug: slugify(base),
       dirs: [dir],
+      processDirs: processFor([dir]),
       group: parts.length > 1 ? (GROUPS[parts[0]] ?? parts[0]) : DEFAULT_GROUP,
       title: titleize(base),
       discovered: true,

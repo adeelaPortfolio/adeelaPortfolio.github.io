@@ -94,20 +94,6 @@ export interface Collection {
   swatches?: Swatch[];
 }
 
-/** A standalone textile / surface-design piece. */
-export interface Textile {
-  /** Display title, e.g. "Indigo Shibori". */
-  title: string;
-  /** Technique, e.g. "Hand-resist dye". */
-  technique: string;
-  /** Short description of the piece. */
-  description: string;
-  /** The artwork image. */
-  image: ImageItem;
-  /** Fallback tone for the placeholder (CSS colour). */
-  tone?: string;
-}
-
 /** A press feature, exhibition, or award. */
 export interface PressItem {
   /** e.g. "Gold Medal, Tamgha-e-Quaid". */

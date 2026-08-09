@@ -145,10 +145,26 @@ All content lives in `src/content/` as plain typed data. Pages map over that dat
 
 ### Optional by design
 
-`Collection.concept`, `.process`, `.swatches`, `.materials` and `.credit` are all
-**optional**, and `src/app/work/[slug]/page.tsx` guards each section. This exists so a
-collection with no development material simply has no Development section, rather than
-tempting anyone to invent one. Keep it that way.
+`Collection.concept`, `.process`, `.swatches`, `.materials`, `.credit` and `.link` are
+all **optional**, and `src/app/work/[slug]/page.tsx` guards each section.
+
+**Optional must still mean reachable.** The 2026-08-09 refactor made `collections.ts`
+assemble its list from the manifest, and `process` and `swatches` were left with no way
+in at all — the Development section, the Swatches section and the whole `SwatchStrip`
+component became unreachable code that still typechecked and still had guards. Both are
+wired again and both were tested by actually populating them:
+
+- **`swatches`** comes from `collection-copy.ts`. It is data, so it belongs with words.
+- **`process`** comes from a sub-folder of the collection’s own folder named
+  **`Development`** or **`Process`** (see `PROCESS_DIRS` in `discover.mjs`). Such a
+  folder is deliberately NOT a collection of its own — mood boards and cutlines belong
+  to the collection they came from. Verified: dropping `My Work/Scarfs/Development`
+  into the archive published `silk-scarves/process/*`, rendered the Development
+  section, and left the count at six collections rather than seven.
+
+If you ever remove the last writer of an optional field, delete the reader too, or wire
+it back. A guarded section nothing can populate is dead code wearing a safety label.
+
 
 **`SiteContent.statement` is optional for the same reason.** The pull quote on Home and
 About exists only while there is a real one to quote; absent, both pages close the gap

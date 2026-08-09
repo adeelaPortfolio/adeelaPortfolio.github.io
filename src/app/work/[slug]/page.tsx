@@ -7,7 +7,7 @@ import Gallery from "@/components/Gallery";
 import SwatchStrip from "@/components/SwatchStrip";
 import Reveal from "@/components/Reveal";
 import Button from "@/components/Button";
-import { collections, getCollection } from "@/content/collections";
+import { collections, getCollection, periodLabel } from "@/content/collections";
 import { toneFor } from "@/lib/tones";
 
 // Pre-render every collection at build time (fully static → free on Vercel).
@@ -26,7 +26,7 @@ export async function generateMetadata({
   // season/year/summary are optional: a collection discovered in the archive
   // has none until it is described. Build the title from what exists rather
   // than emitting "Menswear — undefined undefined".
-  const period = [c.season, c.year].filter(Boolean).join(" ");
+  const period = periodLabel(c);
   return {
     title: period ? `${c.title} — ${period}` : c.title,
     ...(c.summary ? { description: c.summary } : {}),
@@ -43,6 +43,9 @@ export default async function CollectionDetailPage({
   if (!collection) notFound();
 
   const tone = toneFor(collection.slug);
+  // Decides two things that must agree: whether the Concept/Materials block
+  // renders at all, and how much air the Lookbook needs above it.
+  const hasIntroBlock = Boolean(collection.concept?.length || collection.materials?.length);
   // Landscape catalogue spreads must not be forced through a portrait crop.
   const ratio = collection.ratio ?? "3 / 4";
 
@@ -54,7 +57,7 @@ export default async function CollectionDetailPage({
   return (
     <>
       <PageHeader
-        eyebrow={[collection.season, collection.year].filter(Boolean).join(" ") || undefined}
+        eyebrow={periodLabel(collection) || undefined}
         title={collection.title}
         intro={collection.summary}
       />
@@ -83,7 +86,7 @@ export default async function CollectionDetailPage({
       {/* Concept + materials — the whole block is dropped when a collection
           has neither, rather than printing a lone heading over empty space.
           Only the thesis carries a concept statement now. */}
-      {collection.concept?.length || collection.materials?.length ? (
+      {hasIntroBlock ? (
         <section className="container-editorial pt-16">
           <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.6fr_1fr] md:gap-16">
             {collection.concept?.length ? (
@@ -119,9 +122,7 @@ export default async function CollectionDetailPage({
 
       {/* Lookbook */}
       <section
-        className={`container-editorial ${
-          collection.concept?.length || collection.materials?.length ? "pt-24" : "pt-16"
-        }`}
+        className={`container-editorial ${hasIntroBlock ? "pt-24" : "pt-16"}`}
       >
         <SectionHeading
           eyebrow="The Collection"

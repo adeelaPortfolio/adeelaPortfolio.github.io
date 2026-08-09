@@ -32,6 +32,8 @@ type ManifestEntry = {
   dirs: string[];
   cover: Img;
   lookbook: Img[];
+  /** From a "Development" sub-folder of the collection's own folder. */
+  process?: Img[];
 };
 
 const entries = manifest.collections as Record<string, ManifestEntry>;
@@ -62,12 +64,29 @@ function build(slug: string): Collection {
     ...(c.materials?.length ? { materials: c.materials } : {}),
     ...(c.credit ? { credit: c.credit } : {}),
     ...(c.link ? { link: c.link } : {}),
+    ...(c.swatches?.length ? { swatches: c.swatches } : {}),
+    ...(e.process?.length
+      ? { process: e.process.map((img, i) => ({ ...img, alt: `${title} — development ${i + 1}` })) }
+      : {}),
   };
 }
 
 export const collections: Collection[] = order
   .filter((slug) => entries[slug])
   .map(build);
+
+/**
+ * "Lawn & Pret 2021", or whichever half exists, or "".
+ *
+ * Both fields are optional, so composing them is a rule rather than an
+ * expression, and the detail page was applying that rule twice — once for
+ * the document title and once for the page eyebrow. The index row and card
+ * deliberately do NOT use this: they print a short year (’21) and the row
+ * puts the two halves in separate elements for its layout.
+ */
+export function periodLabel(c: Pick<Collection, "season" | "year">): string {
+  return [c.season, c.year].filter(Boolean).join(" ");
+}
 
 /** Look up one collection by slug. */
 export function getCollection(slug: string): Collection | undefined {
