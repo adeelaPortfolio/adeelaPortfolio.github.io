@@ -28,7 +28,7 @@ export default function Footer() {
               <span className="text-sepia">.</span>
             </p>
             <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-ink/60">
-              {site.role} — currently open to studio roles, collaborations, and commissions.
+              {site.role} — currently open to new opportunities.
             </p>
             <a
               href={`mailto:${site.email}`}
