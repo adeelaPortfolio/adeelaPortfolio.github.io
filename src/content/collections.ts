@@ -70,16 +70,6 @@ export const collections: Collection[] = [
     year: "2021",
     summary:
       "Digital textile prints, engineered panel layouts and garment cutlines developed across seasonal lawn and pret ranges.",
-    concept: [
-      "Engineered layout is the discipline here: a three-piece suit is not a length of repeating cloth but a set of shaped panels — shirt front, back, sleeve, dupatta — each drawn to its own dimensions so the pattern resolves exactly where the garment is cut.",
-      "The sequence runs from the artwork itself through the cutlines drawn against it to the finished suits worn, so the whole route from print to garment is visible in one place.",
-    ],
-    materials: [
-      "Cotton lawn",
-      "Printed viscose",
-      "Engineered panel layouts",
-      "Multi-head and hand embroidery",
-    ],
     ratio: "4 / 3",
     credit: "Some campaign photography is courtesy of the respective clients.",
     cover: cover("prints-and-cutlines", "Engineered digital lawn print laid out as garment panels"),
@@ -97,11 +87,6 @@ export const collections: Collection[] = [
     year: "2018",
     summary:
       "Printed silk scarves — each design drawn as a bordered square and photographed as styled cloth.",
-    concept: [
-      "Scarves are the purest form of engineered print: the whole design has to resolve within one bordered square, readable folded, draped or flat.",
-      "The series runs from exotic botanicals through baroque florals to formal medallion and trellis grounds, each with its own border and corner treatment.",
-    ],
-    materials: ["Printed silk twill"],
     ratio: "4 / 3",
     cover: cover(
       "silk-scarves",
@@ -120,16 +105,6 @@ export const collections: Collection[] = [
     year: "2026",
     summary:
       "Bridal and heavy formal wear — hand-drawn figures, colour and fabrication boards, adda embroidery in progress, and the finished pieces worn.",
-    concept: [
-      "Bridal is the one category where every stage has to be owned at once: client consultation and fittings, raw fabric procurement, custom dyeing, trim selection, and sourcing the karigars whose hand-embroidery carries the pieces.",
-      "The sequence follows that arc — colour selection and fabrication boards, hand-drawn figures, panelled lehnga construction, adda frames mid-embroidery, and finally the finished garments worn.",
-    ],
-    materials: [
-      "Hand-embroidered net & chiffon",
-      "Custom-dyed raw silk",
-      "Dori and zardozi karigar work",
-      "Digitally printed panel lehngas",
-    ],
     ratio: "3 / 4",
     cover: cover("bridal", "Bridal outfit with hand-embroidered detail"),
     lookbook: gallery(
@@ -145,11 +120,6 @@ export const collections: Collection[] = [
     year: "2018",
     summary:
       "Luxury semi-formal wear for women and children, developed from hand illustration through embroidery and trims to the finished campaign.",
-    concept: [
-      "The collections were built from hand illustration outward: silhouette drawn first, then the embroidery motifs, borders and trims developed against it, then colour resolved across the range.",
-      "Organza semi-formals and silk tunics followed the same route — prints developed, the cut designed around them, embroideries tried against the finished cloth.",
-    ],
-    materials: ["Organza", "Silk", "Embroidered borders and trims"],
     ratio: "4 / 3",
     cover: cover("semi-formals", "Luxury semi-formal collection campaign spread"),
     lookbook: gallery(

@@ -55,39 +55,49 @@ export default async function CollectionDetailPage({
         intro={collection.summary}
       />
 
-      {/* Concept + materials */}
-      <section className="container-editorial pt-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.6fr_1fr] md:gap-16">
-          <Reveal>
-            <p className="eyebrow mb-6">The Concept</p>
-            <div className="space-y-5">
-              {collection.concept.map((p, i) => (
-                <p key={i} className="max-w-prose font-body text-lg leading-relaxed text-ink/80">
-                  {p}
-                </p>
-              ))}
-            </div>
-          </Reveal>
-          {collection.materials?.length ? (
-            <Reveal delay={120}>
-              <p className="eyebrow mb-6">Materials</p>
-              <ul className="space-y-3">
-                {collection.materials.map((m) => (
-                  <li
-                    key={m}
-                    className="border-b border-ink/10 pb-3 font-body text-ink/75"
-                  >
-                    {m}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          ) : null}
-        </div>
-      </section>
+      {/* Concept + materials — the whole block is dropped when a collection
+          has neither, rather than printing a lone heading over empty space.
+          Only the thesis carries a concept statement now. */}
+      {collection.concept?.length || collection.materials?.length ? (
+        <section className="container-editorial pt-16">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.6fr_1fr] md:gap-16">
+            {collection.concept?.length ? (
+              <Reveal>
+                <p className="eyebrow mb-6">The Concept</p>
+                <div className="space-y-5">
+                  {collection.concept.map((p, i) => (
+                    <p key={i} className="max-w-prose font-body text-lg leading-relaxed text-ink/80">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              </Reveal>
+            ) : null}
+            {collection.materials?.length ? (
+              <Reveal delay={120}>
+                <p className="eyebrow mb-6">Materials</p>
+                <ul className="space-y-3">
+                  {collection.materials.map((m) => (
+                    <li
+                      key={m}
+                      className="border-b border-ink/10 pb-3 font-body text-ink/75"
+                    >
+                      {m}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
 
       {/* Lookbook */}
-      <section className="container-editorial pt-24">
+      <section
+        className={`container-editorial ${
+          collection.concept?.length || collection.materials?.length ? "pt-24" : "pt-16"
+        }`}
+      >
         <SectionHeading
           eyebrow="The Collection"
           title="Lookbook"

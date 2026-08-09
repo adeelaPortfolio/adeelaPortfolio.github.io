@@ -121,10 +121,18 @@ All content lives in `src/content/` as plain typed data. Pages map over that dat
 
 ### Optional by design
 
-`Collection.process`, `.swatches`, `.materials` and `.credit` are **optional**, and
-`src/app/work/[slug]/page.tsx` guards each section. This exists so a collection with no
-development material simply has no Development section, rather than tempting anyone to
-invent one. Keep it that way.
+`Collection.concept`, `.process`, `.swatches`, `.materials` and `.credit` are all
+**optional**, and `src/app/work/[slug]/page.tsx` guards each section. This exists so a
+collection with no development material simply has no Development section, rather than
+tempting anyone to invent one. Keep it that way.
+
+`concept` joined that list on 2026-08-09, when Adeela asked for the Concept/Materials
+block off Prints & Cutlines, Silk Scarfs, Bridal and Semi-Formals. **Only the thesis
+carries one now.** The guard covers the pair: the block renders only if `concept` or
+`materials` has content, and each column is guarded separately, so one without the
+other can never print a lone heading over empty space. The Lookbook's top padding
+keys off the same condition — `pt-24` under the block, `pt-16` when it is the first
+section under the header.
 
 ### Images — the folder is the plan
 

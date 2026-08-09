@@ -51,8 +51,12 @@ export interface Collection {
   year: string;
   /** One-line summary for cards and listings. Names the client first. */
   summary: string;
-  /** Full concept statement (1–3 short paragraphs). */
-  concept: string[];
+  /**
+   * Full concept statement (1–3 short paragraphs). Optional, like `process`
+   * and `materials`: the detail page drops the whole Concept/Materials block
+   * when a collection has neither, rather than showing half of it.
+   */
+  concept?: string[];
   /** Cover image (used on the home page and the collections grid). */
   cover: ImageItem;
   /** The lookbook — finished garments, campaign and catalogue imagery. */
