@@ -58,6 +58,15 @@ adeelaportfolio.github.io still served the old whole-sheet one. A screenshot of 
 live site is evidence about the last *push*, not about the working tree — compare
 `out/images/hero.webp` against the deployed file before re-doing work that already exists.
 
+- **The portrait is now Adeela's own picture**, supplied by her and living in the archive
+  at `Portrait/adeela.jpg`. It replaces the 512px crop lifted out of a 2015 thesis page,
+  which had been the only image of her anywhere in the archive. It is an **illustrated
+  treatment of a photograph, not a photograph** — her choice, made knowingly; the alt
+  text says "Illustrated portrait" so the page doesn't imply otherwise. The crop in
+  `sources.mjs` exists only to cut a generator's sparkle watermark off the bottom edge.
+  She may still want a real headshot; if she sends one, drop it in that folder, adjust
+  the crop and re-run `npm run images`.
+
 **Open items — these need Adeela, not code:**
 
 1. **Inventive Clothing** — her own label, the most senior role on her CV, has no
@@ -66,9 +75,7 @@ live site is evidence about the last *push*, not about the working tree — comp
 2. **Social handles** — none exist anywhere in her material. `site.socials` is `[]` and
    the Footer/Contact blocks hide themselves when empty. Never ship a bare
    `instagram.com` link.
-3. **A current headshot.** The About portrait is cropped from a framed photo inside her
-   2015 thesis PDF — the only picture of her in the whole archive.
-4. **Two files she may not want published**, both included because she asked for
+3. **Two files she may not want published**, both included because she asked for
    everything in the folder: `Bridal/Bridal 2/06.jpg` is a 336×924 sidebar strip, not
    artwork; `Prints & Cutlines/41e.jpg` and `41f.jpg` are 800×800 and visibly soft.
    Deleting the file from the folder and re-running the pipeline is the fix.

@@ -889,8 +889,8 @@
     },
     "portrait": {
       "src": "/images/portrait.webp",
-      "width": 512,
-      "height": 808
+      "width": 800,
+      "height": 1000
     }
   }
 }

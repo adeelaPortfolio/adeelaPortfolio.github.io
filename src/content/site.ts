@@ -29,7 +29,7 @@ export const site: SiteContent = {
 
   portrait: {
     ...manifest.singles.portrait,
-    alt: "Portrait of Adeela Amanat",
+    alt: "Illustrated portrait of Adeela Amanat, in a patterned indigo hijab over a block-printed shirt",
   },
 
   bio: [

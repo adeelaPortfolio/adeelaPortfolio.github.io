@@ -79,13 +79,19 @@ export const singles = [
     max: 1626,
   },
   {
-    // The only photograph of Adeela anywhere in the archive: a framed portrait
-    // inside a thesis page. Cropped to the frame's interior — the rest of that
-    // page prints her old phone number and email.
+    // Adeela's own portrait, supplied by her — an illustrated treatment of a
+    // photograph, not a photograph. It replaces the 512px crop lifted out of a
+    // 2015 thesis page, which was the only picture of her in the whole archive.
+    //
+    // The crop's one job is the bottom edge: the file carries a four-point
+    // sparkle watermark at roughly x 707–752, y 1085–1135. Cutting at y = 1060
+    // removes it, and 848 × 1060 is exactly 4:5, so the w/h box below resizes
+    // without cropping anything further. Move that bottom edge down and the
+    // watermark comes back.
     id: "portrait",
-    from: "Final thesis/Thesis Portfolio/03.jpg",
+    from: "Portrait/adeela.jpg",
     w: 800,
     h: 1000,
-    crop: { left: 0.737, top: 0.108, width: 0.146, height: 0.326 },
+    crop: { left: 0, top: 0, width: 1, height: 0.8618 },
   },
 ];
