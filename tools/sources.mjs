@@ -46,6 +46,11 @@ export const collections = [
     slug: "bridal",
     dirs: ["Bridal/Bridal 1", "Bridal/Bridal 2"],
     ratio: "3 / 4",
+    // Without this the cover is Bridal 1/01.jpg, a pencil croquis — the row on
+    // /work previewed the collection with a working sketch. The tassels read as
+    // finished bridal work at thumbnail size. Full path, not "04.jpg": both
+    // Bridal folders have an 04.
+    cover: "Bridal/Bridal 2/04.jpg",
   },
   {
     slug: "semi-formals",

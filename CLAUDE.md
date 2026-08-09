@@ -135,6 +135,13 @@ invent one. Keep it that way.
   No code edit. This matters — the archive is her working folder and gets reorganised
   regularly, and an earlier hand-listed manifest broke every single time it did, once
   mid-run while silently dropping an entire PDF's worth of images.
+- **A collection's cover is `assets[0]` unless `sources.mjs` names a `cover`.** That
+  default is the first file in folder order, which for Bridal was a pencil croquis —
+  fine inside the gallery, wrong as the one image representing the collection on
+  `/work`. Give `cover` the **archive-relative path**, not the bare filename, whenever a
+  collection lists more than one directory: Bridal draws on "Bridal 1" and "Bridal 2"
+  and both number from 01, so `"04.jpg"` silently resolves to the first folder listed.
+  `build-images.mjs` now throws if a named cover matches nothing.
 - Gallery lengths come from `image-manifest.json`, so a page can never claim more or
   fewer images than exist on disk.
 - `sources.mjs` also carries `crops` — fractional boxes that remove **third-party names

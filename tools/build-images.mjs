@@ -89,8 +89,18 @@ for (const c of collections) {
   }
 
   // Cover: the named file if given, otherwise the first image in sequence.
+  //
+  // `cover` may be a bare filename or an archive-relative path. The path form
+  // is not optional when a collection draws on more than one folder: Bridal
+  // pulls from "Bridal 1" and "Bridal 2" and both number their files from 01,
+  // so a bare "04.jpg" silently resolves to whichever folder is listed first.
   const coverAsset =
-    (c.cover && assets.find((a) => path.basename(a.file) === c.cover)) ?? assets[0];
+    (c.cover &&
+      assets.find((a) => a.id === c.cover || a.id.endsWith(`/${c.cover}`))) ??
+    assets[0];
+  if (c.cover && !assets.some((a) => a.id === c.cover || a.id.endsWith(`/${c.cover}`))) {
+    throw new Error(`${c.slug}: cover "${c.cover}" is not in ${c.dirs.join(", ")}`);
+  }
   // Covers are sized down, never cropped to a box — the site displays every
   // image at its own aspect ratio.
   entry.cover = await write(coverAsset, `${c.slug}/cover`, {
