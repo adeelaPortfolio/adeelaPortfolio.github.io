@@ -62,10 +62,14 @@ export default function HomePage() {
           </Reveal>
           <Reveal delay={120}>
             <p className="eyebrow mb-5">The Designer</p>
-            <blockquote className="font-display text-2xl italic leading-relaxed text-ink sm:text-3xl">
-              &ldquo;{site.statement}&rdquo;
-            </blockquote>
-            <p className="mt-8 max-w-prose font-body text-ink/70">{site.bio[0]}</p>
+            {site.statement && (
+              <blockquote className="font-display text-2xl italic leading-relaxed text-ink sm:text-3xl">
+                &ldquo;{site.statement}&rdquo;
+              </blockquote>
+            )}
+            <p className={`max-w-prose font-body text-ink/70 ${site.statement ? "mt-8" : ""}`}>
+              {site.bio[0]}
+            </p>
             <div className="mt-8">
               <Button href="/about" variant="outline">
                 About {site.name}

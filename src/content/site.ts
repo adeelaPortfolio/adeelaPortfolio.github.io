@@ -33,12 +33,10 @@ export const site: SiteContent = {
   },
 
   bio: [
-    "Adeela Amanat is a fashion and textile designer working across lawn, pret, semi-formal and bridal wear since 2017. Her path runs from Head Designer at a textile house to founding and running an independent label end to end — which means she has sat on both sides of a seasonal collection: the artwork that starts it, and the production floor that has to deliver it.",
-    "She develops digital prints, repeat patterns and engineered layouts for seasonal lawn, directs embroidery artwork and colourways, and manages sourcing, karigars and an in-house production unit. She is a gold medallist in Fashion & Textile Design from the University of South Asia, and is looking for a senior design role with a textile house.",
+    "I am a Fashion and Textile Designer with over nine years of industry experience across seasonal lawn, pret, semi-formal, and bridal wear. Since beginning my career in 2017, my trajectory has spanned leading roles—from serving as Head Designer at a major textile house to founding and managing an independent brand end-to-end.",
+    "Having directed the entire lifecycle of seasonal collections, I bridge the gap between creative conceptualization and production execution. My core expertise lies in developing digital prints, fashion cutlines, and engineered layouts, as well as directing embroidery artwork and defining colourways. On the operational side, I oversee in-house production unit and collaborate directly with skilled karigars to deliver flawless finished collections.",
+    "I hold a Gold Medal in Fashion & Textile Design from the University of South Asia. I am currently seeking a Senior Design role with a forward-thinking textile house where I can leverage both my creative vision and production leadership.",
   ],
-
-  statement:
-    "A three-piece begins as a print, not a pattern. I design the cloth first — the repeat, the engineered placement, where the embroidery will sit — and let the garment follow from what the fabric is already saying.",
 
   skills: [
     "Digital textile print development",

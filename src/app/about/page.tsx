@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `About ${site.fullName} — ${site.role}. Biography, philosophy, skills, and education.`,
+  description: `About ${site.fullName} — ${site.role}. Biography, skills, and education.`,
 };
 
 export default function AboutPage() {
@@ -27,10 +27,12 @@ export default function AboutPage() {
             />
           </Reveal>
           <Reveal delay={120}>
-            <blockquote className="font-display text-2xl italic leading-relaxed text-ink sm:text-3xl">
-              &ldquo;{site.statement}&rdquo;
-            </blockquote>
-            <div className="mt-8 space-y-5">
+            {site.statement && (
+              <blockquote className="font-display text-2xl italic leading-relaxed text-ink sm:text-3xl">
+                &ldquo;{site.statement}&rdquo;
+              </blockquote>
+            )}
+            <div className={`space-y-5 ${site.statement ? "mt-8" : ""}`}>
               {site.bio.map((p, i) => (
                 <p key={i} className="max-w-prose font-body text-lg leading-relaxed text-ink/80">
                   {p}

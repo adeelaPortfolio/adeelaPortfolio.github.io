@@ -132,8 +132,9 @@ export interface SiteContent {
   portrait: ImageItem;
   /** Bio paragraphs for the About page. */
   bio: string[];
-  /** Designer statement / philosophy (short). */
-  statement: string;
+  /** Designer statement / philosophy (short). Optional — the pull quote on the
+   *  home and About pages hides itself when there isn't one. */
+  statement?: string;
   /** Skills list. */
   skills: string[];
   /** Education entries. */
