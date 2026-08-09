@@ -27,7 +27,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Selected Work"
             title="Collections"
-            intro="Lawn, pret, semi-formal and bridal — nine years of seasonal collections for Pakistani textile houses, and for her own label."
+            intro="Lawn, pret, semi-formal and bridal — nine years of seasonal collections for fashion industry."
           />
           <Reveal delay={120}>
             <Link
