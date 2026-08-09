@@ -23,9 +23,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const c = getCollection(slug);
   if (!c) return { title: "Collection not found" };
+  // season/year/summary are optional: a collection discovered in the archive
+  // has none until it is described. Build the title from what exists rather
+  // than emitting "Menswear — undefined undefined".
+  const period = [c.season, c.year].filter(Boolean).join(" ");
   return {
-    title: `${c.title} — ${c.season} ${c.year}`,
-    description: c.summary,
+    title: period ? `${c.title} — ${period}` : c.title,
+    ...(c.summary ? { description: c.summary } : {}),
   };
 }
 
@@ -50,7 +54,7 @@ export default async function CollectionDetailPage({
   return (
     <>
       <PageHeader
-        eyebrow={`${collection.season} ${collection.year}`}
+        eyebrow={[collection.season, collection.year].filter(Boolean).join(" ") || undefined}
         title={collection.title}
         intro={collection.summary}
       />

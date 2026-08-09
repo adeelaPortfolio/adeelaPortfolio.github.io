@@ -15,9 +15,29 @@ import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
-export const SRC_ROOT = "J:/Cursor Projects/Adeela portfolio Data";
+/**
+ * Where the raw archive lives. Override with ARCHIVE_ROOT to point the pipeline
+ * somewhere else without editing code — most usefully at a Google Drive for
+ * Desktop mount, so "put it in Drive" and "put it in the archive" become the
+ * same action:
+ *
+ *   ARCHIVE_ROOT="G:/My Drive/Adeela portfolio Data" npm run images
+ *
+ * Failing loudly here is deliberate. If the archive is missing or still syncing,
+ * every folder looks empty, and a silent run would publish a site with no
+ * collections on it.
+ */
+export const SRC_ROOT = process.env.ARCHIVE_ROOT || "J:/Cursor Projects/Adeela portfolio Data";
 
-const IMAGE_RE = /\.(jpe?g|png|tiff?|webp)$/i;
+if (!fs.existsSync(SRC_ROOT)) {
+  throw new Error(
+    `archive not found at "${SRC_ROOT}".\n` +
+      `Set ARCHIVE_ROOT to where it lives, e.g.\n` +
+      `  ARCHIVE_ROOT="G:/My Drive/Adeela portfolio Data" npm run images`,
+  );
+}
+
+export const IMAGE_RE = /\.(jpe?g|png|tiff?|webp)$/i;
 
 function resolveSegment(dir, want) {
   const entries = fs.readdirSync(dir);

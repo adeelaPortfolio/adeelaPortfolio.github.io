@@ -1,12 +1,26 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// SOURCE MAP — which archive folders feed which collection.
+// SOURCE OVERRIDES — optional corrections to what the archive already says.
 //
-// This file names DIRECTORIES, not files. Whatever is in the folder is what
-// gets published, in filename order, which is the sequence Adeela numbered them
-// in. To add, remove or reorder images, change the folder and re-run
-// `npm run images` — nothing here needs editing.
+// READ THIS FIRST: you do NOT have to edit this file to publish a collection.
+// `tools/lib/discover.mjs` walks the archive and every folder of images becomes
+// a collection on its own, with its images in the folder's own order. Drop a
+// folder in, run `npm run images`, and it is on the site.
 //
-// Prose (titles, summaries, concepts) lives in src/content/collections.ts.
+// This file exists for the handful of things a folder name cannot express:
+//
+//   • merging folders   — Bridal 1 + Bridal 2 are one collection, not two
+//   • display order     — overrides appear first, in the order listed here;
+//                         newly discovered folders are appended after them
+//   • naming            — a slug or title that isn't just the folder name
+//   • covers            — which single image represents the collection
+//   • crops             — removing third-party names, handles, phone numbers
+//   • ratio             — the gallery's placeholder aspect
+//
+// Anything omitted is inferred. Omitting a folder entirely does NOT hide it —
+// it just means the folder is published with defaults. To take something off
+// the site, remove it from the archive.
+//
+// Prose (summaries, concepts) lives in src/content/collection-copy.ts.
 // This file is only about where the pixels come from.
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -38,11 +52,14 @@ export const collections = [
     },
   },
   {
+    // The folder is "Scarfs"; the site says "Silk Scarfs". The slug is pinned
+    // here so the published URL survives a folder rename.
     slug: "silk-scarves",
     dirs: ["My Work/Scarfs"],
     ratio: "4 / 3",
   },
   {
+    // Two folders, one collection — the only reason this entry has to exist.
     slug: "bridal",
     dirs: ["Bridal/Bridal 1", "Bridal/Bridal 2"],
     ratio: "3 / 4",
@@ -69,12 +86,20 @@ export const collections = [
     slug: "inventive-clothing",
     dirs: ["My Work/Inventive Clothing"],
     ratio: "3 / 4",
-    // Default cover was 1.jpeg, a rail of finished pieces on hangers — it reads as
-    // a shop rack at thumbnail size. 3.jpeg is one embroidered bodice over the
-    // rainbow lehnga, which is the label's own work rather than its stockroom.
+    // Default cover was 1.jpeg, a rail of finished pieces on hangers — it reads
+    // as a shop rack at thumbnail size. 3.jpeg is one embroidered bodice over
+    // the rainbow lehnga, which is the label's own work rather than its
+    // stockroom, and is cropped above the neck so no client face is in it.
     cover: "My Work/Inventive Clothing/3.jpeg",
   },
 ];
+
+/**
+ * Archive folders that hold images but are NOT collections. Without this the
+ * portrait would turn up on /work as a one-image collection called "Portrait".
+ * Paths are matched exactly, or as a prefix ending in "/".
+ */
+export const notCollections = ["Portrait"];
 
 /** One-off site images, sourced the same way. */
 export const singles = [

@@ -1,154 +1,72 @@
 import type { Collection } from "./types";
 import manifest from "./image-manifest.json";
+import { copy } from "./collection-copy";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COLLECTIONS — Adeela's own two-category structure: her degree Thesis, and
-// My Work (Printed → Prints & Cutlines and Silk Scarfs, plus Bridal and
-// Semi-Formals).
+// COLLECTIONS — assembled, not written.
 //
-// The IMAGES are not listed here. `tools/sources.mjs` maps each collection to
-// source folders in her archive, `npm run images` reads whatever is in them in
-// filename order — her sequence — and writes image-manifest.json. This file
-// reads its galleries from that manifest, so the page can never claim more or
-// fewer images than actually exist.
+// The list below is not a list. Every collection on the site comes from
+// image-manifest.json, which `npm run images` generates by walking Adeela's
+// archive: each folder of images is a collection, its files are its gallery, in
+// the folder's own order. Add a folder to the archive, run `npm run images`,
+// and /work has a new entry with its own page and route — no edit here, and no
+// edit to tools/sources.mjs either.
 //
-// To change images: change the folder, run `npm run images`. Nothing here needs
-// editing. To change words: edit below.
+// Two files shape the result, both optional:
+//
+//   tools/sources.mjs            pixels — merges, covers, crops, ratio, order
+//   src/content/collection-copy.ts  words — title, season, year, summary…
+//
+// A collection with no copy renders as its folder name and its images. Season,
+// year and summary are simply absent, and every component guards them. That is
+// deliberate: an unattended folder must never acquire an invented season or an
+// invented description just because the layout has a slot for one.
 // ─────────────────────────────────────────────────────────────────────────────
 
 type Img = { src: string; width: number; height: number };
-type ManifestEntry = { cover: Img; lookbook: Img[] };
-const images = manifest.collections as Record<string, ManifestEntry>;
+type ManifestEntry = {
+  title: string;
+  group: string;
+  subgroup?: string;
+  ratio?: string;
+  dirs: string[];
+  cover: Img;
+  lookbook: Img[];
+};
 
-/** Gallery for one collection, straight from what the pipeline produced. */
-function gallery(slug: string, describe: (n: number) => string) {
-  return (images[slug]?.lookbook ?? []).map((img, i) => ({
-    ...img,
-    alt: describe(i + 1),
-  }));
+const entries = manifest.collections as Record<string, ManifestEntry>;
+// Display order is the pipeline's: sources.mjs overrides first, in the order
+// they are listed there, then anything newly discovered, appended.
+const order: string[] = (manifest as { order?: string[] }).order ?? Object.keys(entries);
+
+function build(slug: string): Collection {
+  const e = entries[slug];
+  const c = copy[slug] ?? {};
+  const title = c.title ?? e.title;
+  // No copy means no bespoke alt text. "<title> — image 3" is dull, but it is
+  // accurate, which beats a generated sentence about work nobody has described.
+  const describe = c.describe ?? ((n: number) => `${title} — image ${n}`);
+
+  return {
+    slug,
+    group: e.group,
+    title,
+    cover: { ...e.cover, alt: c.coverAlt ?? title },
+    lookbook: e.lookbook.map((img, i) => ({ ...img, alt: describe(i + 1) })),
+    ...(c.subgroup ?? e.subgroup ? { subgroup: c.subgroup ?? e.subgroup } : {}),
+    ...(e.ratio ? { ratio: e.ratio } : {}),
+    ...(c.season ? { season: c.season } : {}),
+    ...(c.year ? { year: c.year } : {}),
+    ...(c.summary ? { summary: c.summary } : {}),
+    ...(c.concept?.length ? { concept: c.concept } : {}),
+    ...(c.materials?.length ? { materials: c.materials } : {}),
+    ...(c.credit ? { credit: c.credit } : {}),
+  };
 }
 
-function cover(slug: string, alt: string) {
-  const c = images[slug]?.cover;
-  return c ? { ...c, alt } : { src: "", alt };
-}
-
-export const collections: Collection[] = [
-  {
-    slug: "thesis",
-    group: "Thesis",
-    title: "Redefining the Ottoman Queen",
-    season: "Degree Thesis",
-    year: "2015",
-    summary:
-      "The gold-medal thesis collection at the University of South Asia — Ottoman court dress merged with Victorian cut lines.",
-    concept: [
-      "The thesis took the Ottoman period as its subject, and Hürrem Sultan as its figure. Because no fixed dress code was recorded for her, the collection reconstructs one: Victorian cut lines merged with Ottoman fashion, with motifs drawn from Ottoman historical dress and architecture.",
-      "Where the originals used gold work, the collection substitutes dori work and hand-carved aluminium foil with embellishment — a deliberate translation rather than a reproduction. The research boards, illustrations and final exhibition are shown here in sequence.",
-    ],
-    materials: [
-      "Dori work",
-      "Hand-carved aluminium foil embellishment",
-      "Structured velvet and brocade",
-    ],
-    ratio: "4 / 3",
-    cover: cover(
-      "thesis",
-      "Detail of gold embellishment from the Redefining the Ottoman Queen thesis collection",
-    ),
-    lookbook: gallery(
-      "thesis",
-      (n) => `Redefining the Ottoman Queen — thesis research, illustration or finished garment ${n}`,
-    ),
-  },
-  {
-    slug: "prints-and-cutlines",
-    group: "My Work",
-    subgroup: "Printed",
-    title: "Prints & Cutlines",
-    season: "Lawn & Pret",
-    year: "2021",
-    summary:
-      "Digital textile prints, engineered panel layouts and garment cutlines developed across seasonal lawn and pret ranges.",
-    ratio: "4 / 3",
-    credit: "Some campaign photography is courtesy of the respective clients.",
-    cover: cover("prints-and-cutlines", "Engineered digital lawn print laid out as garment panels"),
-    lookbook: gallery(
-      "prints-and-cutlines",
-      (n) => `Digital print artwork, cutline layout or finished printed suit ${n}`,
-    ),
-  },
-  {
-    slug: "silk-scarves",
-    group: "My Work",
-    subgroup: "Printed",
-    title: "Silk Scarfs",
-    season: "Silk",
-    year: "2018",
-    summary:
-      "Printed silk scarves — each design drawn as a bordered square and photographed as styled cloth.",
-    ratio: "4 / 3",
-    cover: cover(
-      "silk-scarves",
-      "Printed silk scarf design shown flat beside the scarf styled and draped",
-    ),
-    lookbook: gallery(
-      "silk-scarves",
-      (n) => `Printed silk scarf design ${n}, shown flat and styled`,
-    ),
-  },
-  {
-    slug: "bridal",
-    group: "My Work",
-    title: "Bridal",
-    season: "Bridal",
-    year: "2026",
-    summary:
-      "Bridal and heavy formal wear — hand-drawn figures, colour and fabrication boards, adda embroidery in progress, and the finished pieces worn.",
-    ratio: "3 / 4",
-    cover: cover("bridal", "Bridal outfit with hand-embroidered detail"),
-    lookbook: gallery(
-      "bridal",
-      (n) => `Bridal and heavy formal wear — development or finished garment ${n}`,
-    ),
-  },
-  {
-    slug: "semi-formals",
-    group: "My Work",
-    title: "Semi-Formals",
-    season: "Semi-Formal",
-    year: "2018",
-    summary:
-      "Luxury semi-formal wear for women and children, developed from hand illustration through embroidery and trims to the finished campaign.",
-    ratio: "4 / 3",
-    cover: cover("semi-formals", "Luxury semi-formal collection campaign spread"),
-    lookbook: gallery(
-      "semi-formals",
-      (n) => `Semi-formal collection — illustration, embroidery development or campaign spread ${n}`,
-    ),
-  },
-  {
-    // Her own label, May 2024 – March 2026. Everything below is from the
-    // Career & Experience entry on her CV — no concept statement, because she
-    // has not written one for it.
-    slug: "inventive-clothing",
-    group: "My Work",
-    title: "Inventive Clothing",
-    season: "Own Label",
-    year: "2026",
-    summary:
-      "Adeela's own label — an independent brand she founded and ran end to end, from custom lawn stitching through semi-formal and bridal commissions.",
-    ratio: "3 / 4",
-    cover: cover(
-      "inventive-clothing",
-      "Hand-embroidered bridal lehnga made under Adeela's own label",
-    ),
-    lookbook: gallery(
-      "inventive-clothing",
-      (n) => `Inventive Clothing — garment, embroidery detail or finished commission ${n}`,
-    ),
-  },
-];
+export const collections: Collection[] = order
+  .filter((slug) => entries[slug])
+  .map(build);
 
 /** Look up one collection by slug. */
 export function getCollection(slug: string): Collection | undefined {

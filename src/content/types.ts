@@ -45,12 +45,20 @@ export interface Collection {
   subgroup?: string;
   /** Display title. */
   title: string;
-  /** Season label, e.g. "Autumn/Winter". */
-  season: string;
-  /** Year label, e.g. "2025". */
-  year: string;
-  /** One-line summary for cards and listings. Names the client first. */
-  summary: string;
+  /**
+   * Season label, e.g. "Autumn/Winter". Optional: a collection discovered in
+   * the archive has no season until Adeela gives it one in
+   * `collection-copy.ts`, and the index row omits the label rather than
+   * inventing a plausible-looking one.
+   */
+  season?: string;
+  /** Year label, e.g. "2025". Optional, for the same reason as `season`. */
+  year?: string;
+  /**
+   * One-line summary for cards and listings. Optional, for the same reason:
+   * an undescribed folder shows its title and its images, nothing more.
+   */
+  summary?: string;
   /**
    * Full concept statement (1–3 short paragraphs). Optional, like `process`
    * and `materials`: the detail page drops the whole Concept/Materials block

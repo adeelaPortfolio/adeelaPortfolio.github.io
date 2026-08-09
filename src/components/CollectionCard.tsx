@@ -27,15 +27,23 @@ export default function CollectionCard({ collection, tone, priority = false }: P
         />
       </div>
       <div className="mt-5">
-        <p className="eyebrow">
-          {collection.season} &rsquo;{collection.year.slice(-2)}
-        </p>
+        {/* Season and year are optional — see collection-copy.ts. Drop the
+            kicker entirely rather than printing a stray apostrophe. */}
+        {(collection.season || collection.year) && (
+          <p className="eyebrow">
+            {collection.season}
+            {collection.season && collection.year ? " " : ""}
+            {collection.year && <>&rsquo;{collection.year.slice(-2)}</>}
+          </p>
+        )}
         <h3 className="mt-2 font-display text-2xl text-ink">
           <span className="link-underline">{collection.title}</span>
         </h3>
-        <p className="mt-2 max-w-sm font-body text-sm leading-relaxed text-ink/60">
-          {collection.summary}
-        </p>
+        {collection.summary && (
+          <p className="mt-2 max-w-sm font-body text-sm leading-relaxed text-ink/60">
+            {collection.summary}
+          </p>
+        )}
       </div>
     </Link>
   );

@@ -1,6 +1,11 @@
 {
   "collections": {
     "thesis": {
+      "title": "Thesis Portfolio",
+      "group": "Thesis",
+      "dirs": [
+        "Final thesis/Thesis Portfolio"
+      ],
       "lookbook": [
         {
           "src": "/images/thesis/01.webp",
@@ -98,6 +103,7 @@
           "height": 816
         }
       ],
+      "ratio": "4 / 3",
       "cover": {
         "src": "/images/thesis/cover.webp",
         "width": 1200,
@@ -105,6 +111,11 @@
       }
     },
     "prints-and-cutlines": {
+      "title": "Prints & Cutlines",
+      "group": "My Work",
+      "dirs": [
+        "My Work/Prints & Cutlines"
+      ],
       "lookbook": [
         {
           "src": "/images/prints-and-cutlines/01.webp",
@@ -562,6 +573,7 @@
           "height": 1400
         }
       ],
+      "ratio": "4 / 3",
       "cover": {
         "src": "/images/prints-and-cutlines/cover.webp",
         "width": 1200,
@@ -569,6 +581,11 @@
       }
     },
     "silk-scarves": {
+      "title": "Scarfs",
+      "group": "My Work",
+      "dirs": [
+        "My Work/Scarfs"
+      ],
       "lookbook": [
         {
           "src": "/images/silk-scarves/01.webp",
@@ -611,6 +628,7 @@
           "height": 990
         }
       ],
+      "ratio": "4 / 3",
       "cover": {
         "src": "/images/silk-scarves/cover.webp",
         "width": 1200,
@@ -618,6 +636,12 @@
       }
     },
     "bridal": {
+      "title": "Bridal 1",
+      "group": "My Work",
+      "dirs": [
+        "Bridal/Bridal 1",
+        "Bridal/Bridal 2"
+      ],
       "lookbook": [
         {
           "src": "/images/bridal/01.webp",
@@ -795,6 +819,7 @@
           "height": 1400
         }
       ],
+      "ratio": "3 / 4",
       "cover": {
         "src": "/images/bridal/cover.webp",
         "width": 1200,
@@ -802,6 +827,11 @@
       }
     },
     "semi-formals": {
+      "title": "Semi Formals",
+      "group": "My Work",
+      "dirs": [
+        "My Work/Semi Formals"
+      ],
       "lookbook": [
         {
           "src": "/images/semi-formals/01.webp",
@@ -874,6 +904,7 @@
           "height": 990
         }
       ],
+      "ratio": "4 / 3",
       "cover": {
         "src": "/images/semi-formals/cover.webp",
         "width": 1200,
@@ -881,6 +912,11 @@
       }
     },
     "inventive-clothing": {
+      "title": "Inventive Clothing",
+      "group": "My Work",
+      "dirs": [
+        "My Work/Inventive Clothing"
+      ],
       "lookbook": [
         {
           "src": "/images/inventive-clothing/01.webp",
@@ -1198,6 +1234,7 @@
           "height": 387
         }
       ],
+      "ratio": "3 / 4",
       "cover": {
         "src": "/images/inventive-clothing/cover.webp",
         "width": 845,
@@ -1205,6 +1242,14 @@
       }
     }
   },
+  "order": [
+    "thesis",
+    "prints-and-cutlines",
+    "silk-scarves",
+    "bridal",
+    "semi-formals",
+    "inventive-clothing"
+  ],
   "singles": {
     "hero": {
       "src": "/images/hero.webp",

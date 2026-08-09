@@ -13,7 +13,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { listImages, open, resolvePath } from "./lib/assets.mjs";
-import { collections, singles } from "./sources.mjs";
+import { discoverCollections } from "./lib/discover.mjs";
+import { collections as overrides, singles, notCollections } from "./sources.mjs";
+
+// The archive decides what exists; sources.mjs only corrects it. A folder
+// nobody mentions still gets published — see lib/discover.mjs.
+const collections = discoverCollections(overrides, notCollections);
 
 const OUT = "public/images";
 const MANIFEST = "src/content/image-manifest.json";
@@ -23,7 +28,8 @@ const QUALITY = 70;
 const BUDGET_MB = 45; // hard ceiling — the run fails past this
 
 const report = [];
-const manifest = { collections: {}, singles: {} };
+const manifest = { collections: {}, order: [], singles: {} };
+const discovered = [];
 
 async function write(asset, outRel, opts = {}) {
   let img = open(asset).rotate();
@@ -73,12 +79,18 @@ fs.rmSync(OUT, { recursive: true, force: true });
 
 for (const c of collections) {
   const assets = c.dirs.flatMap((d) => listImages(d));
-  if (!assets.length) {
-    console.warn(`! ${c.slug}: no images found in ${c.dirs.join(", ")} — skipped`);
-    continue;
-  }
 
-  const entry = { lookbook: [] };
+  // Structure travels with the images. src/content/collections.ts reads its
+  // whole list from this, so a folder added to the archive becomes a
+  // collection on the site without anyone editing a TypeScript file.
+  const entry = {
+    title: c.title,
+    group: c.group,
+    dirs: c.dirs,
+    lookbook: [],
+  };
+  if (c.subgroup) entry.subgroup = c.subgroup;
+  if (c.ratio) entry.ratio = c.ratio;
   for (const [i, asset] of assets.entries()) {
     entry.lookbook.push(
       await write(asset, `${c.slug}/${String(i + 1).padStart(2, "0")}`, {
@@ -110,7 +122,12 @@ for (const c of collections) {
   });
 
   manifest.collections[c.slug] = entry;
-  console.log(`✓ ${c.slug.padEnd(22)} ${String(entry.lookbook.length).padStart(3)} images`);
+  manifest.order.push(c.slug);
+  if (c.discovered) discovered.push(c);
+  console.log(
+    `${c.discovered ? "+" : "✓"} ${c.slug.padEnd(22)} ${String(entry.lookbook.length).padStart(3)} images` +
+      (c.discovered ? `   NEW — ${c.dirs.join(", ")}` : ""),
+  );
 }
 
 for (const s of singles) {
@@ -136,6 +153,20 @@ console.log(`\n${report.length} images, ${(totalKb / 1024).toFixed(1)} MB total`
 console.log("largest:");
 for (const b of [...report].sort((a, b) => b.kb - a.kb).slice(0, 5)) {
   console.log(`  ${b.kb.toFixed(0).padStart(5)} KB  ${b.px.padEnd(11)} ${b.out}`);
+}
+
+if (discovered.length) {
+  console.log(
+    `\n${discovered.length} NEW collection${discovered.length > 1 ? "s" : ""} published straight from the archive:`,
+  );
+  for (const c of discovered) console.log(`  /work/${c.slug}   ← ${c.dirs.join(", ")}`);
+  console.log(
+    "\n  These went out with no words and no review. Before deploying:\n" +
+      "    npm run images:sheet   and look at the sheets — faces, third-party names,\n" +
+      "                           Instagram handles, phone numbers.\n" +
+      "    src/content/collection-copy.ts   add a summary; the page reads fine\n" +
+      "                           without one, but a title alone says little.",
+  );
 }
 
 if (totalKb / 1024 > BUDGET_MB) {

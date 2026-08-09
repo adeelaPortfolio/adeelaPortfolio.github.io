@@ -38,21 +38,33 @@ export default function CollectionRow({ collection, index, tone, priority }: Pro
         </span>
 
         {/* Season and year. Rides the meta line beside the number on phones,
-            returns to its own right-hand column from md. */}
-        <div className="ml-auto flex items-baseline gap-3 md:order-3 md:ml-0 md:block md:shrink-0 md:text-right">
-          <p className="eyebrow whitespace-nowrap">{collection.season}</p>
-          <p className="font-display text-base text-ink/70 md:mt-2 md:text-xl">
-            &rsquo;{collection.year.slice(-2)}
-          </p>
-        </div>
+            returns to its own right-hand column from md.
+
+            Both are optional — a collection discovered in the archive has
+            neither until Adeela writes copy for it. The whole block goes rather
+            than leaving an empty column pushing the title off its line. */}
+        {(collection.season || collection.year) && (
+          <div className="ml-auto flex items-baseline gap-3 md:order-3 md:ml-0 md:block md:shrink-0 md:text-right">
+            {collection.season && (
+              <p className="eyebrow whitespace-nowrap">{collection.season}</p>
+            )}
+            {collection.year && (
+              <p className="font-display text-base text-ink/70 md:mt-2 md:text-xl">
+                &rsquo;{collection.year.slice(-2)}
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="order-last w-full min-w-0 md:order-2 md:w-auto md:flex-1">
           <h3 className="display-xl text-3xl text-ink transition-colors group-hover:text-sepia sm:text-4xl lg:text-5xl">
             {collection.title}
           </h3>
-          <p className="mt-3 max-w-xl font-body text-sm leading-relaxed text-ink/60 md:text-base">
-            {collection.summary}
-          </p>
+          {collection.summary && (
+            <p className="mt-3 max-w-xl font-body text-sm leading-relaxed text-ink/60 md:text-base">
+              {collection.summary}
+            </p>
+          )}
         </div>
 
         <span

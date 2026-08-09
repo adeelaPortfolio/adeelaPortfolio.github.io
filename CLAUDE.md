@@ -126,7 +126,8 @@ All content lives in `src/content/` as plain typed data. Pages map over that dat
 |------|----------|
 | `src/content/types.ts` | The shape of every content object (read this first) |
 | `src/content/site.ts` | Name, tagline, bio, statement, skills, education, awards, `cvPath` |
-| `src/content/collections.ts` | The six collections — **words only**; images come from the manifest |
+| `src/content/collections.ts` | **Assembled, not written.** Builds the list from the manifest + copy |
+| `src/content/collection-copy.ts` | The words for a collection. All optional; absent is fine |
 | `src/content/image-manifest.json` | **Generated.** Written by `npm run images`; never edit by hand |
 
 ### Optional by design
@@ -144,9 +145,46 @@ other can never print a lone heading over empty space. The Lookbook's top paddin
 keys off the same condition — `pt-24` under the block, `pt-16` when it is the first
 section under the header.
 
-### Images — the folder is the plan
+### The archive is the site
 
-- **`tools/sources.mjs` names DIRECTORIES, not files.** Each collection lists source
+**Nothing has to be edited to publish a collection.** `npm run images` walks the
+archive; every folder that directly contains images becomes a collection, with its
+files as its gallery in the folder's own order, its own `/work/<slug>` route and a
+sitemap entry. Drop a folder in, run it, and it is on the site. Delete the folder and
+it is gone. This was verified end-to-end by adding a junk folder, building, seeing
+`/work/kids-wear` appear as row 07, then deleting it and watching the site revert.
+
+Three files shape that result. All three are **optional corrections**, not registries:
+
+| File | Decides |
+|------|---------|
+| `tools/lib/discover.mjs` | the rule itself — folder → collection, group, slug, title |
+| `tools/sources.mjs` | pixels: merges, covers, crops, ratio, display order |
+| `src/content/collection-copy.ts` | words: title, season, year, summary, concept |
+
+**Omitting a folder does not hide it.** A folder nobody mentions is published with
+defaults. To take something off the site, take it out of the archive — or, if it
+holds images that are not a collection at all (the portrait), name it in
+`notCollections` in `sources.mjs`.
+
+**A collection with no copy has no season, no year and no summary, and the layout
+omits all three.** `CollectionRow`, `CollectionCard` and the detail page each guard
+them; the type marks them optional. This is the same principle as *Optional by
+design* — an unattended folder must never acquire an invented season or description
+because a slot exists for one. Alt text falls back to `"<title> — image 3"`, which is
+dull and true.
+
+**`npm run publish`** does the whole loop: images → build → commit → push → Actions
+deploys. It refuses to run if the tree holds changes the pipeline does not own, so it
+can never fold someone's work-in-progress into an image commit. `-- --dry` stops
+before committing.
+
+**`ARCHIVE_ROOT`** overrides where the archive lives:
+`ARCHIVE_ROOT="G:/My Drive/Adeela portfolio Data" npm run images`. Point it at a
+Google Drive for Desktop mount and "put it in Drive" and "put it in the archive"
+become the same action. A missing root throws rather than publishing an empty site.
+
+- **`tools/sources.mjs` names DIRECTORIES, not files.** Each override lists source
   folders in Adeela's archive; `npm run images` publishes whatever is in them, in
   filename order, which is the sequence she numbered them in. That sort is **natural,
   not lexicographic** — digit runs compare as numbers, so an unpadded `1..64` folder
