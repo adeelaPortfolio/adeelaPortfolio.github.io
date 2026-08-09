@@ -12,7 +12,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import fs from "node:fs";
 import path from "node:path";
-import sharp from "sharp";
 import { listImages, open, resolvePath } from "./lib/assets.mjs";
 import { collections, singles } from "./sources.mjs";
 
@@ -61,34 +60,6 @@ async function write(asset, outRel, opts = {}) {
   // nothing. The resize box above is square, so turning last is equivalent.
   if (opts.rotate) img = img.rotate(opts.rotate);
 
-  // Face blur. Fractional boxes, applied AFTER resize and rotate so the numbers
-  // refer to the pixels that actually publish. Tuning them against a 6300px
-  // original would silently drift the moment MAX changes.
-  //
-  // Sigma scales with the box: a fixed sigma that erases a face at 1400px
-  // leaves it readable in a bigger frame. This is the one edit here that is a
-  // privacy control rather than a crop, so it fails loudly (see sources.mjs)
-  // instead of quietly doing nothing.
-  if (opts.blur?.length) {
-    let buf = await img.toBuffer();
-    const m = await sharp(buf).metadata();
-    const patches = [];
-    for (const b of opts.blur) {
-      const left = Math.max(0, Math.round(m.width * b.left));
-      const top = Math.max(0, Math.round(m.height * b.top));
-      const width = Math.min(m.width - left, Math.round(m.width * b.width));
-      const height = Math.min(m.height - top, Math.round(m.height * b.height));
-      if (width < 2 || height < 2) throw new Error(`${outRel}: blur box is off the image`);
-      const sigma = Math.max(12, Math.round(Math.min(width, height) / 4));
-      patches.push({
-        input: await sharp(buf).extract({ left, top, width, height }).blur(sigma).toBuffer(),
-        left,
-        top,
-      });
-    }
-    img = sharp(await sharp(buf).composite(patches).toBuffer());
-  }
-
   const abs = path.join(OUT, outRel + ".webp");
   fs.mkdirSync(path.dirname(abs), { recursive: true });
   const info = await img.webp({ quality: QUALITY, effort: 5 }).toFile(abs);
@@ -107,26 +78,12 @@ for (const c of collections) {
     continue;
   }
 
-  // Blur boxes are keyed by ARCHIVE-RELATIVE PATH, not basename: Bridal 1 and
-  // Bridal 2 both number from 01, so a basename key would blur a face into the
-  // wrong photograph and leave the intended one published. A key that matches
-  // nothing throws rather than warning — a privacy edit that silently does
-  // nothing is the failure that actually costs something.
-  const blurKeys = Object.keys(c.blurs ?? {});
-  const matches = (a, k) => a.id === k || a.id.endsWith(`/${k}`);
-  for (const k of blurKeys) {
-    if (!assets.some((a) => matches(a, k)))
-      throw new Error(`${c.slug}: blur key "${k}" is not in ${c.dirs.join(", ")}`);
-  }
-  const blursFor = (a) => c.blurs?.[blurKeys.find((k) => matches(a, k))];
-
   const entry = { lookbook: [] };
   for (const [i, asset] of assets.entries()) {
     entry.lookbook.push(
       await write(asset, `${c.slug}/${String(i + 1).padStart(2, "0")}`, {
         trim: c.trim,
         crop: c.crops?.[path.basename(asset.file)],
-        blur: blursFor(asset),
       }),
     );
   }
@@ -150,7 +107,6 @@ for (const c of collections) {
     max: COVER,
     trim: c.trim,
     crop: c.crops?.[path.basename(coverAsset.file)],
-    blur: blursFor(coverAsset),
   });
 
   manifest.collections[c.slug] = entry;

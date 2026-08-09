@@ -51,32 +51,6 @@ export const collections = [
     // finished bridal work at thumbnail size. Full path, not "04.jpg": both
     // Bridal folders have an 04.
     cover: "Bridal/Bridal 2/04.jpg",
-    // Faces blurred at Adeela's request. These are her clients photographed at
-    // their own weddings, not models on a paid shoot, so the garment is the
-    // subject and the couple should not be identifiable from a public portfolio.
-    //
-    // Boxes are fractions of the PUBLISHED image and are keyed by archive path,
-    // because both Bridal folders number from 01. Every face in frame is
-    // covered, groom as well as bride. Verified by rendering the output and
-    // looking at it — that is the only check that catches a box off by 4%.
-    blurs: {
-      "Bridal 1/23.jpg": [{ left: 0.59, top: 0.225, width: 0.165, height: 0.145 }],
-      "Bridal 1/24.jpg": [{ left: 0.47, top: 0.185, width: 0.17, height: 0.15 }],
-      "Bridal 1/25.jpg": [
-        { left: 0.455, top: 0.18, width: 0.095, height: 0.15 },  // bride
-        { left: 0.62, top: 0.165, width: 0.095, height: 0.15 },  // groom
-      ],
-      "Bridal 1/26.jpg": [
-        { left: 0.44, top: 0.235, width: 0.13, height: 0.12 },   // bride
-        { left: 0.605, top: 0.22, width: 0.13, height: 0.125 },  // groom
-      ],
-      "Bridal 2/08.jpg": [
-        { left: 0.355, top: 0.305, width: 0.135, height: 0.13 }, // bride
-        { left: 0.69, top: 0.29, width: 0.175, height: 0.135 },  // groom: the
-        // first pass left his beard and ear outside the box on the right.
-      ],
-      "Bridal 2/09.jpg": [{ left: 0.575, top: 0.075, width: 0.135, height: 0.135 }],
-    },
   },
   {
     slug: "semi-formals",
