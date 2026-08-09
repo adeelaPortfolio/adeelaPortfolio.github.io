@@ -18,7 +18,7 @@ export default function AwardsPage() {
       <PageHeader
         eyebrow="Recognition"
         title="Awards & CV"
-        intro="Gold medals, thesis and research work from her training at the University of South Asia. A full curriculum vitae is available to download."
+        intro="Gold medals, thesis and research work from training at the University of South Asia."
       />
 
       {/* Press list */}
