@@ -90,6 +90,10 @@ live site is evidence about the last *push*, not about the working tree — comp
   render it guard it, so setting one value brings the blockquote back to Home and About
   with no markup change. The home teaser prints `site.bio[0]`, so the voice carries
   there too.
+- **The hero is two images now.** From `md` up it is the print panel turned on its
+  side, as before; below `md` the phone gets the same panel upright, because a
+  2.18:1 banner in a portrait viewport crops to a strip of trellis. Details, and the
+  scrim that had to change with it, are under *Images*.
 - **The bridal faces are blurred in the archive originals, not by the site.** A pipeline
   `blurs` option was built first, then reverted whole in `f416e0a` once Adeela's own
   blurred re-exports arrived. Do not rebuild it: the blur belongs in the archive, where
@@ -291,7 +295,11 @@ become the same action. A missing root throws rather than publishing an empty si
   extract → resize → rotate whatever the call order, so a `.rotate()` written earlier in
   the chain silently does nothing. Empirically verified, not assumed.
 - **`src/components/EditorialImage.tsx`** renders a real image when `src` is set and a
-  vintage placeholder frame otherwise. **Never remove that fallback.**
+  vintage placeholder frame otherwise. **Never remove that fallback.** It also takes
+  an optional `sources` list — `{media, src}` pairs rendered as `<source>` inside a
+  `<picture>` — for art direction: a *different file* at a given width, not a
+  different crop of one. Use it rather than two images toggled with `hidden`, which
+  downloads both.
 - The CV at `public/cv/adeela-cv.pdf` is Adeela's own Google Doc export and is the only
   downloadable file on the site.
 
@@ -378,7 +386,8 @@ hover preview in the right margin — **`2xl:` only**, so below 1536px hovering 
 the type colour and shows no image at all, which reads as a broken preview until you
 check the class; folds below `md`) · `CollectionCard` (home featured)
 · `Gallery` (masonry + lightbox, the lightbox re-laid-out for phones — client)
-· `SwatchStrip` · `EditorialImage` · `Button` · `Reveal` (client — starts at opacity 0,
+· `SwatchStrip` · `EditorialImage` (placeholder fallback; optional `<picture>` art
+direction) · `Button` · `Reveal` (client — starts at opacity 0,
 so it photographs blank unless the page is scrolled first) · `ImageGuard`
 (right-click/drag deterrent — client).
 
