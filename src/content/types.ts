@@ -131,8 +131,13 @@ export interface SiteContent {
   email: string;
   /** Social links. */
   socials: { label: string; href: string }[];
-  /** Hero background image. */
+  /** Hero background image (the wide banner, used from `md` up). */
   heroImage: ImageItem;
+  /**
+   * Upright version of the same artwork, shown below `md`. Optional: without
+   * it the banner is used at every width, which is the old behaviour.
+   */
+  heroImagePortrait?: ImageItem;
   /** Portrait for the About page. */
   portrait: ImageItem;
   /** Bio paragraphs for the About page. */

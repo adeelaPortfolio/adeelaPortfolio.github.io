@@ -124,6 +124,23 @@ export const singles = [
     max: 1626,
   },
   {
+    // The same panel, NOT turned: the hero banner on a phone.
+    //
+    // A 2.18:1 banner in a portrait viewport crops to a letterbox slot — the arch,
+    // the vase and the fruit all fall outside it and the opening image becomes a
+    // strip of trellis. Upright, the panel is 746×1626 (0.459) against a phone hero
+    // box of about 0.49, so it very nearly fits: the artwork reads whole, which is
+    // the point of leading with it.
+    //
+    // Same crop and same `max` as `hero` — identical pixels, just unrotated. It is a
+    // second published file rather than a CSS transform so the phone downloads only
+    // the file it shows (see Hero.tsx).
+    id: "hero-portrait",
+    from: "My Work/Prints & Cutlines/03.jpg",
+    crop: { left: 0.0156, top: 0, width: 0.3238, height: 1 },
+    max: 1626,
+  },
+  {
     // Adeela's own portrait, supplied by her — an illustrated treatment of a
     // photograph, not a photograph. It replaces the 512px crop lifted out of a
     // 2015 thesis page, which was the only picture of her in the whole archive.

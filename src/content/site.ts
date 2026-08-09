@@ -33,7 +33,17 @@ export const site: SiteContent = {
   // aspect ratio rather than being cropped to a box.
   heroImage: {
     ...manifest.singles.hero,
-    alt: "Engineered digital print panel — a floral archway over gold trellis, with a vase of blooms and fruit, shown on its side",
+    // No orientation in the alt: <picture> shares one alt across both files, and
+    // the phone is served the upright panel. Alt describes the artwork, not how
+    // it happens to be turned.
+    alt: "Engineered digital print panel — a floral archway over gold trellis, with a vase of blooms and fruit",
+  },
+
+  // The same panel upright, for phones: a 2.18:1 banner in a portrait viewport
+  // crops down to a strip of trellis with the arch and the vase outside it.
+  heroImagePortrait: {
+    ...manifest.singles["hero-portrait"],
+    alt: "Engineered digital print panel — a floral archway over gold trellis, with a vase of blooms and fruit",
   },
 
   portrait: {

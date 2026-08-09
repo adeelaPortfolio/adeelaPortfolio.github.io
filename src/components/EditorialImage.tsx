@@ -28,6 +28,13 @@ interface Props {
   /** Prioritise loading (use for above-the-fold images). */
   priority?: boolean;
   /**
+   * Art direction: a different FILE at a given media query, not a different
+   * crop of the same one. Rendered as <source> inside a <picture>, so the
+   * browser downloads one image rather than loading both and hiding one.
+   * First match wins, so list the narrow query first.
+   */
+  sources?: { media: string; src: string }[];
+  /**
    * "natural" — frame matches the image; nothing is cropped or letterboxed.
    * "cover"   — fills `ratio`, cropping the overflow. Banners only.
    * "contain" — fits inside `ratio`, letterboxing. Lightbox and fixed strips.
@@ -55,6 +62,7 @@ export default function EditorialImage({
   sizes = "(max-width: 768px) 100vw, 50vw",
   priority = false,
   fit = "natural",
+  sources = [],
 }: Props) {
   const hasImage = Boolean(item.src);
   const caption = label ?? item.caption ?? item.alt;
@@ -70,15 +78,20 @@ export default function EditorialImage({
       style={{ aspectRatio: frameRatio }}
     >
       {hasImage ? (
-        <Image
-          src={item.src}
-          alt={item.alt}
-          fill
-          sizes={sizes}
-          priority={priority}
-          draggable={false}
-          className={`select-none ${objectFit}`}
-        />
+        <picture>
+          {sources.map((s) => (
+            <source key={s.media} media={s.media} srcSet={s.src} />
+          ))}
+          <Image
+            src={item.src}
+            alt={item.alt}
+            fill
+            sizes={sizes}
+            priority={priority}
+            draggable={false}
+            className={`select-none ${objectFit}`}
+          />
+        </picture>
       ) : (
         <div
           className="absolute inset-0 flex items-center justify-center"

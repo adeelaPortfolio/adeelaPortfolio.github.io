@@ -274,6 +274,18 @@ become the same action. A missing root throws rather than publishing an empty si
   obtain. Her print-resolution originals (up to 6300 × 14981) are never served. The one
   exception is the hero (`max: 1626`), which is the cropped panel's own long edge — the
   same pixels the old whole-sheet banner already published, not more.
+- **The hero ships twice: `hero` and `hero-portrait`.** Same crop, same `max`, same
+  pixels — the second one simply is not rotated. A 2.18:1 banner in a portrait
+  viewport crops to a strip of trellis with the arch and the vase outside the frame;
+  upright the panel is 0.459 against a phone hero box of ~0.49, so it survives nearly
+  whole. `EditorialImage` takes an optional `sources` list and renders `<picture>`, so
+  a phone downloads the portrait file **instead of** the banner, not as well as it.
+  One `alt` serves both, so it must not mention orientation.
+- **The mobile scrim is a separate overlay, not a re-tuned one.** Below `md` the
+  left-to-right wash is switched off: it was drawn for the banner, whose left half is
+  dark damask, and on the upright panel that edge is border and flowers. A
+  whole-height wash heavy enough to read over flattened the artwork, so the weight is
+  a bottom-two-thirds gradient where the text actually sits.
 - A single may also carry **`rotate`** (a quarter-turn, for a tall panel used as a wide
   banner). It has to be applied **after** `resize` in `build-images.mjs`: sharp runs
   extract → resize → rotate whatever the call order, so a `.rotate()` written earlier in

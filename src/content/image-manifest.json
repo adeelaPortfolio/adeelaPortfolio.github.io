@@ -1256,6 +1256,11 @@
       "width": 1626,
       "height": 746
     },
+    "hero-portrait": {
+      "src": "/images/hero-portrait.webp",
+      "width": 746,
+      "height": 1626
+    },
     "portrait": {
       "src": "/images/portrait.webp",
       "width": 800,
