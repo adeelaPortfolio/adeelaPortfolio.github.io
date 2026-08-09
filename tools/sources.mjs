@@ -56,6 +56,11 @@ export const collections = [
     slug: "semi-formals",
     dirs: ["My Work/Semi Formals"],
     ratio: "4 / 3",
+    // Without this the cover is 01.jpg, a sheet of print panels on white. It
+    // reads as artwork-on-paper at thumbnail size, and the same pink floral
+    // panels already open the gallery. 06.jpg is the Enchantress campaign —
+    // finished garments on a model, which is what the row is previewing.
+    cover: "My Work/Semi Formals/06.jpg",
   },
   // Inventive Clothing: add its folder here once Adeela supplies the images.
   // { slug: "inventive-clothing", dirs: ["My Work/Inventive Clothing"], ratio: "3 / 4" },
