@@ -83,6 +83,19 @@ live site is evidence about the last *push*, not about the working tree — comp
   Clothing" rather than plain "Instagram" because it is the brand's account, not a
   personal design one. The `?igsh=` share token was stripped.
 
+- **The About page is in Adeela's own voice now** — first person, three paragraphs,
+  supplied by her on 2026-08-09. It also removed the "A three-piece begins as a print"
+  pull quote: her replacement text had none, and she chose to drop it rather than keep
+  it. `site.statement` was made **optional** instead of deleted, and both pages that
+  render it guard it, so setting one value brings the blockquote back to Home and About
+  with no markup change. The home teaser prints `site.bio[0]`, so the voice carries
+  there too.
+- **The bridal faces are blurred in the archive originals, not by the site.** A pipeline
+  `blurs` option was built first, then reverted whole in `f416e0a` once Adeela's own
+  blurred re-exports arrived. Do not rebuild it: the blur belongs in the archive, where
+  it is one fewer moving part and no unblurred frame reaches the build at all. The
+  frames are Bridal 1/23–26 and Bridal 2/08–09.
+
 **Open items — these need Adeela, not code:**
 
 1. **Two files she may not want published**, both included because she asked for
@@ -125,7 +138,7 @@ All content lives in `src/content/` as plain typed data. Pages map over that dat
 | File | Controls |
 |------|----------|
 | `src/content/types.ts` | The shape of every content object (read this first) |
-| `src/content/site.ts` | Name, tagline, bio, statement, skills, education, awards, `cvPath` |
+| `src/content/site.ts` | Name, tagline, bio, skills, education, awards, socials, `cvPath` |
 | `src/content/collections.ts` | **Assembled, not written.** Builds the list from the manifest + copy |
 | `src/content/collection-copy.ts` | The words for a collection. All optional; absent is fine |
 | `src/content/image-manifest.json` | **Generated.** Written by `npm run images`; never edit by hand |
@@ -136,6 +149,10 @@ All content lives in `src/content/` as plain typed data. Pages map over that dat
 **optional**, and `src/app/work/[slug]/page.tsx` guards each section. This exists so a
 collection with no development material simply has no Development section, rather than
 tempting anyone to invent one. Keep it that way.
+
+**`SiteContent.statement` is optional for the same reason.** The pull quote on Home and
+About exists only while there is a real one to quote; absent, both pages close the gap
+and neither prints an empty blockquote.
 
 `concept` joined that list on 2026-08-09, when Adeela asked for the Concept/Materials
 block off Prints & Cutlines, Silk Scarfs, Bridal and Semi-Formals. **Only the thesis
@@ -224,7 +241,9 @@ become the same action. A missing root throws rather than publishing an empty si
   `/work`. Give `cover` the **archive-relative path**, not the bare filename, whenever a
   collection lists more than one directory: Bridal draws on "Bridal 1" and "Bridal 2"
   and both number from 01, so `"04.jpg"` silently resolves to the first folder listed.
-  `build-images.mjs` now throws if a named cover matches nothing.
+  `build-images.mjs` now throws if a named cover matches nothing. Semi-Formals names
+  one too: its `assets[0]` is a sheet of print panels on white, which reads as artwork
+  on paper at preview size rather than as a collection.
 - Gallery lengths come from `image-manifest.json`, so a page can never claim more or
   fewer images than exist on disk.
 - `sources.mjs` also carries `crops` — fractional boxes that remove **third-party names
@@ -305,7 +324,7 @@ Other standing rules:
 
 ### Routes (`src/app/`)
 
-`/` · `/work` · `/work/[slug]` (5, SSG) · `/about` · `/awards` (awards + CV download)
+`/` · `/work` · `/work/[slug]` (6, SSG) · `/about` · `/awards` (awards + CV download)
 · plus `not-found`, `sitemap.ts`, `robots.ts`, `icon.svg`.
 
 **There is no `/contact` route** — removed at Adeela's request on 2026-08-09. Contact is
@@ -327,7 +346,9 @@ Each group heading has an `id`, so the hero's "My Work" button can link to `/wor
 
 `Nav` (sticky; white text over the home hero — client) · `Footer` · `Hero`
 · `PageHeader` · `SectionHeading` · `CollectionRow` (the numbered index row, with a
-hover preview in the right margin; folds below `md`) · `CollectionCard` (home featured)
+hover preview in the right margin — **`2xl:` only**, so below 1536px hovering changes
+the type colour and shows no image at all, which reads as a broken preview until you
+check the class; folds below `md`) · `CollectionCard` (home featured)
 · `Gallery` (masonry + lightbox, the lightbox re-laid-out for phones — client)
 · `SwatchStrip` · `EditorialImage` · `Button` · `Reveal` (client — starts at opacity 0,
 so it photographs blank unless the page is scrolled first) · `ImageGuard`
@@ -386,6 +407,10 @@ Two things worth doing in the same pass:
   chained `build && commit` to skip the commit while the following `push` still ran, so
   a "successful deploy" shipped the *previous* commit. **Verify changes against the
   served HTML, not the deploy status.**
+  **Any process whose working directory is inside `out/` does the same thing.** On
+  Windows a shell sitting in `out/` blocks the rmdir exactly as a server does, and the
+  error names the directory rather than the culprit — so a `cd out` from three commands
+  ago reads as a mystery build failure. `cd` back out before building.
 - **Tailwind opacity modifiers only accept values on the scale** (steps of 5). A
   plausible-looking `bg-scrim/92` compiles to **no rule at all** — silently, with no
   build warning. That shipped a lightbox whose backdrop was a 4px blur over a fully
@@ -398,9 +423,6 @@ Two things worth doing in the same pass:
   `bottom-2 sm:inset-y-0 sm:bottom-auto` collapsed the lightbox arrows into the top
   corners on tablets: `sm:bottom-auto` is emitted after `sm:inset-y-0`, so it undid the
   `bottom:0` that was doing the vertical centring.
-- **Tailwind opacity is a fixed scale.** `bg-scrim/92` is not valid — 92 is not a step,
-  so the class silently produces nothing and the lightbox rendered with no backdrop at
-  all. Use an arbitrary value: `bg-scrim/[0.92]`.
 - **Chrome screenshots**: a stale `--user-data-dir` lock makes Chrome write nothing and
   report nothing. Use a fresh directory per run.
 - **You cannot screenshot a narrow viewport from the Chrome CLI on Windows.**
@@ -413,6 +435,14 @@ Two things worth doing in the same pass:
 - **GitHub Pages caches**: after deploying, re-check with a cache-busting query string.
 - Adeela renames folders in her archive *while work is in progress*. If the pipeline
   can't resolve a path, list the directory before assuming anything is lost.
+- **"I replaced the images" usually means Drive, not the archive.** Asked to revert the
+  pipeline face blur because she had re-uploaded blurred originals, the six files in
+  `Adeela portfolio Data\Bridal\` were byte-identical to the day before — hers had
+  landed in `Downloads` as `23.jpeg`, never copied in, and with the wrong extension.
+  Reverting first and rebuilding would have republished the real faces. **Stat the
+  files before acting on "they are updated"**: `stat -c %s,%y` against the sizes you
+  last saw is two seconds and settles it. The nightly Drive sync closes this gap for
+  folders it mirrors, but a hand-edited archive file is still whatever is on disk.
 
 ## Conventions
 
