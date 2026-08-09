@@ -115,13 +115,13 @@ export const copy: Record<string, CollectionCopy> = {
   },
 
   // Her own label, May 2024 – March 2026. From the Career & Experience entry on
-  // her CV. No concept statement, because she has not written one for it.
+  // her CV. No concept statement, because she has not written one for it — and no
+  // summary either: she asked for that line off on 2026-08-09. The row and the page
+  // header omit it rather than falling back to anything, so leave it absent.
   "inventive-clothing": {
     title: "Inventive Clothing",
     season: "Own Label",
     year: "2026",
-    summary:
-      "Adeela's own label — an independent brand she founded and ran end to end, from custom lawn stitching through semi-formal and bridal commissions.",
     coverAlt: "Hand-embroidered bridal lehnga made under Adeela's own label",
     // The label's own account, and the only place the full body of its work
     // lives. The ?igsh= share token she sent is stripped.
