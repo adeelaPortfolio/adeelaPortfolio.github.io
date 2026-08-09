@@ -49,9 +49,15 @@ export default function AboutPage() {
           <Reveal>
             <p className="eyebrow mb-6">Capabilities</p>
             <div className="rule mb-8" />
+            {/* Bullets are a ::before disc rather than list-disc: these <li>s are
+                grid items, and an outside marker hangs into the neighbouring
+                column. pl-5 keeps wrapped lines indented past the disc. */}
             <ul className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
               {site.skills.map((s) => (
-                <li key={s} className="font-body text-ink/80">
+                <li
+                  key={s}
+                  className="relative pl-5 font-body text-ink/80 before:absolute before:left-0 before:top-[0.6em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-sepia/70 before:content-['']"
+                >
                   {s}
                 </li>
               ))}
