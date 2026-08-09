@@ -279,7 +279,12 @@ then `Target.createTarget` → `Target.attachToTarget {flatten:true}`.
 Two things worth doing in the same pass:
 
 - **Scroll before capturing.** `Reveal` uses IntersectionObserver and starts at opacity
-  0, so anything below the fold photographs as blank space.
+  0, so anything below the fold photographs as blank space. Scrolling *fast* is not
+  enough — a 400px/60ms pass left a whole section at opacity 0 and the screenshot showed
+  a plain gap where the CV panel was, which reads exactly like "the section didn't
+  render". 300px steps with ~140ms settle fixed it. Assert it rather than trusting the
+  scroll: probe for `getComputedStyle(e).opacity < 1` in the same pass as the overflow
+  check, and confirm against the built HTML before believing a section is missing.
 - **Assert, don't eyeball.** Probe `documentElement.scrollWidth` vs `clientWidth` and
   list elements whose `getBoundingClientRect().right` exceeds the viewport — the rect
   check still works after `body { overflow-x: clip }` hides the scrollbar evidence.

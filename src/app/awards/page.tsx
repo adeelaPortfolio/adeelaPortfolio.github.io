@@ -21,26 +21,8 @@ export default function AwardsPage() {
         intro="Gold medals, thesis and research work from her training at the University of South Asia. A full curriculum vitae is available to download."
       />
 
-      {/* CV download */}
-      <section className="container-editorial pt-14">
-        <Reveal className="flex flex-col items-start justify-between gap-6 bg-cream/50 p-8 sm:flex-row sm:items-center sm:p-10">
-          <div>
-            <p className="eyebrow mb-3">Curriculum Vitae</p>
-            <p className="font-display text-2xl text-ink">
-              {site.fullName} — full CV
-            </p>
-            <p className="mt-2 font-body text-sm text-ink/60">
-              Education, experience, and technical skills (PDF).
-            </p>
-          </div>
-          <Button href={site.cvPath} variant="solid" external>
-            Download CV
-          </Button>
-        </Reveal>
-      </section>
-
       {/* Press list */}
-      <section className="container-editorial pt-20 pb-8">
+      <section className="container-editorial pt-14">
         <p className="eyebrow mb-8">Awards &amp; Recognition</p>
         <ul>
           {items.map((p, i) => (
@@ -74,6 +56,25 @@ export default function AwardsPage() {
           ))}
         </ul>
         <div className="rule mt-2" />
+      </section>
+
+      {/* CV download — sits after the awards list, so the page reads
+          recognition first and the download is the closing action. */}
+      <section className="container-editorial pt-16 pb-8">
+        <Reveal className="flex flex-col items-start justify-between gap-6 bg-cream/50 p-8 sm:flex-row sm:items-center sm:p-10">
+          <div>
+            <p className="eyebrow mb-3">Curriculum Vitae</p>
+            <p className="font-display text-2xl text-ink">
+              {site.fullName} — full CV
+            </p>
+            <p className="mt-2 font-body text-sm text-ink/60">
+              Education, experience, and technical skills (PDF).
+            </p>
+          </div>
+          <Button href={site.cvPath} variant="solid" external>
+            Download CV
+          </Button>
+        </Reveal>
       </section>
     </>
   );
