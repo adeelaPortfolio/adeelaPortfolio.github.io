@@ -69,6 +69,10 @@ export const collections = [
     slug: "inventive-clothing",
     dirs: ["My Work/Inventive Clothing"],
     ratio: "3 / 4",
+    // Default cover was 1.jpeg, a rail of finished pieces on hangers — it reads as
+    // a shop rack at thumbnail size. 3.jpeg is one embroidered bodice over the
+    // rainbow lehnga, which is the label's own work rather than its stockroom.
+    cover: "My Work/Inventive Clothing/3.jpeg",
   },
 ];
 
