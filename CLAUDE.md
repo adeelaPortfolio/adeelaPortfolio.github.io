@@ -174,6 +174,28 @@ design* — an unattended folder must never acquire an invented season or descri
 because a slot exists for one. Alt text falls back to `"<title> — image 3"`, which is
 dull and true.
 
+**Drive is the source of truth, and the site syncs itself.**
+`.github/workflows/sync-drive.yml` mirrors a Drive folder into the archive at 02:20
+UTC daily, rebuilds and deploys — no machine involved. `tools/pull-drive.mjs` does the
+mirroring with a service-account JWT and plain `fetch`, deliberately with no
+`googleapis` dependency, and skips files whose md5 already matches. Setup (service
+account, sharing, the two repo secrets) is in **`docs/drive-sync.md`**.
+
+Two things about that workflow are load-bearing:
+
+- **It deploys Pages itself** rather than leaving it to `deploy.yml`. A push made with
+  `GITHUB_TOKEN` does not trigger other workflows, so its commit would otherwise never
+  reach the site. Both workflows share the `pages` concurrency group so two deploys
+  cannot overlap.
+- **`actions/cache/restore` and `.../save` are separate steps.** The combined action
+  computes its save key at restore time, and `tools/.drive-state.json` is rewritten
+  mid-run, so the cache would have been keyed to the pre-sync state and never advanced.
+
+**Automation skips the safety review.** Images from a new Drive folder go live without
+anyone seeing them. The run summary flags every new collection with a reminder to check
+faces, third-party names, handles and phone numbers — but the crops in `sources.mjs`
+only cover files that were already there. This is the accepted trade, chosen knowingly.
+
 **`npm run publish`** does the whole loop: images → build → commit → push → Actions
 deploys. It refuses to run if the tree holds changes the pipeline does not own, so it
 can never fold someone's work-in-progress into an image commit. `-- --dry` stops

@@ -1,0 +1,128 @@
+# Mirrors Adeela's Google Drive folder into the archive, rebuilds the images and
+# the site from it, and deploys — with nobody's machine involved.
+#
+# Adding a folder in Drive adds a collection to /work. Adding images to an
+# existing folder adds them to that gallery, in the folder's own order. Deleting
+# a folder in Drive removes it from the site.
+#
+# Two secrets have to exist (Settings → Secrets and variables → Actions):
+#   GDRIVE_SA_KEY     the whole service-account key JSON
+#   GDRIVE_FOLDER_ID  the id in the Drive folder's URL
+# and the Drive folder must be shared with the service account's client_email.
+# Viewer is enough — the token this requests is read-only.
+#
+# It deploys to Pages itself rather than leaving that to deploy.yml. A push made
+# with GITHUB_TOKEN deliberately does not trigger other workflows, so a commit
+# from here would otherwise never reach the site.
+name: Sync from Drive
+
+on:
+  schedule:
+    # 02:20 UTC daily. A few minutes past the hour on purpose: jobs scheduled on
+    # the hour queue behind the rest of GitHub's cron traffic.
+    - cron: "20 2 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Mirror and build, but do not commit or deploy"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Same group as deploy.yml — two Pages deployments must never overlap.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # The archive is ~570 MB of print-resolution originals. Restoring it means
+      # a normal night downloads only the files that actually changed in Drive.
+      #
+      # restore + save as separate steps, not the combined action: the state file
+      # is rewritten by the mirror step, so the combined action would save under
+      # the key it computed BEFORE the sync and the cache would never advance.
+      - name: Restore archive
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .archive
+          key: archive-${{ hashFiles('tools/.drive-state.json') }}
+          restore-keys: archive-
+
+      - name: Mirror Drive into the archive
+        env:
+          GDRIVE_SA_KEY: ${{ secrets.GDRIVE_SA_KEY }}
+          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          ARCHIVE_ROOT: .archive
+        run: node tools/pull-drive.mjs
+
+      - name: Save archive
+        uses: actions/cache/save@v4
+        with:
+          path: .archive
+          key: archive-${{ hashFiles('tools/.drive-state.json') }}
+
+      - name: Rebuild images from the archive
+        env:
+          ARCHIVE_ROOT: .archive
+        run: npm run images
+
+      - run: npm run build
+
+      - name: Commit what changed
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Only ever the pipeline's own output, by path. Never `git add -A`.
+          git add public/images src/content/image-manifest.json tools/.drive-state.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Drive matches what is already published — nothing to do." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            node tools/sync-report.mjs commit-msg.txt "$GITHUB_STEP_SUMMARY"
+            git commit -F commit-msg.txt
+            rm -f commit-msg.txt
+          fi
+
+      - name: Push
+        if: steps.commit.outputs.changed == 'true' && inputs.dry_run != true
+        run: git push origin HEAD:main
+
+      - uses: actions/configure-pages@v5
+        if: steps.commit.outputs.changed == 'true' && inputs.dry_run != true
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.commit.outputs.changed == 'true' && inputs.dry_run != true
+        with:
+          path: ./out
+
+  deploy:
+    needs: sync
+    if: needs.sync.outputs.changed == 'true' && inputs.dry_run != true
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

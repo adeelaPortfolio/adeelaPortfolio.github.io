@@ -35,3 +35,6 @@ next-env.d.ts
 
 # superseded CV build — the published CV is public/cv/adeela-cv.pdf
 /resume/
+
+# Drive mirror, restored from the Actions cache — never committed (~570 MB)
+/.archive/
