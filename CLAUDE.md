@@ -195,9 +195,9 @@ Two ways this went wrong, both now corrected and worth not reintroducing:
   in a single row it took ~120px of a 312px phone column and squeezed the title into
   four words a line. Folding the title to its own full-width line is the fix.
 - **Long unbreakable tokens set the page's minimum width.** `amanatadeela@gmail.com` at
-  `text-3xl` forced the whole `/contact` document to 457px inside a 360px viewport.
-  Any email, URL or single-word display heading needs a smaller base step and
-  `break-words` / `break-all`.
+  `text-3xl` once forced the whole `/contact` document to 457px inside a 360px viewport.
+  That page is gone, but the rule isn't: any email, URL or single-word display heading
+  needs a smaller base step and `break-words` / `break-all`.
 
 Other standing rules:
 
@@ -216,7 +216,15 @@ Other standing rules:
 ### Routes (`src/app/`)
 
 `/` · `/work` · `/work/[slug]` (5, SSG) · `/about` · `/awards` (awards + CV download)
-· `/contact` · plus `not-found`, `sitemap.ts`, `robots.ts`, `icon.svg`.
+· plus `not-found`, `sitemap.ts`, `robots.ts`, `icon.svg`.
+
+**There is no `/contact` route** — removed at Adeela's request on 2026-08-09. Contact is
+now a single `mailto:` in three places: the Footer (on every page), and the "Get in
+Touch" button on `/` and `/about`. `Button` renders a plain `<a>` for a `mailto:` href,
+without `target="_blank"` — a blank target on a mailto leaves an empty tab behind.
+If a contact page is ever wanted back, it was `src/app/contact/page.tsx` up to commit
+`b46677e`. Whatever replaces it, **the email must stay reachable from every page**:
+recruiters are the audience, and the CV download is not a substitute.
 
 Collections carry `group` ("Thesis" / "My Work") and optional `subgroup` ("Printed");
 `/work` renders them under those headings, which is Adeela's own two-category structure.

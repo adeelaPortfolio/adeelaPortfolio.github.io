@@ -6,7 +6,7 @@ import { collections } from "@/content/collections";
 import { SITE_URL } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/work", "/about", "/awards", "/contact"].map(
+  const staticRoutes = ["", "/work", "/about", "/awards"].map(
     (path) => ({
       url: `${SITE_URL}${path}`,
       changeFrequency: "monthly" as const,

@@ -80,7 +80,7 @@ export default function AboutPage() {
               Interested in working together?
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button href="/contact" variant="solid">
+              <Button href={`mailto:${site.email}`} variant="solid">
                 Get in Touch
               </Button>
               <Button href={site.cvPath} variant="outline" external>

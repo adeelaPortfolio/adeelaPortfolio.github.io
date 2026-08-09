@@ -83,7 +83,7 @@ export default function HomePage() {
             Seeking a designer who works from the material outward?
           </h2>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Button href="/contact" variant="solid">
+            <Button href={`mailto:${site.email}`} variant="solid">
               Get in Touch
             </Button>
             <Button href={site.cvPath} variant="outline" external>

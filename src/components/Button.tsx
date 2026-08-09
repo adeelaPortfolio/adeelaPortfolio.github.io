@@ -2,7 +2,7 @@ import Link from "next/link";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Button — editorial link-button in two variants (solid ink / outline).
-// Renders an <a> for external hrefs and a Next <Link> for internal routes.
+// Renders an <a> for external and mailto hrefs, a Next <Link> for routes.
 // ─────────────────────────────────────────────────────────────────────────────
 
 interface Props {
@@ -29,6 +29,16 @@ export default function Button({
   className = "",
 }: Props) {
   const cls = `${base} ${variants[variant]} ${className}`;
+
+  // A mailto is neither a route nor a new tab: target="_blank" on one leaves an
+  // empty tab behind once the mail client takes over.
+  if (href.startsWith("mailto:")) {
+    return (
+      <a href={href} className={cls}>
+        {children}
+      </a>
+    );
+  }
 
   if (external) {
     return (

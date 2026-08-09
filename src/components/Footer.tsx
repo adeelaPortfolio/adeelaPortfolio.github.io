@@ -3,13 +3,15 @@ import { site } from "@/content/site";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Footer — contact CTA, quick links, and socials.
+//
+// There is no /contact page. The mailto below is the site's only contact
+// route, so it stays on every page — don't fold it into the quick links.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const quickLinks = [
   { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/awards", label: "Awards & CV" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Footer() {
